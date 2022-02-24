@@ -17,9 +17,9 @@ def menu():
     settings_img = pygame.image.load("img/settings.png").convert_alpha()
     exit_img = pygame.image.load("img/exit.png").convert_alpha()
 
-    start_button = button.Button(600, 400, start_img, 0.7)
+    start_button = button.Button(600, 450, start_img, 0.7)
     settings_button = button.Button(600, 600, settings_img, 0.7)
-    exit_button = button.Button(600, 800, exit_img, 0.7)
+    exit_button = button.Button(600, 750, exit_img, 0.7)
 
     run = True
     while run:
