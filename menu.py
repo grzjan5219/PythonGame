@@ -27,7 +27,6 @@ while True:
 		print('EXIT')
 	if settings_button.draw(screen):
 		print('SETTINGS')
-
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			sys.exit(0)
