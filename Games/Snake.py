@@ -5,11 +5,13 @@ class Snake():
     def __init__(self):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        pass
+        self.fps = 60.0
+        self.deltaTime = 0
+        self.snake = pygame.Rect(200, 200, 30, 30)
 
     def Start(self, screen):
         screen.fill((100, 200, 100))
-        snake = pygame.Rect(200, 200, 30, 30)
+        currentKey = 'q'
 
         while True:
             # obługa zdarzeń
@@ -19,19 +21,39 @@ class Snake():
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         sys.exit()
+                    if event.key == pygame.K_w:
+                        currentKey = "w"
+                    if event.key == pygame.K_s:
+                        currentKey = "s"
+                    if event.key == pygame.K_a:
+                        currentKey = "a"
+                    if event.key == pygame.K_d:
+                        currentKey = "d"
 
-            # obsługa wejścia
-            keysPressed = pygame.key.get_pressed()
-            if(keysPressed[pygame.K_d]):
-                snake.x += 1
-            if(keysPressed[pygame.K_a]):
-                snake.x -= 1
-            if (keysPressed[pygame.K_w]):
-                snake.y -= 1
-            if (keysPressed[pygame.K_s]):
-                snake.y += 1
+            # obsługa ruchu
+            self.deltaTime += self.clock.tick() / 1000.0
+            self.Move(currentKey, 5)
 
             # rysowanie, wyświetlanie
             screen.fill((0, 0, 0))
-            pygame.draw.rect(screen, (255 , 0, 0), snake)
+            pygame.draw.rect(screen, (255 , 0, 0), self.snake)
             pygame.display.flip()
+
+
+    def Move(self, key, speed):
+
+        while self.deltaTime > (1 / self.fps):
+
+            if key == "q":
+                return
+
+            if key == "w":
+                self.snake.y -= speed
+            if key == "s":
+                self.snake.y += speed
+            if key == "a":
+                self.snake.x -= speed
+            if key == "d":
+                self.snake.x += speed
+
+            self.deltaTime -= (1 / self.fps)
