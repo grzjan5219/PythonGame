@@ -10,7 +10,7 @@ def menu():
     pygame.display.set_caption("Snake")
 
     # tło
-    tlo_img = pygame.image.load("img/DarkField.png").convert_alpha()
+    tlo_img = pygame.image.load("img/tlo.jpg").convert_alpha()
 
     # opcje wyboru
     start_img = pygame.image.load("img/start.png").convert_alpha()
