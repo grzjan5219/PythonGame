@@ -1,6 +1,7 @@
 import pygame
 import sys
-
+import GameBoard
+# tymczasowe wszystko się zmieni
 class Snake():
     def __init__(self):
         #inicjalizacja
@@ -8,10 +9,11 @@ class Snake():
         self.fps = 60.0
         self.deltaTime = 0
         self.snake = pygame.Rect(200, 200, 30, 30)
+        self.gameBoard = GameBoard()
 
     def Start(self, screen):
         screen.fill((100, 200, 100))
-        currentKey = 'q'
+        currentKey = "q"
 
         while True:
             # obługa zdarzeń
@@ -21,13 +23,13 @@ class Snake():
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         sys.exit()
-                    if event.key == pygame.K_w:
+                    if event.key == pygame.K_w and currentKey != "s":
                         currentKey = "w"
-                    if event.key == pygame.K_s:
+                    if event.key == pygame.K_s and currentKey != "w":
                         currentKey = "s"
-                    if event.key == pygame.K_a:
+                    if event.key == pygame.K_a and currentKey != "d":
                         currentKey = "a"
-                    if event.key == pygame.K_d:
+                    if event.key == pygame.K_d and currentKey != "a":
                         currentKey = "d"
 
             # obsługa ruchu
@@ -43,6 +45,7 @@ class Snake():
     def Move(self, key, speed):
 
         while self.deltaTime > (1 / self.fps):
+            self.deltaTime -= (1 / self.fps)
 
             if key == "q":
                 return
@@ -55,5 +58,3 @@ class Snake():
                 self.snake.x -= speed
             if key == "d":
                 self.snake.x += speed
-
-            self.deltaTime -= (1 / self.fps)
