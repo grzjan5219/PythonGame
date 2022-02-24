@@ -1,5 +1,6 @@
 import pygame
-import button
+from tools import button
+
 
 def menu():
     pygame.init()
@@ -9,16 +10,16 @@ def menu():
     pygame.display.set_caption("Snake")
 
     # tło
-    tlo_img = pygame.image.load("tło.jpg")
+    tlo_img = pygame.image.load("img/DarkField.png").convert_alpha()
 
     # opcje wyboru
-    start_img = pygame.image.load("Przycisk START.png").convert_alpha()
-    settings_img = pygame.image.load("Przycisk SETTINGS.png").convert_alpha()
-    quit_img = pygame.image.load("Przycisk QUIT.png")
+    start_img = pygame.image.load("img/start.png").convert_alpha()
+    settings_img = pygame.image.load("img/settings.png").convert_alpha()
+    exit_img = pygame.image.load("img/exit.png").convert_alpha()
 
     start_button = button.Button(600, 400, start_img, 0.7)
     settings_button = button.Button(600, 600, settings_img, 0.7)
-    quit_button = button.Button(600, 800, quit_img, 0.7)
+    exit_button = button.Button(600, 800, exit_img, 0.7)
 
     run = True
     while run:
@@ -28,13 +29,13 @@ def menu():
             print("start")
         if settings_button.draw(screen):
             print("settings")
-        if quit_button.draw(screen):
+        if exit_button.draw(screen):
             run = False
-            print("quit")
+            print("exit")
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            pygame.display.update()
+        pygame.display.update()
 menu()
