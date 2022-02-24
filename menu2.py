@@ -1,35 +1,40 @@
 import pygame
-import sys
-import tools.button
-import Games.Snake
+import button
 
-pygame.init()
+def menu():
+    pygame.init()
+    screen = pygame.display.set_mode((1920, 1080))
 
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption('Menu ')
+    # nazwa okna
+    pygame.display.set_caption("Snake")
 
-start_img = pygame.image.load('img/start.png').convert_alpha()
-exit_img = pygame.image.load('img/exit.png').convert_alpha()
-settings_img = pygame.image.load('img/settings.png').convert_alpha()
+    # tło
+    tlo_img = pygame.image.load("tło.jpg")
 
-start_button = tools.button.Button(100, 200, start_img, 0.8)
-exit_button = tools.button.Button(450, 200, exit_img, 0.8)
-settings_button = tools.button.Button(275, 100, exit_img, 0.8)
+    # opcje wyboru
+    start_img = pygame.image.load("Przycisk START.png").convert_alpha()
+    settings_img = pygame.image.load("Przycisk SETTINGS.png").convert_alpha()
+    quit_img = pygame.image.load("Przycisk QUIT.png")
 
-screen.fill((200, 200, 250))
+    start_button = button.Button(600, 400, start_img, 0.7)
+    settings_button = button.Button(600, 600, settings_img, 0.7)
+    quit_button = button.Button(600, 800, quit_img, 0.7)
 
-while True:
-	if start_button.draw(screen):
-		snake = Games.Snake.Snake()
-		snake.Start(screen)
-		print('START')
-	if exit_button.draw(screen):
-		print('EXIT')
-	if settings_button.draw(screen):
-		print('SETTINGS')
+    run = True
+    while run:
+        screen.blit(tlo_img, (0, 0))
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			sys.exit(0)
+        if start_button.draw(screen):
+            print("start")
+        if settings_button.draw(screen):
+            print("settings")
+        if quit_button.draw(screen):
+            run = False
+            print("quit")
 
-	pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            pygame.display.update()
+menu()
