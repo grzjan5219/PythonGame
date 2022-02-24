@@ -1,0 +1,7 @@
+import tools.button
+
+tools.button.Button(x, y, image, scale)
+
+x, y  - współrzędne przycisku
+image - obraz
+scale - skala obrazu
