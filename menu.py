@@ -5,7 +5,9 @@ from pygame import mixer
 
 def menu():
     pygame.init()
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((1920, 1080))
+    #, pygame.FULLSCREEN, pygame.RESIZABLE
+    # na razie cofnąłem plik do wersji początkowej, bo z FULLSCREEN nie chciał poprawnie działać
 
     # nazwa okna
     pygame.display.set_caption("Snake")
@@ -31,7 +33,6 @@ def menu():
     run = True
     while run:
         screen.blit(tlo_img, (0, 0))
-
         if start_button.draw(screen):
             game = Game()
             game.Start()
