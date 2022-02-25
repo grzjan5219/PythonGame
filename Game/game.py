@@ -13,13 +13,12 @@ class Game():
         self.deltaTime = 0.0
         self.snake = Snake(self)
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.gameBoard = Board(30, 17, self) #narazie druga liczba musi być nieparzysta
+        self.gameBoard = Board(30, 25, self) #narazie druga liczba musi być nieparzysta
 
         pygame.display.set_caption('Menu ')
 
     def Start(self):
         currentKey = "q"
-        #self.gameBoard.draw()
 
         while True:
             # obługa zdarzeń
