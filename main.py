@@ -1,6 +1,6 @@
 import pygame
 import sys
-from menu2 import *
+from menu import *
 import fruit
 import Snake
 

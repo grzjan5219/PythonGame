@@ -2,6 +2,7 @@ from Game.snake import Snake
 from Game.board import Board
 import pygame
 import sys
+from fruit import Food
 
 class Game():
     def __init__(self):
