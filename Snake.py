@@ -1,7 +1,13 @@
 import pygame
 import sys
+from pygame import mixer
 
 pygame.init()
+
+#muzyka w tle
+mixer.music.load("sounds/BG music - game.mp3")
+mixer.music.play(-1)
+mixer.music.set_volume(0.1)
 
 background = (0, 0, 0)
 snake = (0, 0, 255)
