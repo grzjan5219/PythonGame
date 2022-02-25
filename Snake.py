@@ -12,7 +12,10 @@ mixer.music.set_volume(0.1)
 background = (0, 0, 0)
 snake = (0, 0, 255)
 
-screen = pygame.display.set_mode((800, 600))
+screen_width = 800
+screen_height = 600
+
+screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Snake")
 
 game_over = False
@@ -42,6 +45,9 @@ while not game_over:
       elif event.key == pygame.K_DOWN:
         x1_change = 0
         y1_change = 10
+
+  if x1 >= screen_width or x1 < 0 or y1 >= screen_height or y1 < 0:
+    game_over = True
 
   x1 += x1_change
   y1 += y1_change
