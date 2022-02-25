@@ -1,5 +1,4 @@
 import pygame
-from Menu import Settings
 from Game.game import Game
 from tools import button
 from pygame import mixer
@@ -34,8 +33,8 @@ def menu():
     start_button = button.Button(600, 450, start_img, 0.7)
     settings_button = button.Button(600, 600, settings_img, 0.7)
     exit_button = button.Button(600, 750, exit_img, 0.7)
-    on_button = button.Button(1595, 950, on_img, 0.9)
-    off_button = button.Button(1595, 950, off_img, 0.9)
+    off_button = button.Button(1700, 950, off_img, 0.9)
+    on_button = button.Button(1500, 950, on_img, 0.9)
 
     # opcja wyciszania dźwięku (nie dokończona)
     def sound():
@@ -56,8 +55,9 @@ def menu():
             run = False
             print("exit")
         if on_button.draw(screen):
-            sound()
-
+            mixer.music.set_volume(0.1)
+        if off_button.draw(screen):
+            mixer.music.set_volume(0)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
