@@ -2,6 +2,7 @@ from Game.snake import Snake
 from Game.board import Board
 import pygame
 import sys
+from pygame import mixer
 from fruit import Food
 
 class Game():
@@ -16,6 +17,11 @@ class Game():
         self.gameBoard = Board(30, 25, self) #narazie druga liczba musi być nieparzysta
 
         pygame.display.set_caption('Menu ')
+
+        # muzyka w tle
+        mixer.music.load("sounds/BG music - game.mp3")
+        mixer.music.play(-1)
+        mixer.music.set_volume(0.1)
 
     def Start(self):
         currentKey = "q"
