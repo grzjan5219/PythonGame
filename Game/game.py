@@ -13,6 +13,7 @@ class Game():
         self.tps = 60.0
         self.deltaTime = 0.0
         self.snake = Snake(self)
+        self.food = Food(self)
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.gameBoard = Board(21, 21, self) # narazie druga liczba musi być nieparzysta
                                              # width  - max 55  height - max 46
@@ -54,6 +55,7 @@ class Game():
             self.gameBoard.draw()
             # pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(80, 80, 1100, 700))
             self.snake.draw()
+            self.food.draw()
 
             pygame.display.flip()
 
