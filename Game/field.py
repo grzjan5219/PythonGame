@@ -1,5 +1,5 @@
 import pygame
-
+# pole planszy
 class Field():
     block = None
     def __init__(self):
