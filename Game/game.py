@@ -13,6 +13,7 @@ class Game():
         self.tps = 60.0
         self.deltaTime = 0.0
         self.snake = Snake(self)
+        self.food = Food(self)
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.gameBoard = Board(30, 25, self) #narazie druga liczba musi być nieparzysta
 
@@ -52,6 +53,7 @@ class Game():
 
             self.gameBoard.draw()
             self.snake.draw()
+            self.food.draw()
 
             pygame.display.flip()
 

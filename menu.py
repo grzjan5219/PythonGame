@@ -6,7 +6,8 @@ from pygame import mixer
 
 def menu():
     pygame.init()
-    screen = pygame.display.set_mode((1920, 1080))
+    bounds = (1920, 1080)
+    screen = pygame.display.set_mode(bounds)
     #, pygame.FULLSCREEN, pygame.RESIZABLE
     # na razie cofnąłem plik do wersji początkowej, bo z FULLSCREEN nie chciał poprawnie działać
 
