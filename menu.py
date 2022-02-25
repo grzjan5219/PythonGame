@@ -1,7 +1,7 @@
 import pygame
 import sys
 import tools.button
-import Games.Snake
+from Game.game import Game
 
 pygame.init()
 
@@ -10,7 +10,7 @@ pygame.display.set_caption('Menu ')
 
 start_img = pygame.image.load('img/start.png').convert_alpha()
 exit_img = pygame.image.load('img/exit.png').convert_alpha()
-settings_img = pygame.image.load('img/settings.jpg').convert_alpha()
+settings_img = pygame.image.load('img/settings.png').convert_alpha()
 
 start_button = tools.button.Button(100, 200, start_img, 0.8)
 exit_button = tools.button.Button(450, 200, exit_img, 0.8)
@@ -20,8 +20,8 @@ screen.fill((200, 200, 250))
 
 while True:
 	if start_button.draw(screen):
-		snake = Games.Snake.Snake()
-		snake.Start(screen)
+		game = Game()
+		game.Start()
 		print('START')
 	if exit_button.draw(screen):
 		print('EXIT')
