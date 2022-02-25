@@ -1,35 +1,51 @@
 import pygame
-import sys
+from Game.game import Game
 from tools import button
-import Games.Snake
+from pygame import mixer
 
-pygame.init()
+def menu():
+    pygame.init()
+    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption('Menu ')
+    # nazwa okna
+    pygame.display.set_caption("Snake")
 
-start_img = pygame.image.load('img/start.png').convert_alpha()
-exit_img = pygame.image.load('img/exit.png').convert_alpha()
-settings_img = pygame.image.load('img/settings.png').convert_alpha()
+    # tło
+    tlo_img = pygame.image.load("img/tlo.jpg").convert_alpha()
 
-start_button = button.Button(100, 200, start_img, 0.8)
-exit_button = button.Button(450, 200, exit_img, 0.8)
-settings_button = button.Button(100, 400, settings_img, 0.8)
+    #muzyka w tle
+    mixer.music.load("sounds/BG music - menu.mp3")
+    mixer.music.play(-1)
+    mixer.music.set_volume(0.1)
 
-screen.fill((200, 200, 250))
 
-while True:
-	if start_button.draw(screen):
-		snake = Games.Snake.Snake()
-		snake.Start(screen)
-		print('START')
-	if exit_button.draw(screen):
-		print('EXIT')
-	if settings_button.draw(screen):
-		print('SETTINGS')
+    # opcje wyboru
+    start_img = pygame.image.load("img/start.png").convert_alpha()
+    settings_img = pygame.image.load("img/settings.png").convert_alpha()
+    exit_img = pygame.image.load("img/exit.png").convert_alpha()
 
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			sys.exit(0)
+    start_button = button.Button(600, 450, start_img, 0.7)
+    settings_button = button.Button(600, 600, settings_img, 0.7)
+    exit_button = button.Button(600, 750, exit_img, 0.7)
 
-	pygame.display.update()
+    run = True
+    while run:
+        screen.blit(tlo_img, (0, 0))
+
+        if start_button.draw(screen):
+            game = Game()
+            game.Start()
+            print("start")
+            pass
+        if settings_button.draw(screen):
+            print("settings")
+        if exit_button.draw(screen):
+            run = False
+            print("exit")
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        pygame.display.update()
+menu()

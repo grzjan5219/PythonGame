@@ -1,5 +1,7 @@
 import pygame
 import sys
-import menu2
+from menu2 import *
 import fruit
 import Snake
+
+menu()

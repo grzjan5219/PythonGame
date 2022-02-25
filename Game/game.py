@@ -11,8 +11,8 @@ class Game():
         self.tps = 60.0
         self.deltaTime = 0.0
         self.snake = Snake(self)
-        self.screen = pygame.display.set_mode((800, 600))
-        self.gameBoard = Board(17, 17, self) #narazie druga liczba musi być nieparzysta
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.gameBoard = Board(30, 17, self) #narazie druga liczba musi być nieparzysta
 
         pygame.display.set_caption('Menu ')
 
