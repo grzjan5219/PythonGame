@@ -5,7 +5,7 @@ from pygame import mixer
 
 def menu():
     pygame.init()
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
 
     # nazwa okna
     pygame.display.set_caption("Snake")
