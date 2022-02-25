@@ -1,19 +1,24 @@
+from Game.snake import Snake
+from Game.board import Board
 import pygame
 import sys
-import GameBoard
-# tymczasowe wszystko się zmieni
-class Snake():
+
+class Game():
     def __init__(self):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        self.fps = 60.0
-        self.deltaTime = 0
-        self.snake = pygame.Rect(200, 200, 30, 30)
-        self.gameBoard = GameBoard()
+        self.speed = 3
+        self.tps = 60.0
+        self.deltaTime = 0.0
+        self.snake = Snake(self)
+        self.screen = pygame.display.set_mode((800, 600))
+        self.gameBoard = Board(17, 17, self) #narazie druga liczba musi być nieparzysta
 
-    def Start(self, screen):
-        screen.fill((100, 200, 100))
+        pygame.display.set_caption('Menu ')
+
+    def Start(self):
         currentKey = "q"
+        #self.gameBoard.draw()
 
         while True:
             # obługa zdarzeń
@@ -33,28 +38,29 @@ class Snake():
                         currentKey = "d"
 
             # obsługa ruchu
-            self.deltaTime += self.clock.tick() / 1000.0
-            self.Move(currentKey, 5)
+            self.deltaTime += (self.clock.tick() / 1000.0)
+            self.Move(currentKey)
 
             # rysowanie, wyświetlanie
-            screen.fill((0, 0, 0))
-            pygame.draw.rect(screen, (255 , 0, 0), self.snake)
+            self.screen.fill((0, 0, 0))
+
+            self.gameBoard.draw()
+            self.snake.draw()
+
             pygame.display.flip()
 
+    def Move(self, key):
 
-    def Move(self, key, speed):
-
-        while self.deltaTime > (1 / self.fps):
-            self.deltaTime -= (1 / self.fps)
+        while self.deltaTime > (1 / self.tps):
+            self.deltaTime -= (1 / self.tps)
 
             if key == "q":
                 return
-
             if key == "w":
-                self.snake.y -= speed
+                self.snake.snake.y -= self.speed
             if key == "s":
-                self.snake.y += speed
+                self.snake.snake.y += self.speed
             if key == "a":
-                self.snake.x -= speed
+                self.snake.snake.x -= self.speed
             if key == "d":
-                self.snake.x += speed
+                self.snake.snake.x += self.speed
