@@ -14,8 +14,9 @@ class Game():
         self.deltaTime = 0.0
         self.snake = Snake(self)
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.gameBoard = Board(30, 25, self) #narazie druga liczba musi być nieparzysta
-
+        self.gameBoard = Board(21, 21, self) # narazie druga liczba musi być nieparzysta
+                                             # width  - max 55  height - max 46
+                                             # sizeBlock - minimum 20
         pygame.display.set_caption('Menu ')
 
         # muzyka w tle
@@ -51,6 +52,7 @@ class Game():
             self.screen.fill((0, 0, 0))
 
             self.gameBoard.draw()
+            # pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(80, 80, 1100, 700))
             self.snake.draw()
 
             pygame.display.flip()

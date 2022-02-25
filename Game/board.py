@@ -8,24 +8,25 @@ class Board():
         self.width = width
         self.height = height
         self.game = game
-        # dwuwymiarowa tablica pól planszy
-        self._fields = [[None] * height]*width
+        self._fields = [[None] * height] * width # dwuwymiarowa tablica pól planszy
 
-        coordinateX = 50
-        coordinateY = 50
+        coordinateX = 80
+        coordinateY = 80
+
+        maxWidth = 1100
+        maxHeight = 700
+
+        self.sizeBlock = int(min((maxWidth / width), (maxHeight / height)))
+        print(sizeBlock)
 
         for x in range(width):
-            coordinateY = 50
+            coordinateY = 80
             self._fields[x] = [None] * height
             for y in range(height):
                 self._fields[x][y] = Field()
-                self._fields[x][y].block = pygame.Rect(coordinateX, coordinateY, 30, 30)
-                #self._fields[x][y]._rect.x = coordinateX
-                #self._fields[x][y]._rect.y = coordinateY
-                #print(coordinateX, coordinateY)
-                #print(self._fields[x][y].rect.x, self._fields[x][y].rect.y)
-                coordinateY += 30
-            coordinateX += 30
+                self._fields[x][y].block = pygame.Rect(coordinateX, coordinateY, sizeBlock, sizeBlock)
+                coordinateY += sizeBlock
+            coordinateX += sizeBlock
 
     def draw(self):
         color1 = (150 , 150, 150)
