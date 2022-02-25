@@ -6,7 +6,6 @@ class Food:
     x = 0;
     y = 0;
     bounds = None
-
     def __init__(self, block_size, bounds):
         self.block_size = block_size
         self.bounds = bounds

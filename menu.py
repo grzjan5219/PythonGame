@@ -33,7 +33,6 @@ def menu():
     run = True
     while run:
         screen.blit(tlo_img, (0, 0))
-
         if start_button.draw(screen):
             game = Game()
             game.Start()
