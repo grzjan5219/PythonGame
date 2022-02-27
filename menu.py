@@ -33,8 +33,8 @@ def menu():
     start_button = button.Button(700, 450, start_img, 0.7)
     settings_button = button.Button(700, 600, settings_img, 0.7)
     exit_button = button.Button(700, 750, exit_img, 0.7)
-    off_button = button.Button(1700, 950, off_img, 0.9)
-    on_button = button.Button(1500, 950, on_img, 0.9)
+    off_button = button.Button(1725, 950, off_img, 0.9)
+    on_button = button.Button(1550, 950, on_img, 0.9)
 
     # opcja wyciszania dźwięku (nie dokończona)
     def sound():
