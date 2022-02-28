@@ -72,6 +72,7 @@ class Game():
             if key == "q":
                 return
             if key == "w":
+                #self.snake.snake = self.snake.headFieldPos
                 self.snake.snake.y -= self.speed
             if key == "s":
                 self.snake.snake.y += self.speed

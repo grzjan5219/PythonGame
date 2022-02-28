@@ -6,14 +6,15 @@ class Snake():
         #print(game.gameBoard.sizeBlock)
         sizeBlock = game.gameBoard.sizeBlock
 
-        snake_position = [200, 200]
-        snake_body = [[200, 175], [200, 150], [200, 125], [200, 100]]
-        self.snake = pygame.Rect(snake_position[0], snake_position[1], sizeBlock-4, sizeBlock-4)
+
+        self.length = 1
+        # pozycja w tablicy początku węża
         self.headFieldPos = pygame.math.Vector2(4, (int)(game.gameBoard.height / 2))
+        # pozycja na ekranie
         self.headFieldCord = self.game.gameBoard.boardPos + pygame.math.Vector2(self.headFieldPos.x *sizeBlock, self.headFieldPos.y *sizeBlock)
 
-        print(self.snake.centery)
-
+        self.snake = pygame.Rect(self.headFieldCord.x, self.headFieldCord.y , sizeBlock, sizeBlock)
+        print(self.snake.center)
 
         #print(self.headFieldCord)
         #self.game.gameBoard.boardPos
