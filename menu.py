@@ -53,6 +53,7 @@ def menu():
         if exit_button.draw(screen):
             run = False
             print("exit")
+            pass
         if on_button.draw(screen):
             mixer.music.set_volume(0.1)
         if off_button.draw(screen):
