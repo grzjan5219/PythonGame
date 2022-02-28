@@ -40,6 +40,7 @@ def menu():
         run = True
         while run:
             screen.blit(tlo_img, (0, 0))
+            pygame.display.set_caption("Snake- ustawienia")
 
             if exit_button.draw(screen):
                 run = False
