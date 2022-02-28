@@ -20,6 +20,7 @@ class Game():
                                              # width  - max 47 (min - 5)  height - max 35 (min - 5)
                                              # sizeBlock - minimum 20
         self.snake = Snake(self)
+        self.food = Food(self)
         pygame.display.set_caption("Snake")
 
         # muzyka w tle
@@ -58,6 +59,7 @@ class Game():
             pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
 
             self.snake.draw()
+            self.food.draw()
             #self.food.draw()
 
             pygame.display.flip()
