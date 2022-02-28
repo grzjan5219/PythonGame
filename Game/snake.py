@@ -6,7 +6,8 @@ class Snake():
         #print(game.gameBoard.sizeBlock)
         sizeBlock = game.gameBoard.sizeBlock
 
-        self.snake = pygame.Rect(200, 200, sizeBlock-4, sizeBlock-4)
+        snake_position = [200, 200]
+        self.snake = pygame.Rect(snake_position[0], snake_position[1], sizeBlock-4, sizeBlock-4)
         self.length = 1
         self.headFieldPos = pygame.math.Vector2(4, (int)(game.gameBoard.height / 2))
         self.headFieldCord = self.game.gameBoard.boardPos + pygame.math.Vector2(self.headFieldPos.x *sizeBlock, self.headFieldPos.y *sizeBlock)

@@ -59,7 +59,7 @@ class Game():
             pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
 
             self.snake.draw()
-            self.fruit,draw()
+            self.food.draw()
             #self.food.draw()
 
             pygame.display.flip()
