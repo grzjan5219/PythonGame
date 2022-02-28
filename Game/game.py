@@ -60,6 +60,7 @@ class Game():
 
             self.snake.draw()
             self.food.draw()
+            # self.food.draw()
 
             self.snake.snake_body.insert(0, list(self.snake.snake_position))
             if self.snake.snake_position[0] == self.food.x and self.snake.snake_position[1] == self.food.y:
@@ -67,7 +68,8 @@ class Game():
             else:
                 self.snake.snake_body.pop()
 
-            #self.food.draw()
+            for pos in self.snake.snake_body:
+                pygame.draw.rect(self.screen, (255, 0, 0), pygame.Rect(pos[1], pos[0], 20, 20))
 
             pygame.display.flip()
 
