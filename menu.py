@@ -40,6 +40,7 @@ def menu():
         run = True
         while run:
             screen.blit(tlo_img, (0, 0))
+
             if exit_button.draw(screen):
                 run = False
                 print("exit")
@@ -75,9 +76,8 @@ def menu():
 
         #  przycisk ustawień w main menu
         if settings_button.draw(screen):
-            while run:
-                settings()
-                pygame.display.update()
+            settings()
+            pygame.display.update()
             print("settings")
 
         #wyjście
