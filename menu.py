@@ -16,6 +16,9 @@ def menu():
     # tło
     tlo_img = pygame.image.load("img/tlo.jpg").convert_alpha()
 
+    # tło ustawień
+    tlo_settings_img = pygame.image.load("img/tlo_settings.jpg").convert_alpha()
+
     #muzyka w tle
     mixer.music.load("sounds/BG music - menu.mp3")
     mixer.music.play(-1)
@@ -39,7 +42,7 @@ def menu():
     def settings():
         run = True
         while run:
-            screen.blit(tlo_img, (0, 0))
+            screen.blit(tlo_settings_img, (0, 0))
             pygame.display.set_caption("Snake- ustawienia")
 
             if exit_button.draw(screen):
