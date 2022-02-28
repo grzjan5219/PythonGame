@@ -17,7 +17,7 @@ class Snake():
         print(self.snake.centery)
 
         self.food = Food(self)
-        self.snake_body.insert(1, list(self.snake_position))
+        self.snake_body.insert(0, list(self.snake_position))
         if self.snake_position[0] == self.food.x and self.snake_position[1] == self.food.y:
             self.food.respawn()
         else:
