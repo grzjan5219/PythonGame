@@ -9,7 +9,7 @@ class Game():
     def __init__(self):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        self.speed = 2
+        self.speed = 20
         self.tps = 100.0
         self.deltaTime = 0.0
 
@@ -49,7 +49,7 @@ class Game():
                         currentKey = "d"
 
             # obsługa ruchu
-            self.deltaTime += (self.clock.tick() / 1000.0)
+            self.deltaTime += (self.clock.tick() / 30000.0)
             self.Move(currentKey)
 
             # rysowanie, wyświetlanie
@@ -73,9 +73,13 @@ class Game():
                 return
             if key == "w":
                 self.snake.snake.y -= self.speed
+                self.snake.snake_position[1] -= self.speed
             if key == "s":
                 self.snake.snake.y += self.speed
+                self.snake.snake_position[1] += self.speed
             if key == "a":
                 self.snake.snake.x -= self.speed
+                self.snake.snake_position[0] -= self.speed
             if key == "d":
                 self.snake.snake.x += self.speed
+                self.snake.snake_position[0] += self.speed
