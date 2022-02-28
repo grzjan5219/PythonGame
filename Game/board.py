@@ -1,32 +1,34 @@
 import pygame
+import copy
 from Game.field import Field
 
 class Board():
     def __init__(self, width, height, game):
-        # width - liczba kwadracików w szerokości(x)
-        # height - liczba kwadracików w wysokości(y)
         self.width = width
         self.height = height
         self.game = game
         self._fields = [[None] * height] * width # dwuwymiarowa tablica pól planszy
 
-        coordinateX = 80
-        coordinateY = 80
+        self.maxBoardSize = pygame.math.Vector2(940, 700)
+        self.sizeBlock = int(min((self.maxBoardSize.x / width), (self.maxBoardSize.y / height)))
+        self.boardSize = pygame.math.Vector2(self.sizeBlock * width, self.sizeBlock * height)
 
-        maxWidth = 1100
-        maxHeight = 700
+        margin = pygame.math.Vector2((self.maxBoardSize.x - self.boardSize.x) / 2, (self.maxBoardSize.y - self.boardSize.y) / 2)
 
-        self.sizeBlock = int(min((maxWidth / width), (maxHeight / height)))
-        print(sizeBlock)
+        #print(margin)
+        self.boardPos = pygame.math.Vector2(80, 80) + margin
+        #print(self.boardPos)
+
+        fieldPos = copy.deepcopy(self.boardPos)
 
         for x in range(width):
-            coordinateY = 80
+            fieldPos.y = self.boardPos.y
             self._fields[x] = [None] * height
             for y in range(height):
                 self._fields[x][y] = Field()
-                self._fields[x][y].block = pygame.Rect(coordinateX, coordinateY, sizeBlock, sizeBlock)
-                coordinateY += sizeBlock
-            coordinateX += sizeBlock
+                self._fields[x][y].block = pygame.Rect(fieldPos.x, fieldPos.y, self.sizeBlock, self.sizeBlock)
+                fieldPos.y += self.sizeBlock
+            fieldPos.x += self.sizeBlock
 
     def draw(self):
         color1 = (150 , 150, 150)
@@ -42,5 +44,3 @@ class Board():
                 else:
                     pygame.draw.rect(self.game.screen, color2, self._fields[x][y].block)
                     zmiana = True
-
-

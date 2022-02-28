@@ -9,16 +9,18 @@ class Game():
     def __init__(self):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        self.speed = 3
-        self.tps = 60.0
+        self.speed = 2
+        self.tps = 100.0
         self.deltaTime = 0.0
-        self.snake = Snake(self)
-        self.food = Food(self)
+
+        #self.food = Food(self)
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.gameBoard = Board(21, 21, self) # narazie druga liczba musi być nieparzysta
-                                             # width  - max 55  height - max 46
+        #self.screen = pygame.display.set_mode((600, 600), pygame.SCALED | pygame.RESIZABLE)
+        self.gameBoard = Board(47, 35, self) # narazie druga liczba musi być nieparzysta
+                                             # width  - max 47 (min - 5)  height - max 35 (min - 5)
                                              # sizeBlock - minimum 20
-        pygame.display.set_caption('Menu ')
+        self.snake = Snake(self)
+        pygame.display.set_caption("Snake")
 
         # muzyka w tle
         mixer.music.load("sounds/BG music - game.mp3")
@@ -53,9 +55,10 @@ class Game():
             self.screen.fill((0, 0, 0))
 
             self.gameBoard.draw()
-            # pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(80, 80, 1100, 700))
+            pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
+
             self.snake.draw()
-            self.food.draw()
+            #self.food.draw()
 
             pygame.display.flip()
 
