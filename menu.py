@@ -31,12 +31,14 @@ def menu():
     exit_img = pygame.image.load("img/exit.png").convert_alpha()
     on_img = pygame.image.load("img/on.png").convert_alpha()
     off_img = pygame.image.load("img/off.png").convert_alpha()
+    back_img = pygame.image.load("img/back.png").convert_alpha()
 
     start_button = button.Button(700, 450, start_img, 0.7)
     settings_button = button.Button(700, 600, settings_img, 0.7)
     exit_button = button.Button(700, 750, exit_img, 0.7)
     off_button = button.Button(1700, 950, off_img, 0.9)
     on_button = button.Button(1570, 950, on_img, 0.9)
+    back_button = button.Button(700, 750, exit_img, 0.7)
 
     # ustawienia
     def settings():
