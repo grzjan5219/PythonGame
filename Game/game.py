@@ -60,6 +60,13 @@ class Game():
 
             self.snake.draw()
             self.food.draw()
+
+            self.snake.snake_body.insert(0, list(self.snake.snake_position))
+            if self.snake.snake_position[0] == self.food.x and self.snake.snake_position[1] == self.food.y:
+                self.food.respawn()
+            else:
+                self.snake.snake_body.pop()
+
             #self.food.draw()
 
             pygame.display.flip()
@@ -74,9 +81,13 @@ class Game():
             if key == "w":
                 #self.snake.snake = self.snake.headFieldPos
                 self.snake.snake.y -= self.speed
+                self.snake.snake_position[1] -= self.speed
             if key == "s":
                 self.snake.snake.y += self.speed
+                self.snake.snake_position[1] += self.speed
             if key == "a":
                 self.snake.snake.x -= self.speed
+                self.snake.snake_position[0] -= self.speed
             if key == "d":
                 self.snake.snake.x += self.speed
+                self.snake.snake_position[0] += self.speed
