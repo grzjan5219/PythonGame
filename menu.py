@@ -15,7 +15,6 @@ def menu():
 
     # tło
     tlo_img = pygame.image.load("img/tlo.jpg").convert_alpha()
-
     # tło ustawień
     tlo_settings_img = pygame.image.load("img/tlo_settings.jpg").convert_alpha()
 
@@ -38,7 +37,7 @@ def menu():
     exit_button = button.Button(700, 750, exit_img, 0.7)
     off_button = button.Button(1700, 950, off_img, 0.9)
     on_button = button.Button(1570, 950, on_img, 0.9)
-    back_button = button.Button(700, 750, exit_img, 0.7)
+    back_button = button.Button(700, 750, back_img, 0.7)
 
     # ustawienia
     def settings():
@@ -51,7 +50,8 @@ def menu():
                 run = False
                 print("exit")
                 pass
-            if exit_button.draw(screen):
+
+            if back_button.draw(screen):
                 print("exit")
                 run = False
                 pass
