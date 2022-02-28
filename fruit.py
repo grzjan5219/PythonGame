@@ -7,8 +7,9 @@ class Food:
         self.block_size = block_size
         self.bounds = bounds
         self.color = (0, 255, 0)
-        self.x = 0;
-        self.y = 0;
+        self.x = None
+        self.y = None
+        self.respawn()
 
     def draw(self):
         pygame.draw.rect(self.game.screen, self.color, (self.x, self.y, self.block_size, self.block_size))
@@ -16,5 +17,5 @@ class Food:
     def respawn(self):
         blocks_in_x = (self.bounds[0])/self.block_size
         blocks_in_y = (self.bounds[1])/self.block_size
-        self.x = random.randint(0, blocks_in_x - 1) * self.block_size
-        self.y = random.randint(0, blocks_in_y - 1) * self.block_size
+        self.x = random.randint(0, blocks_in_x) * self.block_size
+        self.y = random.randint(0, blocks_in_y) * self.block_size

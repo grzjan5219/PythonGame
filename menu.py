@@ -7,7 +7,7 @@ def menu():
     pygame.init()
     #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     screen = pygame.display.set_mode((1920, 1080))
-    #, pygame.FULLSCREEN, pygame.RESIZABLE
+    #, py   game.FULLSCREEN, pygame.RESIZABLE
     # w fullscreen nie może być zmiany rozmiaru
     # na razie cofnąłem plik do wersji początkowej, bo z FULLSCREEN nie chciał poprawnie działać
 
