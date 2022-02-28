@@ -33,20 +33,21 @@ def menu():
     settings_button = button.Button(700, 600, settings_img, 0.7)
     exit_button = button.Button(700, 750, exit_img, 0.7)
     off_button = button.Button(1700, 950, off_img, 0.9)
-    on_button = button.Button(1500, 950, on_img, 0.9)
+    on_button = button.Button(1570, 950, on_img, 0.9)
 
     # ustawienia
     def settings():
         run = True
         while run:
             screen.blit(tlo_img, (0, 0))
+
             if exit_button.draw(screen):
                 run = False
                 print("exit")
                 pass
             if exit_button.draw(screen):
-                menu()
                 print("exit")
+                run = False
                 pass
 
             # opcje dźwięku
@@ -61,6 +62,7 @@ def menu():
                     quit()
             pygame.display.update()
 
+    # main menu
     run = True
     while run:
         screen.blit(tlo_img, (0, 0))
@@ -74,9 +76,8 @@ def menu():
 
         #  przycisk ustawień w main menu
         if settings_button.draw(screen):
-            while run:
-                settings()
-                pygame.display.update()
+            settings()
+            pygame.display.update()
             print("settings")
 
         #wyjście
