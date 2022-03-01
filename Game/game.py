@@ -29,6 +29,7 @@ class Game():
         mixer.music.play(-1)
         mixer.music.set_volume(0.1)
 
+
     def Start(self):
         while True:
             # obługa zdarzeń
