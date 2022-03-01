@@ -33,6 +33,7 @@ class Game():
 
         while True:
             # obługa zdarzeń
+            pygame.time.delay(290)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit(0)
