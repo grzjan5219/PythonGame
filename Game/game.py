@@ -39,7 +39,7 @@ class Game():
                     sys.exit(0)
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        sys.exit()
+                        return True
                     if event.key == pygame.K_w and currentKey != "s":
                         currentKey = "w"
                     if event.key == pygame.K_s and currentKey != "w":
