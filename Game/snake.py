@@ -7,7 +7,7 @@ class Snake():
         self.game = game
         #print(game.gameBoard.sizeBlock)
         sizeBlock = game.gameBoard.sizeBlock
-        self.currentDirection = Direction.none
+        self.currentDirection = Direction.right
         self.turningDirection = Direction.none
 
 
@@ -19,7 +19,7 @@ class Snake():
         self.headSnake = pygame.Rect(self.headFieldCord.x, self.headFieldCord.y , sizeBlock, sizeBlock)
 
         # cel aktualnej sesji ruchu(taablica pól)
-        self.purposeMove = headFieldPos + pygame.math.Vector2(1, 0)
+        self.purposeMove = self.headFieldPos + pygame.math.Vector2(1, 0)
 
         self.headPos = pygame.math.Vector2(0, 0)
         #print(self.headFieldPos)
@@ -37,62 +37,72 @@ class Snake():
             self.game.deltaTime -= (1 / self.game.tps)
 
             if self.currentDirection == Direction.up:
-                '''#ruch w górę
-                if self.previousDirection == Directin.up:
-                    # kontynuacja ruchu
+                if self.headSnake.centery - self.game.speed <= self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].block.centery:
+                    distanceToTarget = self.headSnake.centery - self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].block.centery
+                    distanceExcess = self.game.speed - distanceToTarget
+                    self.changePurpose(distanceExcess)
+                    self.headSnake.y -= distanceToTarget
+                else:
                     self.headSnake.y -= self.game.speed
-                    if not self.game.gameBoard.fields[int(self.headFieldPos.x)][int(self.headFieldPos.y)].block.collidepoint(self.headSnake.midtop):
-                        if self.headFieldPos.y - 1 >= 0:
-                            self.headFieldPos.y -= 1
-                        else:
-                            self.game.Defeat()
-                else:  # wykonanie skrętu
-                    if self.previousDirection == Direction.right:
-                        # poprzednio w prawo
-                        # w kolejnym będzie skręt
-                        if self.headSnake.midright > self.game.gameBoard.fields[int(self.headFieldPos.x)][int(self.headFieldPos.y)].block.centerx:
-                            pass
-                        else: # w obecnym jest skręt
-                            pass
 
-                    if self.previousDirection == Direction.left:
-                        # poprzednio w lewo
-                        pass
-
-
-'''
             elif self.currentDirection == Direction.down:
-                pass
-                #ruch w dół
+                if self.headSnake.centery + self.game.speed >= self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].block.centery:
+                    distanceToTarget = self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].block.centery - self.headSnake.centery
+                    distanceExcess = self.game.speed - distanceToTarget
+                    self.changePurpose(distanceExcess)
+                    self.headSnake.y += distanceToTarget
+                else:
+                    self.headSnake.y += self.game.speed
             elif self.currentDirection == Direction.right:
+
                 if self.headSnake.centerx + self.game.speed >= self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].block.centerx:
                     #dotarło do celu
                     #obliczenie różnicy skrętu
                     distanceToTarget = self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].block.centerx - self.headSnake.centerx
                     distanceExcess = self.game.speed - distanceToTarget
                     #ustalenie nowego celu
-
-
+                    self.changePurpose(distanceExcess)
                     # dodanie przemieszczenia
                     self.headSnake.x += distanceToTarget
-                    self.addDisplacement(self.turningDirection, distanceExcess)
                 else:
                     # kontynuacja drogi do celu
                     self.headSnake.x += self.game.speed
             elif self.currentDirection == Direction.left:
-                pass
-                #ruch w lewo
+                if self.headSnake.centerx - self.game.speed <= self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].block.centerx:
+                    distanceToTarget = self.headSnake.centerx - self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].block.centerx
+                    distanceExcess = self.game.speed - distanceToTarget
+                    #ustalenie nowego celu
+                    self.changePurpose(distanceExcess)
+                    # dodanie przemieszczenia
+                    self.headSnake.x -= distanceToTarget
+                else:
+                    # kontynuacja drogi do celu
+                    self.headSnake.x -= self.game.speed
+
             elif self.currentDirection == Direction.none:
                 pass
                 # brak ruchu
 
-    def addDisplacement(self, direction, value):
-        match direction:
+    def changePurpose(self, value):
+        if self.turningDirection == Direction.none: # brak zmiany kierunku
+            self.turningDirection = self.currentDirection
+
+        match self.turningDirection:
             case Direction.up:
-                self.headSnake.x -= value
-            case Direction.down:
-                self.headSnake.x += value
-            case Direction.right:
-                self.headSnake.y += value
-            case Direction.left:
+                self.currentDirection = Direction.up
                 self.headSnake.y -= value
+                self.purposeMove += pygame.math.Vector2(0, -1)
+            case Direction.down:
+                self.currentDirection = Direction.down
+                self.headSnake.y += value
+                self.purposeMove += pygame.math.Vector2(0, +1)
+            case Direction.right:
+                self.currentDirection = Direction.right
+                self.headSnake.x += value
+                self.purposeMove += pygame.math.Vector2(+1, 0)
+            case Direction.left:
+                self.currentDirection = Direction.left
+                self.headSnake.x -= value
+                self.purposeMove += pygame.math.Vector2(-1, 0)
+
+        self.turningDirection = Direction.none
