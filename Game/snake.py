@@ -1,46 +1,28 @@
 import pygame
-from fruit import Food
+from Game.fruitType import FruitType
 from Game.direction import Direction
 
 class Snake():
     def __init__(self, game):
         self.game = game
-        #print(game.gameBoard.sizeBlock)
-        sizeBlock = game.gameBoard.sizeBlock
-
-        self.currentDirection = Direction.right
+        self.currentDirection = Direction.none
         self.turningDirection = Direction.none
 
-        #snake_position = [200, 200]
-        #self.snake_position = snake_position
-        #self.snake_body = [[200, 180], [200, 160], [200, 140], [200, 120]]
+        sizeBlock = game.gameBoard.sizeBlock
 
-        #self.snake = pygame.Rect(self.snake_position[0], self.snake_position[1], sizeBlock, sizeBlock)
-
-
+        #pozycja na planszy
         self.headFieldPos = pygame.math.Vector2(4, (int)(game.gameBoard.height / 2))
-        self.headFieldCord = self.game.gameBoard.boardPos + pygame.math.Vector2(self.headFieldPos.x *sizeBlock, self.headFieldPos.y *sizeBlock)
+        #pzycja na ekranie
+        self.headFieldCord = self.game.gameBoard.boardPos + pygame.math.Vector2(self.headFieldPos.x * sizeBlock, self.headFieldPos.y * sizeBlock)
+        #początek snake
         self.headSnake = pygame.Rect(self.headFieldCord.x, self.headFieldCord.y, sizeBlock, sizeBlock)
 
         # cel aktualnej sesji ruchu(taablica pól)
         self.purposeMove = self.headFieldPos + pygame.math.Vector2(1, 0)
 
-        self.direction = Direction.right
-
-        #print(self.snake.centery)
-
-        #print(self.headFieldCord)
-        #self.game.gameBoard.boardPos
-
-
-        self.headPos = pygame.math.Vector2(0, 0)
-        #print(self.headFieldPos)
-        #self.headPos = pygame.math.Vector2(0, 0)
-
-
     def draw(self):
         pygame.draw.rect(self.game.screen, (255 , 0, 0), self.headSnake)
-        # UWAGA PLAC BUDOWY NIE WCHODZIC, NIE PYTAC
+
 
     def Move(self):
 
@@ -107,6 +89,12 @@ class Snake():
         if self.turningDirection == Direction.none:  # brak zmiany kierunku
             self.turningDirection = self.currentDirection
 
+        if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType != FruitType.none:
+            if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType == FruitType.common:
+                self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].color = (100, 0, 100)
+                self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType = FruitType.none
+                self.game.fruit.spawn()
+
         match self.turningDirection:
             case Direction.up:
                 self.currentDirection = Direction.up
@@ -125,4 +113,6 @@ class Snake():
                 self.headSnake.x -= value
                 self.purposeMove += pygame.math.Vector2(-1, 0)
 
+        if not self.game.gameBoard.isExistField(self.purposeMove):
+            self.game.Defeat()
         self.turningDirection = Direction.none

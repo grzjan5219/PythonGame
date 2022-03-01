@@ -43,9 +43,10 @@ class Board():
     def draw(self):
         for x in range(self.width):
             for y in range(self.height):
-                    pygame.draw.rect(self.game.screen, self.fields[x][y].color, self.fields[x][y].block)
+                pygame.draw.rect(self.game.screen, self.fields[x][y].color, self.fields[x][y].block)
 
-    def update(self):
-        for x in range(self.width):
-            for y in range(self.height):
-                    pygame.display.update(self.fields[x][y].block)
+    def isExistField(self, pos):
+        if (pos.x >= 0 and pos.x < self.width) and (pos.y >= 0 and pos.y < self.height):
+            return True
+        else:
+            return False

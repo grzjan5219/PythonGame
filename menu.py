@@ -14,9 +14,9 @@ def menu():
     pygame.display.set_caption("Snake")
 
     # tło
-    tlo_img = pygame.image.load("img/tlo.jpg").convert_alpha()
+    tlo_img = pygame.image.load("img/tlo.jpg")
     # tło ustawień
-    tlo_settings_img = pygame.image.load("img/tlo_settings.jpg").convert_alpha()
+    tlo_settings_img = pygame.image.load("img/tlo_settings.jpg")
 
     #muzyka w tle
     mixer.music.load("sounds/BG music - menu.mp3")
@@ -25,12 +25,12 @@ def menu():
 
 
     # opcje wyboru
-    start_img = pygame.image.load("img/start.png").convert_alpha()
-    settings_img = pygame.image.load("img/settings.png").convert_alpha()
-    exit_img = pygame.image.load("img/exit.png").convert_alpha()
-    on_img = pygame.image.load("img/on.png").convert_alpha()
-    off_img = pygame.image.load("img/off.png").convert_alpha()
-    back_img = pygame.image.load("img/back.png").convert_alpha()
+    start_img = pygame.image.load("img/start.png")
+    settings_img = pygame.image.load("img/settings.png")
+    exit_img = pygame.image.load("img/exit.png")
+    on_img = pygame.image.load("img/on.png")
+    off_img = pygame.image.load("img/off.png")
+    back_img = pygame.image.load("img/back.png")
 
     start_button = button.Button(700, 450, start_img, 0.7)
     settings_button = button.Button(700, 600, settings_img, 0.7)
