@@ -10,16 +10,14 @@ class Game():
     def __init__(self):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        self.speed = 2
+        self.speed = 4
         self.tps = 100.0
         self.deltaTime = 0.0
 
-        #self.food = Food(self)
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        #self.screen = pygame.display.set_mode((600, 600), pygame.SCALED | pygame.RESIZABLE)
-        self.gameBoard = Board(15, 15, self) # narazie druga liczba musi być nieparzysta
-                                             # width  - max 47 (min - 5)  height - max 35 (min - 5)
+        self.gameBoard = Board(15, 15, self) # width  - max 47 (min - 5)  height - max 35 (min - 5)
                                              # sizeBlock - minimum 20
+
         self.snake = Snake(self)
         self.food = Food(self)
         pygame.display.set_caption("Snake")
@@ -51,7 +49,7 @@ class Game():
                         if self.snake.turningDirection == Direction.none:
                             self.snake.turningDirection = Direction.right
 
-            # obsługa ruchu
+            # obsługa ruchu, stałe wykonywanie niezalezne od fps
             self.deltaTime += (self.clock.tick() / 1000.0)
             self.snake.Move()
 
@@ -59,6 +57,7 @@ class Game():
             self.screen.fill((0, 0, 0))
 
             self.gameBoard.draw()
+            # tymczasowy prostokąt wyznaczający miejsce na informację
             pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
 
             self.snake.draw()

@@ -15,32 +15,37 @@ class Board():
 
         margin = pygame.math.Vector2((self.maxBoardSize.x - self.boardSize.x) / 2, (self.maxBoardSize.y - self.boardSize.y) / 2)
 
-        #print(margin)
         self.boardPos = pygame.math.Vector2(80, 80) + margin
-        #print(self.boardPos)
+        self.color1 = (150, 150, 150)
+        self.color2 = (200, 200, 100)
 
         fieldPos = copy.deepcopy(self.boardPos)
+        negationWidth = True
+        negationHeight = True
 
         for x in range(width):
             fieldPos.y = self.boardPos.y
             self.fields[x] = [None] * height
+            negationHeight = negationWidth
+            negationWidth = not negationWidth
             for y in range(height):
                 self.fields[x][y] = Field()
                 self.fields[x][y].block = pygame.Rect(fieldPos.x, fieldPos.y, self.sizeBlock, self.sizeBlock)
                 fieldPos.y += self.sizeBlock
+                if negationHeight:
+                    self.fields[x][y].color = self.color1
+                    negationHeight = False
+                else:
+                    self.fields[x][y].color = self.color2
+                    negationHeight = True
             fieldPos.x += self.sizeBlock
 
     def draw(self):
-        color1 = (150 , 150, 150)
-        color2 = (200 , 200, 100)
-        zmiana = True
-
         for x in range(self.width):
             for y in range(self.height):
-                #print(self._fields[x][y].rect.x, self._fields[x][y].rect.y)
-                if zmiana == True:
-                    pygame.draw.rect(self.game.screen, color1, self.fields[x][y].block)
-                    zmiana = False
-                else:
-                    pygame.draw.rect(self.game.screen, color2, self.fields[x][y].block)
-                    zmiana = True
+                    pygame.draw.rect(self.game.screen, self.fields[x][y].color, self.fields[x][y].block)
+
+    def update(self):
+        for x in range(self.width):
+            for y in range(self.height):
+                    pygame.display.update(self.fields[x][y].block)

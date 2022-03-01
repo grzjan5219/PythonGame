@@ -1,7 +1,10 @@
 import pygame
-# pole planszy
+from Game.fruitType import FruitType
+
 class Field():
     block = None
+    color = None
+    fruitType = FruitType.none
+    isFree = True
     def __init__(self):
         pass
-        #self._rect = pygame.Rect(0, 0, 30, 30)
