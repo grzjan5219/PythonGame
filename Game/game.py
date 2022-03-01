@@ -4,6 +4,7 @@ import pygame
 import sys
 from pygame import mixer
 from fruit import Food
+from tools import button
 
 class Game():
     def __init__(self):
@@ -34,11 +35,20 @@ class Game():
         while True:
             # obługa zdarzeń
             pygame.time.delay(290)
+
+            on_img = pygame.image.load("img/on.png").convert_alpha()
+            off_img = pygame.image.load("img/off.png").convert_alpha()
+
+            off_button = button.Button(1700, 950, off_img, 0.9)
+            on_button = button.Button(1570, 950, on_img, 0.9)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit(0)
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
+                        mixer.music.load("sounds/BG music - menu.mp3")
+                        mixer.music.play(-1)
                         return True
                     if event.key == pygame.K_w and currentKey != "s":
                         currentKey = "w"
@@ -55,6 +65,12 @@ class Game():
 
             # rysowanie, wyświetlanie
             self.screen.fill((0, 0, 0))
+
+            # opcje dźwięku
+            if on_button.draw(self.screen):
+                mixer.music.set_volume(0.1)
+            if off_button.draw(self.screen):
+                mixer.music.set_volume(0)
 
             self.gameBoard.draw()
             pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
