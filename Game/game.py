@@ -68,6 +68,9 @@ class Game():
             else:
                 self.snake.snake_body.pop()
 
+            for segment in self.snake.snake_body:
+                pygame.draw.rect(self.screen, (255, 0, 0), (segment[0], segment[1], 20, 20))
+
             pygame.display.flip()
 
     def Move(self, key):
