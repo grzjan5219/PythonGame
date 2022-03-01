@@ -4,19 +4,20 @@ import pygame
 import sys
 from pygame import mixer
 from fruit import Food
+from Game.direction import Direction
 
 class Game():
     def __init__(self):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        self.speed = 20
+        self.speed = 2
         self.tps = 100.0
         self.deltaTime = 0.0
 
         #self.food = Food(self)
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         #self.screen = pygame.display.set_mode((600, 600), pygame.SCALED | pygame.RESIZABLE)
-        self.gameBoard = Board(47, 35, self) # narazie druga liczba musi być nieparzysta
+        self.gameBoard = Board(15, 15, self) # narazie druga liczba musi być nieparzysta
                                              # width  - max 47 (min - 5)  height - max 35 (min - 5)
                                              # sizeBlock - minimum 20
         self.snake = Snake(self)
@@ -29,8 +30,6 @@ class Game():
         mixer.music.set_volume(0.1)
 
     def Start(self):
-        currentKey = "q"
-
         while True:
             # obługa zdarzeń
             for event in pygame.event.get():
@@ -39,18 +38,22 @@ class Game():
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         sys.exit()
-                    if event.key == pygame.K_w and currentKey != "s":
-                        currentKey = "w"
-                    if event.key == pygame.K_s and currentKey != "w":
-                        currentKey = "s"
-                    if event.key == pygame.K_a and currentKey != "d":
-                        currentKey = "a"
-                    if event.key == pygame.K_d and currentKey != "a":
-                        currentKey = "d"
+                    if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.snake.currentDirection != Direction.down:
+                        if self.snake.turningDirection == Direction.none:
+                            self.snake.turningDirection = Direction.up
+                    if (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self.snake.currentDirection != Direction.up:
+                        if self.snake.turningDirection == Direction.none:
+                            self.snake.turningDirection = Direction.down
+                    if (event.key == pygame.K_a or event.key == pygame.K_LEFT) and self.snake.currentDirection != Direction.right:
+                        if self.snake.turningDirection == Direction.none:
+                            self.snake.turningDirection = Direction.left
+                    if (event.key == pygame.K_d or event.key == pygame.K_RIGHT) and self.snake.currentDirection != Direction.left:
+                        if self.snake.turningDirection == Direction.none:
+                            self.snake.turningDirection = Direction.right
 
             # obsługa ruchu
-            self.deltaTime += (self.clock.tick() / 30000.0)
-            self.Move(currentKey)
+            self.deltaTime += (self.clock.tick() / 1000.0)
+            self.snake.Move()
 
             # rysowanie, wyświetlanie
             self.screen.fill((0, 0, 0))
@@ -60,36 +63,12 @@ class Game():
 
             self.snake.draw()
             self.food.draw()
-            # self.food.draw()
-
-            self.snake.snake_body.insert(0, list(self.snake.snake_position))
-            if self.snake.snake_position[0] == self.food.x and self.snake.snake_position[1] == self.food.y:
-                self.food.respawn()
-            else:
-                self.snake.snake_body.pop()
 
             for segment in self.snake.snake_body:
                 pygame.draw.rect(self.screen, (255, 0, 0), (segment[0], segment[1], 20, 20))
 
             pygame.display.flip()
 
-    def Move(self, key):
-
-        while self.deltaTime > (1 / self.tps):
-            self.deltaTime -= (1 / self.tps)
-
-            if key == "q":
-                return
-            if key == "w":
-                #self.snake.snake = self.snake.headFieldPos
-                self.snake.snake.y -= self.speed
-                self.snake.snake_position[1] -= self.speed
-            if key == "s":
-                self.snake.snake.y += self.speed
-                self.snake.snake_position[1] += self.speed
-            if key == "a":
-                self.snake.snake.x -= self.speed
-                self.snake.snake_position[0] -= self.speed
-            if key == "d":
-                self.snake.snake.x += self.speed
-                self.snake.snake_position[0] += self.speed
+    def Defeat(self):
+        print("Przegrana")
+        sys.exit(0)

@@ -7,7 +7,7 @@ class Board():
         self.width = width
         self.height = height
         self.game = game
-        self._fields = [[None] * height] * width # dwuwymiarowa tablica pól planszy
+        self.fields = [[None] * height] * width # dwuwymiarowa tablica pól planszy
 
         self.maxBoardSize = pygame.math.Vector2(940, 700)
         self.sizeBlock = int(min((self.maxBoardSize.x / width), (self.maxBoardSize.y / height)))
@@ -23,10 +23,10 @@ class Board():
 
         for x in range(width):
             fieldPos.y = self.boardPos.y
-            self._fields[x] = [None] * height
+            self.fields[x] = [None] * height
             for y in range(height):
-                self._fields[x][y] = Field()
-                self._fields[x][y].block = pygame.Rect(fieldPos.x, fieldPos.y, self.sizeBlock, self.sizeBlock)
+                self.fields[x][y] = Field()
+                self.fields[x][y].block = pygame.Rect(fieldPos.x, fieldPos.y, self.sizeBlock, self.sizeBlock)
                 fieldPos.y += self.sizeBlock
             fieldPos.x += self.sizeBlock
 
@@ -39,8 +39,8 @@ class Board():
             for y in range(self.height):
                 #print(self._fields[x][y].rect.x, self._fields[x][y].rect.y)
                 if zmiana == True:
-                    pygame.draw.rect(self.game.screen, color1, self._fields[x][y].block)
+                    pygame.draw.rect(self.game.screen, color1, self.fields[x][y].block)
                     zmiana = False
                 else:
-                    pygame.draw.rect(self.game.screen, color2, self._fields[x][y].block)
+                    pygame.draw.rect(self.game.screen, color2, self.fields[x][y].block)
                     zmiana = True
