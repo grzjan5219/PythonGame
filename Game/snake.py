@@ -8,6 +8,7 @@ class Direction(Enum):
   LEFT = 2
   RIGHT = 3
 
+
 class Snake():
     def __init__(self, game):
         self.game = game
