@@ -15,6 +15,8 @@ def menu():
 
     # tło
     tlo_img = pygame.image.load("img/tlo.jpg").convert_alpha()
+    # tło ustawień
+    tlo_settings_img = pygame.image.load("img/tlo_settings.jpg").convert_alpha()
 
     #muzyka w tle
     mixer.music.load("sounds/BG music - menu.mp3")
@@ -28,36 +30,74 @@ def menu():
     exit_img = pygame.image.load("img/exit.png").convert_alpha()
     on_img = pygame.image.load("img/on.png").convert_alpha()
     off_img = pygame.image.load("img/off.png").convert_alpha()
+    back_img = pygame.image.load("img/back.png").convert_alpha()
 
     start_button = button.Button(700, 450, start_img, 0.7)
     settings_button = button.Button(700, 600, settings_img, 0.7)
     exit_button = button.Button(700, 750, exit_img, 0.7)
     off_button = button.Button(1700, 950, off_img, 0.9)
-    on_button = button.Button(1500, 950, on_img, 0.9)
+    on_button = button.Button(1570, 950, on_img, 0.9)
+    back_button = button.Button(700, 750, back_img, 0.7)
 
-    # opcja wyciszania dźwięku (nie dokończona)
-    def sound():
-        off_button.draw(screen)
-        mixer.music.set_volume(0)
+    # ustawienia
+    def settings():
+        run = True
+        while run:
+            screen.blit(tlo_settings_img, (0, 0))
+            pygame.display.set_caption("Snake- ustawienia")
 
+            if exit_button.draw(screen):
+                run = False
+                print("exit")
+                pass
+
+            if back_button.draw(screen):
+                print("exit")
+                run = False
+                pass
+
+            # opcje dźwięku
+            if on_button.draw(screen):
+                mixer.music.set_volume(0.1)
+            if off_button.draw(screen):
+                mixer.music.set_volume(0)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+            pygame.display.update()
+
+    # main menu
     run = True
     while run:
         screen.blit(tlo_img, (0, 0))
+
+        # start gry
         if start_button.draw(screen):
             game = Game()
             game.Start()
             print("start")
             pass
+
+        #  przycisk ustawień w main menu
         if settings_button.draw(screen):
+            settings()
+            pygame.display.update()
             print("settings")
+
+        #wyjście
         if exit_button.draw(screen):
             run = False
             print("exit")
             pass
+
+        #opcje dźwięku
         if on_button.draw(screen):
             mixer.music.set_volume(0.1)
         if off_button.draw(screen):
             mixer.music.set_volume(0)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
