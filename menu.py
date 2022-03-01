@@ -23,7 +23,6 @@ def menu():
     mixer.music.play(-1)
     mixer.music.set_volume(0.1)
 
-
     # opcje wyboru
     start_img = pygame.image.load("img/start.png")
     settings_img = pygame.image.load("img/settings.png")
@@ -45,6 +44,10 @@ def menu():
         while run:
             screen.blit(tlo_settings_img, (0, 0))
             pygame.display.set_caption("Snake- ustawienia")
+
+            if start_button.draw(screen):
+                print("test")
+                pygame.display.update()
 
             if exit_button.draw(screen):
                 run = False
