@@ -68,9 +68,6 @@ class Game():
             else:
                 self.snake.snake_body.pop()
 
-            for pos in self.snake.snake_body:
-                pygame.draw.rect(self.screen, (255, 0, 0), pygame.Rect(pos[1], pos[0], 20, 20))
-
             pygame.display.flip()
 
     def Move(self, key):
