@@ -39,10 +39,12 @@ class Game():
     def Start(self):
         background = pygame.image.load("img/tlo_game.jpg")
         exit_img = pygame.image.load("img/exit.png")
-        exit_button = button.Button(650, 800, exit_img, 0.7)
-        exit_button = button.Button(900, 900, exit_img, 0.7)
+        exit_button = button.Button(1500, 950, exit_img, 0.5)
 
         while True:
+            # rysowanie, wyświetlanie
+            pygame.Surface.blit(self.screen, background, (0, 0))
+
             # Przycisk exit
             if exit_button.draw(self.screen):
                 mixer.music.load("sounds/BG music - menu.mp3")
@@ -80,9 +82,6 @@ class Game():
             # obsługa ruchu, stałe wykonywanie niezalezne od fps
             self.deltaTime += (self.clock.tick() / 1000.0)
             self.snake.Move()
-
-            # rysowanie, wyświetlanie
-            pygame.Surface.blit(self.screen, background, (0, 0))
 
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację
