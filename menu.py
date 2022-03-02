@@ -45,9 +45,9 @@ def menu():
             screen.blit(tlo_settings_img, (0, 0))
             pygame.display.set_caption("Snake- ustawienia")
 
-            if start_button.draw(screen):
-                print("test")
-                pygame.display.update()
+            #if start_button.draw(screen):
+                #print("test")
+                #pygame.display.update()
 
             if exit_button.draw(screen):
                 run = False
