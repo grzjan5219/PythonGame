@@ -20,8 +20,12 @@ class Snake():
         # cel aktualnej sesji ruchu(taablica pól)
         self.purposeMove = self.headFieldPos + pygame.math.Vector2(1, 0)
 
+        self.red = (255, 0, 0)
+        self.blue = (0, 255, 0)
+        self.green = (0, 0, 255)
+
     def draw(self):
-        pygame.draw.rect(self.game.screen, (255 , 0, 0), self.headSnake)
+        pygame.draw.rect(self.game.screen, self.red, self.headSnake)
 
 
     def Move(self):
