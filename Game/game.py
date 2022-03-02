@@ -43,6 +43,9 @@ class Game():
         exit_button = button.Button(900, 900, exit_img, 0.7)
 
         while True:
+            # rysowanie, wyświetlanie
+            pygame.Surface.blit(self.screen, background, (0, 0))
+
             # Przycisk exit
             if exit_button.draw(self.screen):
                 mixer.music.load("sounds/BG music - menu.mp3")
@@ -80,9 +83,6 @@ class Game():
             # obsługa ruchu, stałe wykonywanie niezalezne od fps
             self.deltaTime += (self.clock.tick() / 1000.0)
             self.snake.Move()
-
-            # rysowanie, wyświetlanie
-            pygame.Surface.blit(self.screen, background, (0, 0))
 
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację
