@@ -30,7 +30,7 @@ class Game():
         mixer.music.set_volume(0.1)
 
     def Start(self):
-        img = pygame.image.load("img/tlo.jpg")
+        img = pygame.image.load("img/tlo_game.jpg")
         while True:
             # obługa zdarzeń
             for event in pygame.event.get():
