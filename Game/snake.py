@@ -97,23 +97,22 @@ class Snake():
                 self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType = FruitType.none
                 self.game.food.spawn()
 
-        match self.turningDirection:
-            case Direction.up:
-                self.currentDirection = Direction.up
-                self.headSnake.y -= value
-                self.purposeMove += pygame.math.Vector2(0, -1)
-            case Direction.down:
-                self.currentDirection = Direction.down
-                self.headSnake.y += value
-                self.purposeMove += pygame.math.Vector2(0, +1)
-            case Direction.right:
-                self.currentDirection = Direction.right
-                self.headSnake.x += value
-                self.purposeMove += pygame.math.Vector2(+1, 0)
-            case Direction.left:
-                self.currentDirection = Direction.left
-                self.headSnake.x -= value
-                self.purposeMove += pygame.math.Vector2(-1, 0)
+        if self.turningDirection == Direction.up:
+            self.currentDirection = Direction.up
+            self.headSnake.y -= value
+            self.purposeMove += pygame.math.Vector2(0, -1)
+        elif self.turningDirection == Direction.down:
+            self.currentDirection = Direction.down
+            self.headSnake.y += value
+            self.purposeMove += pygame.math.Vector2(0, +1)
+        elif self.turningDirection == Direction.right:
+            self.currentDirection = Direction.right
+            self.headSnake.x += value
+            self.purposeMove += pygame.math.Vector2(+1, 0)
+        elif self.turningDirection == Direction.left:
+            self.currentDirection = Direction.left
+            self.headSnake.x -= value
+            self.purposeMove += pygame.math.Vector2(-1, 0)
 
         if not self.game.gameBoard.isExistField(self.purposeMove):
             self.game.Defeat()
