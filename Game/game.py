@@ -6,6 +6,7 @@ from pygame import mixer
 from Game.food import Food
 from Game.direction import Direction
 from Game.fruitType import FruitType
+from tools import button
 
 class Game():
     def __init__(self):
@@ -37,8 +38,16 @@ class Game():
 
     def Start(self):
         background = pygame.image.load("img/tlo_game.jpg")
+        exit_img = pygame.image.load("img/exit.png")
+        exit_button = button.Button(650, 800, exit_img, 0.7)
+        exit_button = button.Button(900, 900, exit_img, 0.7)
 
         while True:
+            # Przycisk exit
+            if exit_button.draw(self.screen):
+                mixer.music.load("sounds/BG music - menu.mp3")
+                mixer.music.play(-1)
+                return True
             # obługa zdarzeń
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -80,6 +89,7 @@ class Game():
             pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
             self.food.draw()
             self.snake.draw()
+
 
             pygame.display.flip()
 
