@@ -89,6 +89,9 @@ class Game():
             self.food.draw()
             self.snake.draw()
 
+            czcionka = pygame.font.SysFont('comicsans', 30)
+            wynik = czcionka.render("Punkty {0}".format(self.result), 1, (255, 255, 0))
+            self.screen.blit(wynik, (5, 10))
 
             pygame.display.flip()
 
