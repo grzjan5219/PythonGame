@@ -34,11 +34,6 @@ class Food():
                 self.game.gameBoard.fields[x][y].fruit = fruit
                 break
 
-
-
-
-
-
     def add(self, fruitType):
         self.fruits.append(Fruit(fruitType))
 
