@@ -36,7 +36,7 @@ class Game():
         mixer.music.set_volume(0.1)
 
     def Start(self):
-        img = pygame.image.load("img/tlo_game.jpg")
+        background = pygame.image.load("img/tlo_game.jpg")
 
         while True:
             # obługa zdarzeń
@@ -63,7 +63,7 @@ class Game():
                     if event.key == pygame.K_SPACE:
                         if self.isRun == False:
                             print("Start")
-                            self.food.spawnAll()
+                            self.food.spawn()
                             self.snake.currentDirection = Direction.right
                             self.snake.turningDirection = Direction.none
                             self.isRun = True
@@ -73,9 +73,7 @@ class Game():
             self.snake.Move()
 
             # rysowanie, wyświetlanie
-            #self.screen.fill((0, 0, 0))
-
-            pygame.Surface.blit(self.screen, img, (0, 0))
+            pygame.Surface.blit(self.screen, background, (0, 0))
 
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację

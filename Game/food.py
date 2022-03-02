@@ -9,7 +9,7 @@ class Food():
         self.commonFruitImage = pygame.transform.scale(pygame.image.load("img/limonka.png"), (self.game.gameBoard.sizeBlock, self.game.gameBoard.sizeBlock))
         self.fruits = []
 
-    def spawnAll(self):
+    def spawn(self):
         for fruit in self.fruits:
             while True:
                 x = random.randint(0, self.game.gameBoard.width - 1)
@@ -23,7 +23,7 @@ class Food():
 
     def respawn(self, fruit):
         self.game.gameBoard.fields[fruit.x][fruit.y].fruitType = FruitType.none
-        self.game.gameBoard.fields[fruit.x][fruit.y].fruit = None
+        #self.game.gameBoard.fields[fruit.x][fruit.y].fruit = None
         while True:
             x = random.randint(0, self.game.gameBoard.width - 1)
             y = random.randint(0, self.game.gameBoard.height - 1)
