@@ -91,9 +91,11 @@ class Snake():
 
         if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType != FruitType.none:
             if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType == FruitType.common:
+                self.game.result += 1;
+                print(self.game.result)
                 #self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].color = (100, 0, 100)
                 self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType = FruitType.none
-                self.game.fruit.spawn()
+                self.game.food.spawn()
 
         match self.turningDirection:
             case Direction.up:

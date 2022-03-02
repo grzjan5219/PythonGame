@@ -3,8 +3,9 @@ from Game.board import Board
 import pygame
 import sys
 from pygame import mixer
-from Game.fruit import Fruit
+from Game.food import Food
 from Game.direction import Direction
+from Game.fruitType import FruitType
 
 class Game():
     def __init__(self):
@@ -14,14 +15,16 @@ class Game():
         self.tps = 100.0
         self.deltaTime = 0.0
         self.isRun = False
+        self.result = 0
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.gameBoard = Board(15, 15, self) # width  - max 47 (min - 5)  height - max 35 (min - 5)
                                              # sizeBlock - minimum 20
-        print(self.screen.get_width())
-        print(self.screen.get_height())
+        print(self.screen.get_width(), self.screen.get_height())
+
         self.snake = Snake(self)
-        self.fruit = Fruit(self)
+        self.food = Food(self)
+        self.food.add(FruitType.common)
         pygame.display.set_caption("Snake")
 
         # muzyka w tle
@@ -31,6 +34,7 @@ class Game():
 
     def Start(self):
         img = pygame.image.load("img/tlo_game.jpg")
+
         while True:
             # obługa zdarzeń
             for event in pygame.event.get():
@@ -54,7 +58,7 @@ class Game():
                     if event.key == pygame.K_SPACE:
                         if self.isRun == False:
                             print("Start")
-                            self.fruit.spawn()
+                            self.food.spawn()
                             self.snake.currentDirection = Direction.right
                             self.snake.turningDirection = Direction.none
                             self.isRun = True
@@ -71,7 +75,7 @@ class Game():
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację
             pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
-            self.fruit.draw()
+            self.food.draw()
             self.snake.draw()
 
             pygame.display.flip()
