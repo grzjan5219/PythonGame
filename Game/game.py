@@ -39,7 +39,7 @@ class Game():
     def Start(self):
         background = pygame.image.load("img/tlo_game.jpg")
         exit_img = pygame.image.load("img/exit.png")
-        exit_button = button.Button(1350, 950, exit_img, 0.7)
+        exit_button = button.Button(1500, 950, exit_img, 0.5)
 
         while True:
             # rysowanie, wyświetlanie
