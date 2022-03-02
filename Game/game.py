@@ -56,7 +56,7 @@ class Game():
                     if event.key == pygame.K_ESCAPE:
                         mixer.music.load("sounds/BG music - menu.mp3")
                         mixer.music.play(-1)
-                        return True
+                        sys.exit(0)
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.snake.currentDirection != Direction.down:
                         if self.snake.turningDirection == Direction.none:
                             self.snake.turningDirection = Direction.up
@@ -90,9 +90,12 @@ class Game():
             self.food.draw()
             self.snake.draw()
 
+            czcionka = pygame.font.SysFont('comicsans', 30)
+            wynik = czcionka.render("Punkty {0}".format(self.result), 1, (255, 255, 0))
+            self.screen.blit(wynik, (5, 10))
 
             pygame.display.flip()
 
     def Defeat(self):
-        print("Przegrana")
+        print("Przegrana punkty: ", self.result)
         sys.exit(0)
