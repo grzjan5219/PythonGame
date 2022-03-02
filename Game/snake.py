@@ -94,8 +94,8 @@ class Snake():
                 self.game.result += 1;
                 print(self.game.result)
                 #self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].color = (100, 0, 100)
-                self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType = FruitType.none
-                self.game.food.spawn()
+                #self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType = FruitType.none
+                self.game.food.respawn(self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruit)
 
         if self.turningDirection == Direction.up:
             self.currentDirection = Direction.up

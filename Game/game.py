@@ -24,6 +24,9 @@ class Game():
 
         self.snake = Snake(self)
         self.food = Food(self)
+        # trzy owoce
+        self.food.add(FruitType.common)
+        self.food.add(FruitType.common)
         self.food.add(FruitType.common)
         pygame.display.set_caption("Snake")
 
@@ -58,7 +61,7 @@ class Game():
                     if event.key == pygame.K_SPACE:
                         if self.isRun == False:
                             print("Start")
-                            self.food.spawn()
+                            self.food.spawnAll()
                             self.snake.currentDirection = Direction.right
                             self.snake.turningDirection = Direction.none
                             self.isRun = True
