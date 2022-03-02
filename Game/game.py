@@ -42,12 +42,14 @@ class Game():
 
         while True:
             exit_img = pygame.image.load("img/exit.png")
-            exit_button = button.Button(650, 800, exit_img, 0.7)
+            exit_button = button.Button(900, 900, exit_img, 0.7)
 
+            # Przycisk exit
             if exit_button.draw(self.screen):
                 mixer.music.load("sounds/BG music - menu.mp3")
                 mixer.music.play(-1)
                 return True
+
             # obługa zdarzeń
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
