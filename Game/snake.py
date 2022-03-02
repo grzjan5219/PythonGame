@@ -1,6 +1,7 @@
 import pygame
 from Game.fruitType import FruitType
 from Game.direction import Direction
+import menu
 
 class Snake():
     def __init__(self, game):
@@ -25,7 +26,7 @@ class Snake():
         self.green = (0, 0, 255)
 
     def draw(self):
-        pygame.draw.rect(self.game.screen, self.red, self.headSnake)
+        pygame.draw.rect(self.game.screen, menu.kolor, self.headSnake)
 
 
     def Move(self):

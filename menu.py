@@ -2,7 +2,9 @@ import pygame
 from Game.game import Game
 from tools import button
 from pygame import mixer
+import Colours
 
+kolor = Colours.red
 def menu():
     pygame.init()
     #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -45,9 +47,10 @@ def menu():
             screen.blit(tlo_settings_img, (0, 0))
             pygame.display.set_caption("Snake- ustawienia")
 
-            #if start_button.draw(screen):
-                #print("test")
-                #pygame.display.update()
+            if start_button.draw(screen):
+                print("test")
+                kolor = Colour.black
+                pygame.display.update()
 
             if exit_button.draw(screen):
                 run = False
