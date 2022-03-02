@@ -45,7 +45,7 @@ class Game():
                     sys.exit(0)
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        sys.exit()
+                        return True
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.snake.currentDirection != Direction.down:
                         if self.snake.turningDirection == Direction.none:
                             self.snake.turningDirection = Direction.up
