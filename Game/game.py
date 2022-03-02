@@ -18,7 +18,8 @@ class Game():
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.gameBoard = Board(15, 15, self) # width  - max 47 (min - 5)  height - max 35 (min - 5)
                                              # sizeBlock - minimum 20
-
+        print(self.screen.get_width())
+        print(self.screen.get_height())
         self.snake = Snake(self)
         self.fruit = Fruit(self)
         pygame.display.set_caption("Snake")
@@ -70,7 +71,7 @@ class Game():
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację
             pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
-
+            self.fruit.draw()
             self.snake.draw()
 
             pygame.display.flip()
