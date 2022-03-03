@@ -16,8 +16,16 @@ class Board():
         margin = pygame.math.Vector2((self.maxBoardSize.x - self.boardSize.x) / 2, (self.maxBoardSize.y - self.boardSize.y) / 2)
 
         self.boardPos = pygame.math.Vector2(80, 80) + margin
-        self.color1 = (150, 150, 150)
-        self.color2 = (200, 200, 100)
+
+        kolor1 = (150, 150, 150)
+        kolor2 = (200, 200, 100)
+        kolor3 = (100, 200, 200)
+        kolor4 = (200, 100, 200)
+        kolor5 = (200, 200, 0)
+        kolor6 = (200, 0, 200)
+        kolor7 = (0, 200, 200)
+        self.color1 = kolor1
+        self.color2 = kolor2
 
         fieldPos = copy.deepcopy(self.boardPos)
         negationWidth = True
