@@ -2,6 +2,7 @@ import pygame
 import random
 from Game.fruitType import FruitType
 from Game.fruit import Fruit
+from pygame import mixer
 
 class Food():
     def __init__(self, game):
