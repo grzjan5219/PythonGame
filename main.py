@@ -1,7 +1,7 @@
 import pygame
 import sys
 from menu import *
-import fruit
+from Archive import fruit
 from Game import game
 
 menu()
