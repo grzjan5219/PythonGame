@@ -27,9 +27,16 @@ class Snake():
         self.body[1].purposeMove.x -= 1
         self.body[1].currentDirection = Direction.right
 
+        self.zolty = (255, 255, 0)
+        self.czerwony = (255, 0, 0)
+        self.zielony = (0, 255, 0)
+        self.niebieski = (0, 0, 255)
+        self.czarny = (0, 0, 0)
+        self.bialy = (255, 255, 255)
+
     def draw(self):
         for section in self.body:
-            pygame.draw.rect(self.game.screen, (255, 0, 0), section.rect)
+            pygame.draw.rect(self.game.screen, self.czerwony, section.rect)
 
     def Move(self):
         while self.game.deltaTime > (1 / self.game.tps):
