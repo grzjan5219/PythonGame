@@ -7,7 +7,9 @@ from pygame import mixer
 class Food():
     def __init__(self, game):
         self.game = game
-        self.commonFruitImage = pygame.transform.scale(pygame.image.load("img/limonka.png"), (self.game.gameBoard.sizeBlock, self.game.gameBoard.sizeBlock))
+        self.commonFruitImage1 = pygame.transform.scale(pygame.image.load("img/limonka.png"), (self.game.gameBoard.sizeBlock, self.game.gameBoard.sizeBlock))
+        self.commonFruitImage2 = pygame.transform.scale(pygame.image.load("img/cytryna.png"), (self.game.gameBoard.sizeBlock, self.game.gameBoard.sizeBlock))
+        self.fruit_list = [self.commonFruitImage1, self.commonFruitImage2]
         self.fruits = []
 
     def spawn(self):
@@ -46,4 +48,4 @@ class Food():
     def draw(self):
         if self.game.isRun:
             for fruit in self.fruits:
-                self.game.screen.blit(self.commonFruitImage, self.game.gameBoard.fields[fruit.x][fruit.y].block)
+                self.game.screen.blit(random.choice(self.fruit_list), self.game.gameBoard.fields[fruit.x][fruit.y].block)
