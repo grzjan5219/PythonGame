@@ -2,6 +2,7 @@ import pygame
 import random
 from Game.fruitType import FruitType
 from Game.fruit import Fruit
+from pygame import mixer
 
 class Food():
     def __init__(self, game):
@@ -32,6 +33,11 @@ class Food():
                 fruit.changePos(x, y)
                 self.game.gameBoard.fields[x][y].fruitType = FruitType.common
                 self.game.gameBoard.fields[x][y].fruit = fruit
+
+                # dźwięk jedzenia
+                eat_sound = mixer.Sound("sounds/Eatting.mp3")
+                eat_sound.set_volume(0.5)
+                eat_sound.play()
                 break
 
     def add(self, fruitType):

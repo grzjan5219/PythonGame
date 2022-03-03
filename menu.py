@@ -2,7 +2,10 @@ import pygame
 from Game.game import Game
 from tools import button
 from pygame import mixer
+import Colours
 
+# Kolor węża. Później tego nie będzie
+kolor = Colours.red
 def menu():
     pygame.init()
     #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
