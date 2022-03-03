@@ -1,5 +1,4 @@
 import pygame
-import menu
 
 siema = print("test")
 black = (0, 0, 0)
