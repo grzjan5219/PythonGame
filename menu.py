@@ -50,7 +50,6 @@ def menu():
 
             if start_button.draw(screen):
                 print("test")
-                kolor = Colour.black
                 pygame.display.update()
 
             if exit_button.draw(screen):
