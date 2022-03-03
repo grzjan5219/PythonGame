@@ -27,6 +27,9 @@ class Snake():
         self.body[1].purposeMove.x -= 1
         self.body[1].currentDirection = Direction.right
 
+        # koniec snake
+        self.endSnakePos = pygame.math.Vector2(1, self.headFieldPos.y)
+
         self.zolty = (255, 255, 0)
         self.czerwony = (255, 0, 0)
         self.zielony = (0, 255, 0)
@@ -101,11 +104,11 @@ class Snake():
             self.isNewSegment = False
 
         if self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].fruitType != FruitType.none:
+            # jest owoc
             if self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].fruitType == FruitType.common:
                 self.isNewSegment = True
                 self.addSegment()
-                self.game.result += 1;
-                #self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].color = (100, 0, 100)
+                self.game.result += 1
                 self.game.food.respawn(self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].fruit)
 
         if self.headSection.turningDirection == Direction.up:
@@ -127,14 +130,21 @@ class Snake():
 
         if not self.game.gameBoard.isExistField(self.headSection.purposeMove) or not self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].isFree:
             self.game.Defeat()
+
+        self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].isFree = False
         self.headSection.turningDirection = Direction.none
 
     def changeBodyPurpose(self, distanceToTarget, distanceExcess):
+
         minus = 1
 
         if self.isNewSegment:
             # nie przemieszcza nowego segmentu w tej sekcji ruchu
             minus +=1
+        else:
+            self.game.gameBoard.fields[int(self.endSnakePos.x)][int(self.endSnakePos.y)].isFree = True
+            self.endSnakePos = self.body[-1].purposeMove
+
 
         for i in range(len(self.body) - minus, 0, -1):
             if self.body[i].currentDirection == Direction.up:
@@ -179,3 +189,4 @@ class Snake():
     def addSegment(self):
         # dodaje segment do snake
         self.body.append(deepcopy(self.body[-1]))
+        

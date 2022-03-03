@@ -12,14 +12,14 @@ class Game():
     def __init__(self):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        self.speed = 4
+        self.speed = 3
         self.tps = 100.0
         self.deltaTime = 0.0
         self.isRun = False
         self.result = 0
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.gameBoard = Board(15, 15, self) # width  - max 47 (min - 5)  height - max 35 (min - 5)
+        self.gameBoard = Board(20, 4, self) # width  - max 47 (min - 5)  height - max 35 (min - 5)
                                              # sizeBlock - minimum 20
         #print(self.screen.get_width(), self.screen.get_height())
 

@@ -31,7 +31,7 @@ class Food():
 
             if self.game.gameBoard.fields[x][y].isFree:
                 fruit.changePos(x, y)
-                self.game.gameBoard.fields[x][y].fruitType = FruitType.common
+                self.game.gameBoard.fields[x][y].fruitType = fruit.fruitType
                 self.game.gameBoard.fields[x][y].fruit = fruit
 
                 # dźwięk jedzenia
