@@ -11,6 +11,7 @@ class Snake():
         self.headFieldPos = pygame.math.Vector2(2, (int)(game.gameBoard.height / 2))
         #pozycja snake na ekranie
         self.headFieldCord = self.game.gameBoard.boardPos + pygame.math.Vector2(self.headFieldPos.x * game.gameBoard.sizeBlock, self.headFieldPos.y * game.gameBoard.sizeBlock)
+        self.isNewSegment = False
 
         #początek snake
         self.headSection = Section()
@@ -89,8 +90,12 @@ class Snake():
         if self.headSection.turningDirection == Direction.none:  # brak zmiany kierunku
             self.headSection.turningDirection = self.headSection.currentDirection
 
+        if self.isNewSegment:
+            self.isNewSegment = False
+
         if self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].fruitType != FruitType.none:
             if self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].fruitType == FruitType.common:
+                self.isNewSegment = True
                 self.addSegment()
                 self.game.result += 1;
                 #self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].color = (100, 0, 100)
@@ -118,7 +123,13 @@ class Snake():
         self.headSection.turningDirection = Direction.none
 
     def changeBodyPurpose(self, distanceToTarget, distanceExcess):
-        for i in range(len(self.body) - 1, 0, -1):
+        minus = 1
+
+        if self.isNewSegment:
+            # nie przemieszcza nowego segmentu w tej sekcji ruchu
+            minus +=1
+
+        for i in range(len(self.body) - minus, 0, -1):
             if self.body[i].currentDirection == Direction.up:
                 self.body[i].rect.y -= distanceToTarget
             elif self.body[i].currentDirection == Direction.down:
@@ -144,15 +155,19 @@ class Snake():
             self.body[i].rect.x -= value
 
     def continueWayToPurpose(self, direction):
-        for section in self.body:
-            if section.currentDirection == Direction.up:
-                section.rect.y -= self.game.speed
-            if section.currentDirection == Direction.down:
-                section.rect.y += self.game.speed
-            if section.currentDirection == Direction.right:
-                section.rect.x += self.game.speed
-            if section.currentDirection == Direction.left:
-                section.rect.x -= self.game.speed
+        minus = 0
+        if self.isNewSegment:
+            minus = 1
+
+        for i in range(0, len(self.body) - minus):
+            if self.body[i].currentDirection == Direction.up:
+                self.body[i].rect.y -= self.game.speed
+            if self.body[i].currentDirection == Direction.down:
+                self.body[i].rect.y += self.game.speed
+            if self.body[i].currentDirection == Direction.right:
+                self.body[i].rect.x += self.game.speed
+            if self.body[i].currentDirection == Direction.left:
+                self.body[i].rect.x -= self.game.speed
 
     def addSegment(self):
         # dodaje segment do snake
