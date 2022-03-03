@@ -39,6 +39,11 @@ class Game():
     def Start(self):
         background = pygame.image.load("img/tlo_game.jpg")
         exit_img = pygame.image.load("img/exit.png")
+        on_img = pygame.image.load("img/on.png")
+        off_img = pygame.image.load("img/off.png")
+
+        off_button = button.Button(1750, 40, off_img, 0.9)
+        on_button = button.Button(1620, 40, on_img, 0.9)
         exit_button = button.Button(1500, 950, exit_img, 0.5)
 
         while True:
@@ -50,6 +55,14 @@ class Game():
                 mixer.music.load("sounds/BG music - menu.mp3")
                 mixer.music.play(-1)
                 return True
+
+            # Opcje dźwięku
+            if on_button.draw(self.screen):
+                mixer.music.set_volume(0.1)
+
+            if off_button.draw(self.screen):
+                mixer.music.set_volume(0)
+
             # obługa zdarzeń
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
