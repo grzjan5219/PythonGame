@@ -58,7 +58,7 @@ class Game():
                     if event.key == pygame.K_ESCAPE:
                         mixer.music.load("sounds/BG music - menu.mp3")
                         mixer.music.play(-1)
-                        sys.exit(0)
+                        return True
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.snake.headSection.currentDirection != Direction.down:
                         if self.snake.headSection.turningDirection == Direction.none:
                             self.snake.headSection.turningDirection = Direction.up
