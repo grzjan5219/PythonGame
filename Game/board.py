@@ -17,15 +17,16 @@ class Board():
 
         self.boardPos = pygame.math.Vector2(80, 80) + margin
 
-        kolor1 = (150, 150, 150)
-        kolor2 = (200, 200, 100)
-        kolor3 = (100, 200, 200)
-        kolor4 = (200, 100, 200)
-        kolor5 = (200, 200, 0)
-        kolor6 = (200, 0, 200)
-        kolor7 = (0, 200, 200)
-        self.color1 = kolor1
-        self.color2 = kolor2
+        default1 = (150, 150, 150)
+        default2 = (200, 200, 100)
+        zolty = (255, 255, 0)
+        czerwony = (255, 0, 0)
+        zielony = (0, 255, 0)
+        niebieski = (0, 0, 255)
+        czarny = (0, 0, 0)
+        bialy = (255, 255, 255)
+        self.color1 = default1
+        self.color2 = default2
 
         fieldPos = copy.deepcopy(self.boardPos)
         negationWidth = True
