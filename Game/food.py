@@ -48,4 +48,5 @@ class Food():
     def draw(self):
         if self.game.isRun:
             for fruit in self.fruits:
-                self.game.screen.blit(random.choice(self.fruit_list), self.game.gameBoard.fields[fruit.x][fruit.y].block)
+                self.game.screen.blit(self.fruit_list[0], self.game.gameBoard.fields[fruit.x][fruit.y].block)
+                #random.choice(self.fruit_list)
