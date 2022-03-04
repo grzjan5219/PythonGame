@@ -38,7 +38,7 @@ class Game():
         mixer.music.set_volume(0.1)
 
     def Start(self):
-        czcionka = pygame.font.SysFont('comicsans', 40)
+        czcionka = pygame.font.SysFont('comicsans', 50)
         background = pygame.image.load("img/tlo_game.jpg")
         exit_img = pygame.image.load("img/exit.png")
         on_img = pygame.image.load("img/on.png")
