@@ -6,6 +6,7 @@ from pygame import mixer
 from Game.food import Food
 from Game.direction import Direction
 from Game.fruitType import FruitType
+from Game.gui import Gui
 from tools import button
 
 class Game():
@@ -23,9 +24,11 @@ class Game():
         self.gameBoard = Board(15, 15, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
                                              # sizeBlock - minimum 20
         #print(self.screen.get_width(), self.screen.get_height())
+        self.background = pygame.image.load("img/tlo_game.jpg")
 
         self.snake = Snake(self)
         self.food = Food(self)
+        self.gui = Gui(self)
         # trzy owoce
         self.food.add(FruitType.common)
         self.food.add(FruitType.common)
@@ -38,32 +41,10 @@ class Game():
         mixer.music.set_volume(0.1)
 
     def Start(self):
-        czcionka = pygame.font.SysFont('comicsans', 40)
-        background = pygame.image.load("img/tlo_game.jpg")
-        exit_img = pygame.image.load("img/exit.png")
-        on_img = pygame.image.load("img/on.png")
-        off_img = pygame.image.load("img/off.png")
-
-        off_button = button.Button(1750, 40, off_img, 0.9)
-        on_button = button.Button(1620, 40, on_img, 0.9)
-        exit_button = button.Button(1500, 950, exit_img, 0.5)
 
         while True:
             # rysowanie, wyświetlanie
-            pygame.Surface.blit(self.screen, background, (0, 0))
-
-            # Przycisk exit
-            if exit_button.draw(self.screen):
-                mixer.music.load("sounds/BG music - menu.mp3")
-                mixer.music.play(-1)
-                return True
-
-            # Opcje dźwięku
-            if on_button.draw(self.screen):
-                mixer.music.set_volume(0.1)
-
-            if off_button.draw(self.screen):
-                mixer.music.set_volume(0)
+            pygame.Surface.blit(self.screen, self.background, (0, 0))
 
             # obługa zdarzeń
             for event in pygame.event.get():
@@ -101,22 +82,19 @@ class Game():
 
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację
-            #pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
+            pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1400, 100, 420, 880))
             #pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(100, 100, 1200, 880))
             self.food.draw()
             self.snake.draw()
-
-
-            wynik = czcionka.render("Punkty {0}".format(self.result), 1, (255, 255, 0))
-
-            dialogue_font = pygame.font.Font('customFont/upheavtt.ttf', 60)
-            dialogue = dialogue_font.render("press 'SPACE BAR' to play", 1, (0, 0, 0))
-            self.screen.blit(dialogue, (150, 850))
-            self.screen.blit(wynik, (5, 10))
+            self.gui.draw()
 
             pygame.display.flip()
 
     def Defeat(self):
         print("Przegrana punkty: ", self.result)
+        self.snake.headSection.currentDirection = Direction.none
         self.isRun = False
         #sys.exit(0)
+
+    def Reset(self):
+        pass
