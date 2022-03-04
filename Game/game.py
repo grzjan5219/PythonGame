@@ -136,9 +136,16 @@ class Game():
             wynik = czcionka.render("Punkty: {0}".format(self.result), 1, (0, 0, 0))
             self.screen.blit(wynik, (720, 500))
 
+            self.start_img = pygame.image.load("img/start.png")
             self.exit_img = pygame.image.load("img/exit.png")
-            self.exit_button = button.Button(700, 750, self.exit_img, 0.7)
+            self.start_button = button.Button(700, 700, self.start_img, 0.7)
+            self.exit_button = button.Button(700, 850, self.exit_img, 0.7)
 
+            if self.start_button.draw(self.screen):
+                game = Game()
+                game.Start()
+                print("start")
+                pass
             if self.exit_button.draw(self.screen):
                 sys.exit(0)
             for event in pygame.event.get():
