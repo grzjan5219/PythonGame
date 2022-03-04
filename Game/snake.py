@@ -13,9 +13,11 @@ class Snake():
         self.headFieldCord = self.game.gameBoard.boardPos + pygame.math.Vector2(self.headFieldPos.x * game.gameBoard.sizeBlock, self.headFieldPos.y * game.gameBoard.sizeBlock)
         self.isNewSegment = False
 
+        print("rozmiar: ", game.gameBoard.sizeBlock)
+
         #początek snake
         self.headSection = Section()
-        self.headSection.currentDirection = Direction.none
+        self.headSection.currentDirection = Direction.right
         self.headSection.turningDirection = Direction.none
         self.headSection.rect = pygame.Rect(self.headFieldCord.x, self.headFieldCord.y, game.gameBoard.sizeBlock, game.gameBoard.sizeBlock)
         self.headSection.purposeMove = self.headFieldPos + pygame.math.Vector2(1, 0)
@@ -26,6 +28,7 @@ class Snake():
         self.body[1].rect.x -= game.gameBoard.sizeBlock
         self.body[1].purposeMove.x -= 1
         self.body[1].currentDirection = Direction.right
+        self.body[1].turningDirection = Direction.right
 
         # koniec snake
         self.endSnakePos = pygame.math.Vector2(1, self.headFieldPos.y)
@@ -38,8 +41,12 @@ class Snake():
         self.bialy = (255, 255, 255)
 
     def draw(self):
-        for section in self.body:
-            pygame.draw.rect(self.game.screen, self.czerwony, section.rect)
+        pygame.draw.rect(self.game.screen, self.czarny, self.headSection.rect)
+
+        for i in range(1, len(self.body)):
+            pygame.draw.rect(self.game.screen, self.czerwony, self.body[i].rect)
+        #for section in self.body:
+            #pygame.draw.rect(self.game.screen, self.czerwony, section.rect)
 
     def Move(self):
         while self.game.deltaTime > (1 / self.game.tps):
@@ -49,6 +56,9 @@ class Snake():
                 if self.headSection.rect.centery - self.game.speed <= self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].block.centery:
                     distanceToTarget = self.headSection.rect.centery - self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].block.centery
                     distanceExcess = self.game.speed - distanceToTarget
+
+                    if self.headSection.turningDirection == Direction.none:
+                        self.headSection.turningDirection = self.headSection.currentDirection
 
                     self.changeBodyPurpose(distanceToTarget, distanceExcess)
                     self.changeHeadPurpose(distanceExcess)
@@ -61,6 +71,8 @@ class Snake():
                     distanceToTarget = self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][
                                            int(self.headSection.purposeMove.y)].block.centery - self.headSection.rect.centery
                     distanceExcess = self.game.speed - distanceToTarget
+                    if self.headSection.turningDirection == Direction.none:
+                        self.headSection.turningDirection = self.headSection.currentDirection
                     self.changeBodyPurpose(distanceToTarget, distanceExcess)
                     self.changeHeadPurpose(distanceExcess)
                     self.headSection.rect.y += distanceToTarget
@@ -73,6 +85,8 @@ class Snake():
                     # obliczenie różnicy skrętu
                     distanceToTarget = self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].block.centerx - self.headSection.rect.centerx
                     distanceExcess = self.game.speed - distanceToTarget
+                    if self.headSection.turningDirection == Direction.none:
+                        self.headSection.turningDirection = self.headSection.currentDirection
                     # ustalenie nowego celu
                     self.changeBodyPurpose(distanceToTarget, distanceExcess)
                     self.changeHeadPurpose(distanceExcess)
@@ -87,19 +101,17 @@ class Snake():
                     distanceToTarget = self.headSection.rect.centerx - self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][
                         int(self.headSection.purposeMove.y)].block.centerx
                     distanceExcess = self.game.speed - distanceToTarget
+                    if self.headSection.turningDirection == Direction.none:
+                        self.headSection.turningDirection = self.headSection.currentDirection
                     self.changeBodyPurpose(distanceToTarget, distanceExcess)
                     self.changeHeadPurpose(distanceExcess)
                     self.headSection.rect.x -= distanceToTarget
                 else:
                     self.continueWayToPurpose(Direction.left)
             elif self.headSection.currentDirection == Direction.none:
-                # brak ruchu
                 pass
 
     def changeHeadPurpose(self, value):
-        if self.headSection.turningDirection == Direction.none:  # brak zmiany kierunku
-            self.headSection.turningDirection = self.headSection.currentDirection
-
         if self.isNewSegment:
             self.isNewSegment = False
 
@@ -130,13 +142,14 @@ class Snake():
 
         if not self.game.gameBoard.isExistField(self.headSection.purposeMove) or not self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].isFree:
             self.game.Defeat()
+            return
 
         self.game.gameBoard.fields[int(self.headSection.purposeMove.x)][int(self.headSection.purposeMove.y)].isFree = False
         self.headSection.turningDirection = Direction.none
 
     def changeBodyPurpose(self, distanceToTarget, distanceExcess):
-
         minus = 1
+        #print("zmiana ciała: ", distanceToTarget, distanceExcess)
 
         if self.isNewSegment:
             # nie przemieszcza nowego segmentu w tej sekcji ruchu
@@ -156,12 +169,15 @@ class Snake():
             elif self.body[i].currentDirection == Direction.left:
                 self.body[i].rect.x -= distanceToTarget
 
+            #if self.body[i].turningDirection == Direction.none:
+                #print("blad")
             self.addExcessToBody(i, distanceExcess)
             self.body[i].purposeMove = deepcopy(self.body[i - 1].purposeMove)
             self.body[i].currentDirection = deepcopy(self.body[i - 1].currentDirection)
             self.body[i].turningDirection = deepcopy(self.body[i - 1].turningDirection)
 
     def addExcessToBody(self, i, value):
+        #print("przed: ", self.body[i].rect.x, self.body[i].rect.y)
         if self.body[i].turningDirection == Direction.up:
             self.body[i].rect.y -= value
         elif self.body[i].turningDirection == Direction.down:
@@ -170,6 +186,7 @@ class Snake():
             self.body[i].rect.x += value
         elif self.body[i].turningDirection == Direction.left:
             self.body[i].rect.x -= value
+        #print("po: ", self.body[i].rect.x, self.body[i].rect.y)
 
     def continueWayToPurpose(self, direction):
         minus = 0
