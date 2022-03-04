@@ -12,7 +12,7 @@ class menu():
         pygame.init()
         #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.screen = pygame.display.set_mode((1920, 1080))
-        #, pygame.FULLSCREEN, pygame.RESIZABLE
+        # pygame.FULLSCREEN, pygame.RESIZABLE
         # na razie cofnąłem plik do wersji początkowej, bo z FULLSCREEN nie chciał poprawnie działać
 
         # nazwa okna
@@ -23,7 +23,7 @@ class menu():
         # tło ustawień
         self.tlo_settings_img = pygame.image.load("img/tlo_settings.jpg")
 
-        #muzyka w tle
+        # muzyka w tle
         mixer.music.load("sounds/BG music - menu.mp3")
         mixer.music.play(-1)
         mixer.music.set_volume(0.1)
@@ -43,15 +43,41 @@ class menu():
         self.on_button = button.Button(1570, 950, self.on_img, 0.9)
         self.back_button = button.Button(700, 750, self.back_img, 0.7)
 
-    # ustawienia
+    # ustawienia wizualne (Tu będzie się znajdować zmiana kolorystyki węża, owocu i planszy)
+    def wizualne(self):
+        run = True
+        while run:
+            self.screen.blit(self.tlo_settings_img, (0, 0))
+            pygame.display.set_caption("Snake- ustawienia")
+
+            if self.exit_button.draw(self.screen):
+                run = False
+                print("exit")
+                pass
+
+            if self.back_button.draw(self.screen):
+                print("exit")
+                run = False
+                pass
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+            pygame.display.update()
+
+
+    # główne ustawienia (Tu będą znajdować się opcje m.in. wizualne, zmiany  trudności..)
     def settings(self):
         run = True
         while run:
             self.screen.blit(self.tlo_settings_img, (0, 0))
             pygame.display.set_caption("Snake- ustawienia")
 
+            # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
             if self.start_button.draw(self.screen):
                 print("test")
+                self.wizualne()
                 pygame.display.update()
 
             if self.exit_button.draw(self.screen):
