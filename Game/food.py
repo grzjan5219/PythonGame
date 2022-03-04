@@ -18,7 +18,7 @@ class Food():
                 x = random.randint(0, self.game.gameBoard.width - 1)
                 y = random.randint(0, self.game.gameBoard.height - 1)
 
-                if self.game.gameBoard.fields[x][y].isFree:
+                if self.game.gameBoard.fields[x][y].isFree and self.game.gameBoard.fields[x][y].fruitType == FruitType.none:
                     fruit.changePos(x, y)
                     self.game.gameBoard.fields[x][y].fruitType = FruitType.common
                     self.game.gameBoard.fields[x][y].fruit = fruit
@@ -31,7 +31,7 @@ class Food():
             x = random.randint(0, self.game.gameBoard.width - 1)
             y = random.randint(0, self.game.gameBoard.height - 1)
 
-            if self.game.gameBoard.fields[x][y].isFree:
+            if self.game.gameBoard.fields[x][y].isFree and self.game.gameBoard.fields[x][y].fruitType == FruitType.none:
                 fruit.changePos(x, y)
                 self.game.gameBoard.fields[x][y].fruitType = fruit.fruitType
                 self.game.gameBoard.fields[x][y].fruit = fruit

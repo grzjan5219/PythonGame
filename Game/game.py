@@ -12,14 +12,15 @@ class Game():
     def __init__(self):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        self.speed = 3
+        self.speed = 4
         self.tps = 100.0
         self.deltaTime = 0.0
         self.isRun = False
         self.result = 0
+        # 1200 # 880
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.gameBoard = Board(20, 4, self) # width  - max 47 (min - 5)  height - max 35 (min - 5)
+        self.gameBoard = Board(15, 15, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
                                              # sizeBlock - minimum 20
         #print(self.screen.get_width(), self.screen.get_height())
 
@@ -37,6 +38,7 @@ class Game():
         mixer.music.set_volume(0.1)
 
     def Start(self):
+        czcionka = pygame.font.SysFont('comicsans', 40)
         background = pygame.image.load("img/tlo_game.jpg")
         exit_img = pygame.image.load("img/exit.png")
         on_img = pygame.image.load("img/on.png")
@@ -88,21 +90,23 @@ class Game():
                         if self.isRun == False:
                             print("Start")
                             self.food.spawn()
-                            self.snake.headSection.currentDirection = Direction.right
                             self.snake.headSection.turningDirection = Direction.none
                             self.isRun = True
+                            self.clock.tick()
 
             # obsługa ruchu, stałe wykonywanie niezalezne od fps
-            self.deltaTime += (self.clock.tick() / 1000.0)
-            self.snake.Move()
+            if self.isRun:
+                self.deltaTime += (self.clock.tick() / 1000.0)
+                self.snake.Move()
 
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację
-            pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
+            #pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))
+            #pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(100, 100, 1200, 880))
             self.food.draw()
             self.snake.draw()
 
-            czcionka = pygame.font.SysFont('comicsans', 40)
+
             wynik = czcionka.render("Punkty {0}".format(self.result), 1, (255, 255, 0))
 
             dialogue_font = pygame.font.Font('customFont/upheavtt.ttf', 60)
@@ -114,4 +118,5 @@ class Game():
 
     def Defeat(self):
         print("Przegrana punkty: ", self.result)
-        sys.exit(0)
+        self.isRun = False
+        #sys.exit(0)
