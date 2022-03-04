@@ -2,6 +2,7 @@ from Game.snake import Snake
 from Game.board import Board
 import pygame
 import sys
+from menu import *
 from pygame import mixer
 from Game.food import Food
 from Game.direction import Direction
@@ -113,5 +114,32 @@ class Game():
             pygame.display.flip()
 
     def Defeat(self):
-        print("Przegrana punkty: ", self.result)
-        sys.exit(0)
+        # dźwięk obrażenia
+        mixer.music.load("sounds/Getting hit.mp3")
+        mixer.music.play()
+        mixer.music.set_volume(2)
+
+        run = True
+        while run:
+            self.screen = pygame.display.set_mode((1920, 1080))
+            pygame.display.set_caption("Snake- Game Over")
+            self.tlo_game_over_img = pygame.image.load("img/tlo_game_over.jpg")
+            self.screen.blit(self.tlo_game_over_img, (0, 0))
+
+            self.back_img = pygame.image.load("img/back.png")
+            self.exit_img = pygame.image.load("img/exit.png")
+            self.exit_button = button.Button(700, 750, self.exit_img, 0.7)
+            self.back_button = button.Button(700, 750, self.back_img, 0.7)
+
+            if self.exit_button.draw(self.screen):
+                mixer.music.load("sounds/BG music - menu.mp3")
+                mixer.music.play(-1)
+                print("Przegrana punkty: ", self.result)
+                sys.exit(0)
+
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+            pygame.display.update()
