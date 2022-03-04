@@ -106,17 +106,43 @@ class Game():
             self.food.draw()
             self.snake.draw()
 
-
-            wynik = czcionka.render("Punkty {0}".format(self.result), 1, (255, 255, 0))
+            global wynik
+            wynik = czcionka.render("Punkty: {0}".format(self.result), 1, (255, 255, 0))
 
             dialogue_font = pygame.font.Font('customFont/upheavtt.ttf', 60)
             dialogue = dialogue_font.render("press 'SPACE BAR' to play", 1, (0, 0, 0))
-            self.screen.blit(dialogue, (150, 850))
+            self.screen.blit(dialogue, (325, 1000))
             self.screen.blit(wynik, (5, 10))
 
             pygame.display.flip()
 
     def Defeat(self):
-        print("Przegrana punkty: ", self.result)
-        self.isRun = False
+        #print("Przegrana punkty: ", self.result)
+        #self.isRun = False
         #sys.exit(0)
+
+        # dźwięk obrażenia
+        mixer.music.load("sounds/Getting hit.mp3")
+        mixer.music.play()
+        mixer.music.set_volume(2)
+        run = True
+        while run:
+            self.screen = pygame.display.set_mode((1920, 1080))
+            pygame.display.set_caption("Snake- Game Over")
+            self.tlo_game_over_img = pygame.image.load("img/tlo_game_over.jpg")
+
+            self.screen.blit(self.tlo_game_over_img, (0, 0))
+            czcionka = pygame.font.SysFont('comicsans', 100)
+            wynik = czcionka.render("Punkty: {0}".format(self.result), 1, (0, 0, 0))
+            self.screen.blit(wynik, (720, 500))
+
+            self.exit_img = pygame.image.load("img/exit.png")
+            self.exit_button = button.Button(700, 750, self.exit_img, 0.7)
+
+            if self.exit_button.draw(self.screen):
+                sys.exit(0)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+            pygame.display.update()
