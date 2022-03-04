@@ -12,7 +12,11 @@ class Game():
     def __init__(self):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        self.speed = 4
+        wolny = 2
+        default = 4
+        szybki = 6
+        bardzo_szybki = 8
+        self.speed = default
         self.tps = 100.0
         self.deltaTime = 0.0
         self.isRun = False
