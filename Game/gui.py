@@ -1,6 +1,7 @@
 import pygame
 from tools.button import Button
 from Game.direction import Direction
+from pygame import mixer
 
 class Gui():
     def __init__(self, game):
