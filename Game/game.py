@@ -20,6 +20,7 @@ class Game():
         # 1200 # 880
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        #self.screen = pygame.display.set_mode((1000, 800))
         self.gameBoard = Board(15, 15, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
                                              # sizeBlock - minimum 20
         #print(self.screen.get_width(), self.screen.get_height())
@@ -75,22 +76,22 @@ class Game():
                         mixer.music.play(-1)
                         return True
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.snake.headSection.currentDirection != Direction.down:
-                        if self.snake.headSection.turningDirection == Direction.none:
-                            self.snake.headSection.turningDirection = Direction.up
+                        if self.snake.turningDirection == Direction.none:
+                            self.snake.turningDirection = Direction.up
                     if (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self.snake.headSection.currentDirection != Direction.up:
-                        if self.snake.headSection.turningDirection == Direction.none:
-                            self.snake.headSection.turningDirection = Direction.down
+                        if self.snake.turningDirection == Direction.none:
+                            self.snake.turningDirection = Direction.down
                     if (event.key == pygame.K_a or event.key == pygame.K_LEFT) and self.snake.headSection.currentDirection != Direction.right:
-                        if self.snake.headSection.turningDirection == Direction.none:
-                            self.snake.headSection.turningDirection = Direction.left
+                        if self.snake.turningDirection == Direction.none:
+                            self.snake.turningDirection = Direction.left
                     if (event.key == pygame.K_d or event.key == pygame.K_RIGHT) and self.snake.headSection.currentDirection != Direction.left:
-                        if self.snake.headSection.turningDirection == Direction.none:
-                            self.snake.headSection.turningDirection = Direction.right
+                        if self.snake.turningDirection == Direction.none:
+                            self.snake.turningDirection = Direction.right
                     if event.key == pygame.K_SPACE:
                         if self.isRun == False:
                             print("Start")
                             self.food.spawn()
-                            self.snake.headSection.turningDirection = Direction.none
+                            self.snake.turningDirection = Direction.none
                             self.isRun = True
                             self.clock.tick()
 
