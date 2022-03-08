@@ -4,9 +4,11 @@ import pygame
 import sys
 from pygame import mixer
 from Game.food import Food
+from Game.przeszkoda import Przeszkoda
 from Game.direction import Direction
 from Game.fruitType import FruitType
 from tools import button
+from Game.przeszkodaType import PrzeszkodaType
 
 class Game():
     def __init__(self):
@@ -27,10 +29,12 @@ class Game():
 
         self.snake = Snake(self)
         self.food = Food(self)
+        self.przeszkoda = Przeszkoda(self)
         # trzy owoce
         self.food.add(FruitType.common)
         self.food.add(FruitType.common)
         self.food.add(FruitType.common)
+        self.przeszkoda.add(PrzeszkodaType.common)
         pygame.display.set_caption("Snake")
 
         # muzyka w tle
@@ -91,6 +95,7 @@ class Game():
                         if self.isRun == False:
                             print("Start")
                             self.food.spawn()
+                            self.przeszkoda.spawn()
                             self.snake.turningDirection = Direction.none
                             self.isRun = True
                             self.clock.tick()
@@ -106,6 +111,7 @@ class Game():
             #pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(100, 100, 1200, 880))
             self.food.draw()
             self.snake.draw()
+            self.przeszkoda.draw()
 
             global wynik
             wynik = czcionka.render("Punkty: {0}".format(self.result), 1, (255, 255, 0))
