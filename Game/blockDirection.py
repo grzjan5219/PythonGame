@@ -1,5 +1,8 @@
-class Block_localization():
-    def __init__(self):
+from Game.blockType import BlockType
+
+class BlockDirection():
+    def __init__(self, fruitType):
+        self.fruitType = fruitType
         self.x = 0
         self.y = 0
 
