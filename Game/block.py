@@ -1,7 +1,5 @@
 import pygame
 import random
-from Game.fruitType import FruitType
-from Game.fruit import Fruit
 from pygame import mixer
 
 class Food():
@@ -26,7 +24,6 @@ class Food():
 
     def respawn(self, fruit):
         self.game.gameBoard.fields[fruit.x][fruit.y].fruitType = FruitType.none
-        #self.game.gameBoard.fields[fruit.x][fruit.y].fruit = None
         while True:
             x = random.randint(0, self.game.gameBoard.width - 1)
             y = random.randint(0, self.game.gameBoard.height - 1)
@@ -36,12 +33,6 @@ class Food():
                 self.game.gameBoard.fields[x][y].fruitType = fruit.fruitType
                 self.game.gameBoard.fields[x][y].fruit = fruit
 
-                # dźwięk jedzenia
-                eat_sound = mixer.Sound("sounds/Eatting.mp3")
-                eat_sound.set_volume(0.5)
-                eat_sound.play()
-                break
-
     def add(self, fruitType):
         self.fruits.append(Fruit(fruitType))
 
@@ -49,4 +40,3 @@ class Food():
         if self.game.isRun:
             for fruit in self.fruits:
                 self.game.screen.blit(self.fruit_list[0], self.game.gameBoard.fields[fruit.x][fruit.y].block)
-                #random.choice(self.fruit_list)
