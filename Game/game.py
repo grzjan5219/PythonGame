@@ -6,6 +6,7 @@ from pygame import mixer
 from Game.food import Food
 from Game.direction import Direction
 from Game.fruitType import FruitType
+from Game.gameMode import GameMode
 from tools import button
 
 class Game():
@@ -24,6 +25,8 @@ class Game():
         self.gameBoard = Board(15, 15, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
                                              # sizeBlock - minimum 20
         #print(self.screen.get_width(), self.screen.get_height())
+        # tryb gry
+        self.gameMode = GameMode.timeWarp
 
         self.snake = Snake(self)
         self.food = Food(self)
@@ -94,6 +97,7 @@ class Game():
                             self.snake.turningDirection = Direction.none
                             self.isRun = True
                             self.clock.tick()
+
 
             # obsługa ruchu, stałe wykonywanie niezalezne od fps
             if self.isRun:

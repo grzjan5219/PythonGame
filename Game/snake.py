@@ -3,6 +3,8 @@ from copy import deepcopy
 from Game.fruitType import FruitType
 from Game.direction import Direction
 from Game.section import Section
+from Game.sectionTimeWarp import SectionTimeWarp
+from Game.gameMode import GameMode
 from collections import deque
 
 class Snake():
@@ -30,6 +32,9 @@ class Snake():
 
         # koniec snake
         self.endSnakePos = pygame.math.Vector2(1, self.headFieldPos.y)
+
+        # przenikanie snake
+        self.timeWarp = []
 
         self.zolty = (255, 255, 0)
         self.czerwony = (255, 0, 0)
@@ -118,21 +123,28 @@ class Snake():
             self.turningDirection = self.headSection.currentDirection
 
         if self.turningDirection == Direction.up:
-            print("gura")
             self.headSection.currentDirection = Direction.up
             self.purposeMove += pygame.math.Vector2(0, -1)
         elif self.turningDirection == Direction.down:
             self.headSection.currentDirection = Direction.down
             self.purposeMove += pygame.math.Vector2(0, 1)
         elif self.turningDirection == Direction.right:
-            print("prawo")
             self.headSection.currentDirection = Direction.right
             self.purposeMove += pygame.math.Vector2(1, 0)
         elif self.turningDirection == Direction.left:
             self.headSection.currentDirection = Direction.left
             self.purposeMove += pygame.math.Vector2(-1, 0)
 
-        if not self.game.gameBoard.isExistField(self.purposeMove) or not self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].isFree:
+        if not self.game.gameBoard.isExistField(self.purposeMove):
+            if self.game.gameMode == GameMode.standard:
+                self.game.Defeat()
+                return
+            elif self.game.gameMode == GameMode.timeWarp:
+                # wykonanie zakrzywienia
+                # sprawdzenie czy równoległe pole jest wolne
+                # dodanie elementu do zakrzywionej listy
+                pass
+        elif not self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].isFree:
             self.game.Defeat()
             return
 
