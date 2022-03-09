@@ -10,6 +10,10 @@ from Game.fruitType import FruitType
 from Game.gameMode import GameMode
 from tools import button
 from Game.przeszkodaType import PrzeszkodaType
+from os import path
+
+#plik który przechowuje najwyższy wynik
+HS_FILE = "highscore.txt"
 
 class Game():
     def __init__(self):
@@ -44,9 +48,18 @@ class Game():
         mixer.music.load("sounds/BG music - game.mp3")
         mixer.music.play(-1)
         mixer.music.set_volume(0.1)
+        self.load_data()
+
+    def load_data(self):
+        self.dir = path.dirname(__file__)
+        with open(path.join(self.dir, HS_FILE), 'r') as f:
+            try:
+                self.highscore = int(f.read())
+            except:
+                self.highscore = 0
 
     def Start(self):
-        czcionka = pygame.font.SysFont('comicsans', 50)
+        czcionka = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
         background = pygame.image.load("img/tlo_game.jpg")
         exit_img = pygame.image.load("img/exit.png")
         on_img = pygame.image.load("img/on.png")
@@ -118,7 +131,7 @@ class Game():
             self.przeszkoda.draw()
 
             global wynik
-            wynik = czcionka.render("Punkty: {0}".format(self.result), 1, (255, 255, 0))
+            wynik = czcionka.render("Score: {0}".format(self.result), 1, (0, 0, 0))
 
             dialogue_font = pygame.font.Font('customFont/upheavtt.ttf', 60)
             dialogue = dialogue_font.render("press 'SPACE BAR' to play", 1, (0, 0, 0))
@@ -143,9 +156,20 @@ class Game():
             self.tlo_game_over_img = pygame.image.load("img/tlo_game_over.jpg")
 
             self.screen.blit(self.tlo_game_over_img, (0, 0))
-            czcionka = pygame.font.SysFont('comicsans', 100)
-            wynik = czcionka.render("Punkty: {0}".format(self.result), 1, (0, 0, 0))
-            self.screen.blit(wynik, (720, 500))
+            czcionka = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
+            wynik = czcionka.render("Score: {0}".format(self.result), 1, (0, 0, 0))
+            rekord = czcionka.render("Highscore: {0}".format(self.highscore), 1, (0, 0, 0))
+            nowy_rekord = czcionka.render("New highscore!", 1, (255, 0, 0))
+            self.screen.blit(wynik, (840, 480))
+            if self.result < self.highscore:
+                self.screen.blit(rekord, (780, 580))
+            else:
+                self.highscore = self.result
+                with open(path.join(self.dir, HS_FILE), 'w') as f:
+                    f.write(str(self.result))
+                    #self.screen.blit(rekord, (780, 580))
+                    self.screen.blit(nowy_rekord, (750, 580))
+
 
             self.retry_img = pygame.image.load("img/retry.png")
             self.exit_img = pygame.image.load("img/exit.png")
