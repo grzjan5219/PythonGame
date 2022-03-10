@@ -4,8 +4,6 @@ from tools import button
 from pygame import mixer
 import Colours
 
-# Kolor węża. Później tego nie będzie
-kolor = Colours.red
 class menu():
     def __init__(self):
         print("test")
