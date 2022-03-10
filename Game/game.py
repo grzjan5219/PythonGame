@@ -9,6 +9,7 @@ from Game.direction import Direction
 from Game.fruitType import FruitType
 from Game.gameMode import GameMode
 from tools import button
+from tools import Buttonhover2
 from Game.przeszkodaType import PrzeszkodaType
 
 class Game():
@@ -48,20 +49,20 @@ class Game():
     def Start(self):
         czcionka = pygame.font.SysFont('comicsans', 50)
         background = pygame.image.load("img/tlo_game.jpg")
-        exit_img = pygame.image.load("img/exit.png")
+        exit_button= Buttonhover2.Button(1200, 950, "img/exit")
         on_img = pygame.image.load("img/on.png")
         off_img = pygame.image.load("img/off.png")
 
         off_button = button.Button(1750, 40, off_img, 0.9)
         on_button = button.Button(1620, 40, on_img, 0.9)
-        exit_button = button.Button(1500, 950, exit_img, 0.5)
 
         while True:
             # rysowanie, wyświetlanie
             pygame.Surface.blit(self.screen, background, (0, 0))
+            exit_button.draw(self.screen)
 
             # Przycisk exit
-            if exit_button.draw(self.screen):
+            if exit_button.tick():
                 mixer.music.load("sounds/BG music - menu.mp3")
                 mixer.music.play(-1)
                 return True

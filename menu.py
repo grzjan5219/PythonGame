@@ -1,9 +1,12 @@
 import pygame
 from Game.game import Game
+from tools import Buttonhover2
 from tools import button
 from pygame import mixer
 import Colours
 
+# Kolor węża. Później tego nie będzie
+kolor = Colours.red
 class menu():
     def __init__(self):
         print("test")
@@ -27,19 +30,15 @@ class menu():
         mixer.music.set_volume(0.1)
 
         # opcje wyboru
-        self.start_img = pygame.image.load("img/start.png")
-        self.settings_img = pygame.image.load("img/settings.png")
-        self.exit_img = pygame.image.load("img/exit.png")
         self.on_img = pygame.image.load("img/on.png")
         self.off_img = pygame.image.load("img/off.png")
-        self.back_img = pygame.image.load("img/back.png")
 
-        self.start_button = button.Button(700, 450, self.start_img, 0.7)
-        self.settings_button = button.Button(700, 600, self.settings_img, 0.7)
-        self.exit_button = button.Button(700, 750, self.exit_img, 0.7)
+        self.start_button = Buttonhover2.Button(600, 450, "img/start")
+        self.settings_button = Buttonhover2.Button(600, 600, "img/settings")
+        self.exit_button = Buttonhover2.Button(600, 750, "img/exit")
         self.off_button = button.Button(1700, 950, self.off_img, 0.9)
         self.on_button = button.Button(1570, 950, self.on_img, 0.9)
-        self.back_button = button.Button(700, 750, self.back_img, 0.7)
+        self.back_button = Buttonhover2.Button(600, 750, "img/back")
 
     # ustawienia wizualne (Tu będzie się znajdować zmiana kolorystyki węża, owocu i planszy)
     def wizualne(self):
@@ -67,9 +66,11 @@ class menu():
 
     # główne ustawienia (Tu będą znajdować się opcje m.in. wizualne, zmiany  trudności..)
     def settings(self):
-        run = True
-        while run:
+        run2 = True
+        while run2:
             self.screen.blit(self.tlo_settings_img, (0, 0))
+            self.start_button.draw(self.screen)
+            self.back_button.draw(self.screen)
             pygame.display.set_caption("Snake- ustawienia")
 
             # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
@@ -78,15 +79,8 @@ class menu():
                 self.wizualne()
                 pygame.display.update()
 
-            if self.exit_button.draw(self.screen):
-                run = False
-                print("exit")
-                pass
-
-            if self.back_button.draw(self.screen):
-                print("exit")
-                run = False
-                pass
+            if self.back_button.tick():
+                return True
 
             # opcje dźwięku
             if self.on_button.draw(self.screen):
@@ -104,22 +98,25 @@ class menu():
         run = True
         while run:
             self.screen.blit(self.tlo_img, (0, 0))
+            self.start_button.draw(self.screen)
+            self.settings_button.draw(self.screen)
+            self.exit_button.draw(self.screen)
 
             # start gry
-            if self.start_button.draw(self.screen):
+            if self.start_button.tick():
                 game = Game()
                 game.Start()
                 print("start")
                 pass
 
             #  przycisk ustawień w main menu
-            if self.settings_button.draw(self.screen):
+            if self.settings_button.tick():
                 self.settings()
                 pygame.display.update()
                 print("settings")
 
             # wyjście
-            if self.exit_button.draw(self.screen):
+            if self.exit_button.tick():
                 run = False
                 print("exit")
                 pass
