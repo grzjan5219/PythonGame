@@ -12,12 +12,14 @@ class menu():
         print("test")
         pygame.init()
 
-        #to jest potrzebne do animowanego tła
+        #to jest potrzebne do animowanego tła + TEKST
         self.win = pygame.display.set_mode((1920, 1080))
         self.bg_img = pygame.image.load(os.path.join("img/tlo_wide.jpg"))
         self.bg = pygame.transform.scale(self.bg_img, (3840, 1080))
         self.width = 3840
         self.i = 0
+        self.MAIN_MENU = pygame.image.load("img/okno_main_menu.png")
+        self.SETTINGS = pygame.image.load("img/okno_settings.png")
 
         #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.screen = pygame.display.set_mode((1920, 1080))
@@ -26,11 +28,6 @@ class menu():
 
         # nazwa okna
         pygame.display.set_caption("Snake")
-
-        # tło
-        self.tlo_img = pygame.image.load("img/tlo.jpg")
-        # tło ustawień
-        self.tlo_settings_img = pygame.image.load("img/tlo_settings.jpg")
 
         # muzyka w tle
         mixer.music.load("sounds/BG music - menu.mp3")
@@ -80,7 +77,15 @@ class menu():
     def settings(self):
         run = True
         while run:
-            self.screen.blit(self.tlo_settings_img, (0, 0))
+            # kod który robi animowane tło + TEXT
+            self.win.fill((0, 0, 0))
+            self.win.blit(self.bg, (self.i, 0))
+            self.win.blit(self.bg, (self.width + self.i, 0))
+            if self.i == -self.width:
+                self.win.blit(self.bg, (self.width + self.i, 0))
+                self.i = 0
+            self.i -= 1
+            self.screen.blit(self.SETTINGS, (0, 0))
             pygame.display.set_caption("Snake- ustawienia")
 
             # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
@@ -114,7 +119,7 @@ class menu():
     def main_menu(self):
         run = True
         while run:
-            #kod który robi animowane tło
+            #kod który robi animowane tło + TEKST
             self.win.fill((0, 0, 0))
             self.win.blit(self.bg, (self.i, 0))
             self.win.blit(self.bg, (self.width + self.i, 0))
@@ -122,6 +127,7 @@ class menu():
                 self.win.blit(self.bg, (self.width + self.i, 0))
                 self.i = 0
             self.i -= 1
+            self.screen.blit(self.MAIN_MENU, (0, 0))
 
             # start gry
             if self.start_button.draw(self.screen):
