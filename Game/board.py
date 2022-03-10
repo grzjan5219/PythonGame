@@ -60,3 +60,8 @@ class Board():
             return True
         else:
             return False
+
+    def getPos(self, pos):
+        positionOnThesScreen = self.boardPos + pygame.math.Vector2(pos.x * self.sizeBlock, pos.y * self.sizeBlock)
+        return positionOnThesScreen
+
