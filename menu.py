@@ -3,7 +3,7 @@ from Game.game import Game
 from tools import button
 from pygame import mixer
 import Colours
-from animated_bg import animowane_tlo
+import os
 
 # Kolor węża. Później tego nie będzie
 kolor = Colours.red
@@ -12,11 +12,12 @@ class menu():
         print("test")
         pygame.init()
 
-        #self.win = pygame.display.set_mode((1920, 1080))
-        #self.bg_img = pygame.image.load(os.path.join("img/tlo_wide.jpg"))
-        #self.bg = pygame.transform.scale(self.bg_img, (3840, 1080))
-        #self.width = 3840
-        #self.i = 0
+        #to jest potrzebne do animowanego tła
+        self.win = pygame.display.set_mode((1920, 1080))
+        self.bg_img = pygame.image.load(os.path.join("img/tlo_wide.jpg"))
+        self.bg = pygame.transform.scale(self.bg_img, (3840, 1080))
+        self.width = 3840
+        self.i = 0
 
         #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.screen = pygame.display.set_mode((1920, 1080))
@@ -113,15 +114,14 @@ class menu():
     def main_menu(self):
         run = True
         while run:
-            #self.win.fill((0, 0, 0))
-            # Create looping background
-            #self.win.blit(self.bg, (self.i, 0))
-            #self.win.blit(self.bg, (self.width + self.i, 0))
-            #if self.i == -self.width:
-                #self.win.blit(self.bg, (self.width + self.i, 0))
-                #self.i = 0
-            #self.i -= 1
-
+            #kod który robi animowane tło
+            self.win.fill((0, 0, 0))
+            self.win.blit(self.bg, (self.i, 0))
+            self.win.blit(self.bg, (self.width + self.i, 0))
+            if self.i == -self.width:
+                self.win.blit(self.bg, (self.width + self.i, 0))
+                self.i = 0
+            self.i -= 1
 
             # start gry
             if self.start_button.draw(self.screen):
@@ -147,8 +147,6 @@ class menu():
                 mixer.music.set_volume(0.1)
             if self.off_button.draw(self.screen):
                 mixer.music.set_volume(0)
-
-            animowane_tlo()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
