@@ -22,9 +22,13 @@ class Game():
         self.result = 0
         # 1200 # 880
 
+        big_map = 20
+        medium_map = 15
+        small_map = 10
+
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         #self.screen = pygame.display.set_mode((1000, 800))
-        self.gameBoard = Board(15, 15, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
+        self.gameBoard = Board(medium_map, medium_map, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
                                              # sizeBlock - minimum 20
         #print(self.screen.get_width(), self.screen.get_height())
         # tryb gry
