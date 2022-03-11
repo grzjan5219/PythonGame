@@ -49,7 +49,7 @@ class Game():
     def Start(self):
         czcionka = pygame.font.SysFont('comicsans', 50)
         background = pygame.image.load("img/tlo_game.jpg")
-        exit_button= Buttonhover2.Button(1200, 950, "img/exit")
+        exit_button= Buttonhover2.Button(1400, 950, "img/exit", 0.7)
         on_img = pygame.image.load("img/on.png")
         off_img = pygame.image.load("img/off.png")
 

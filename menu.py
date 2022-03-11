@@ -29,12 +29,12 @@ class menu():
         self.on_img = pygame.image.load("img/on.png")
         self.off_img = pygame.image.load("img/off.png")
 
-        self.start_button = Buttonhover2.Button(600, 450, "img/start")
-        self.settings_button = Buttonhover2.Button(600, 620, "img/settings")
-        self.exit_button = Buttonhover2.Button(600, 790, "img/exit")
-        self.off_button = button.Button(1700, 950, self.off_img, 0.9)
-        self.on_button = button.Button(1570, 950, self.on_img, 0.9)
-        self.back_button = Buttonhover2.Button(600, 750, "img/back")
+        self.start_button = Buttonhover2.Button(600, 450, "img/start", 0.8)
+        self.settings_button = Buttonhover2.Button(600, 620, "img/settings", 0.8)
+        self.exit_button = Buttonhover2.Button(600, 790, "img/exit", 0.8)
+        self.back_button = Buttonhover2.Button(600, 750, "img/back", 0.8)
+        self.on_button = Buttonhover2.Button(1550, 950, "img/on", 1)
+        self.off_button = Buttonhover2.Button(1700, 950, "img/off", 1)
 
     # ustawienia wizualne (Tu będzie się znajdować zmiana kolorystyki węża, owocu i planszy)
     def wizualne(self):
@@ -69,6 +69,8 @@ class menu():
             self.screen.blit(self.tlo_settings_img, (0, 0))
             self.start_button.draw(self.screen)
             self.back_button.draw(self.screen)
+            self.on_button.draw(self.screen)
+            self.off_button.draw(self.screen)
             pygame.display.set_caption("Snake- ustawienia")
 
             # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
@@ -81,9 +83,9 @@ class menu():
                 return True
 
             # opcje dźwięku
-            if self.on_button.draw(self.screen):
+            if self.on_button.tick():
                 mixer.music.set_volume(0.1)
-            if self.off_button.draw(self.screen):
+            if self.off_button.tick():
                 mixer.music.set_volume(0)
 
             for event in pygame.event.get():
@@ -99,6 +101,8 @@ class menu():
             self.start_button.draw(self.screen)
             self.settings_button.draw(self.screen)
             self.exit_button.draw(self.screen)
+            self.on_button.draw(self.screen)
+            self.off_button.draw(self.screen)
 
             # start gry
             if self.start_button.tick():
@@ -120,9 +124,9 @@ class menu():
                 pass
 
             # opcje dźwięku
-            if self.on_button.draw(self.screen):
+            if self.on_button.tick():
                 mixer.music.set_volume(0.1)
-            if self.off_button.draw(self.screen):
+            if self.off_button.tick():
                 mixer.music.set_volume(0)
 
             for event in pygame.event.get():
