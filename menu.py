@@ -77,10 +77,6 @@ class menu():
                 print("back")
                 return True
 
-            if self.back_button.tick():
-                print("back")
-                return True
-
             # opcje dźwięku
             if self.on_button.tick():
                 mixer.music.set_volume(0.1)
@@ -112,9 +108,9 @@ class menu():
 
             #  przycisk ustawień w main menu
             if self.settings_button.tick():
-                print("settings")
                 self.settings()
                 pygame.display.update()
+                print("settings")
 
             # wyjście
             if self.exit_button.tick():
