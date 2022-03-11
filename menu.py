@@ -3,13 +3,9 @@ from Game.game import Game
 from tools import Buttonhover2
 from tools import button
 from pygame import mixer
-import Colours
 
-# Kolor węża. Później tego nie będzie
-kolor = Colours.red
 class menu():
     def __init__(self):
-        print("test")
         pygame.init()
         #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.screen = pygame.display.set_mode((1920, 1080))
@@ -46,13 +42,15 @@ class menu():
         while run:
             self.screen.blit(self.tlo_settings_img, (0, 0))
             pygame.display.set_caption("Snake- ustawienia")
+            self.exit_button.draw(self.screen)
+            self.back_button.draw(self.screen)
 
-            if self.exit_button.draw(self.screen):
+            if self.exit_button.tick():
                 run = False
                 print("exit")
                 pass
 
-            if self.back_button.draw(self.screen):
+            if self.back_button.tick():
                 print("exit")
                 run = False
                 pass
@@ -74,7 +72,7 @@ class menu():
             pygame.display.set_caption("Snake- ustawienia")
 
             # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
-            if self.start_button.draw(self.screen):
+            if self.start_button.tick():
                 print("test")
                 self.wizualne()
                 pygame.display.update()
