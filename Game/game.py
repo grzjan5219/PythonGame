@@ -8,7 +8,6 @@ from Game.przeszkoda import Przeszkoda
 from Game.direction import Direction
 from Game.fruitType import FruitType
 from Game.gameMode import GameMode
-from tools import button
 from tools import Buttonhover2
 from Game.przeszkodaType import PrzeszkodaType
 
@@ -53,7 +52,8 @@ class Game():
         on_button = Buttonhover2.Button(1600, 40, "img/on", 1)
         off_button = Buttonhover2.Button(1750, 40, "img/off", 1)
 
-        while True:
+        run = True
+        while run:
             # rysowanie, wyświetlanie
             pygame.Surface.blit(self.screen, background, (0, 0))
             exit_button.draw(self.screen)
@@ -155,9 +155,10 @@ class Game():
             self.exit_button.draw(self.screen)
 
             if self.retry_button.tick():
+                print("start")
+                run = False
                 game = Game()
                 game.Start()
-                print("start")
                 pass
             if self.exit_button.tick():
                 sys.exit(0)

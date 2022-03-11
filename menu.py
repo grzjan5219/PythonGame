@@ -45,13 +45,8 @@ class menu():
             self.exit_button.draw(self.screen)
             self.back_button.draw(self.screen)
 
-            if self.exit_button.tick():
-                run = False
-                print("exit")
-                pass
-
             if self.back_button.tick():
-                print("exit")
+                print("back")
                 run = False
                 pass
 
@@ -75,11 +70,15 @@ class menu():
 
             # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
             if self.start_button.tick():
-                print("test")
                 self.wizualne()
                 pygame.display.update()
 
             if self.back_button.tick():
+                print("back")
+                return True
+
+            if self.back_button.tick():
+                print("back")
                 return True
 
             # opcje dźwięku
@@ -113,9 +112,9 @@ class menu():
 
             #  przycisk ustawień w main menu
             if self.settings_button.tick():
+                print("settings")
                 self.settings()
                 pygame.display.update()
-                print("settings")
 
             # wyjście
             if self.exit_button.tick():
