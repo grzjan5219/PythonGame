@@ -3,7 +3,7 @@ from Game.game import Game
 from tools import button
 from pygame import mixer
 import Colours
-from pyvidplayer import Video
+from tools.pyvidplayer import Video
 
 # Kolor węża. Później tego nie będzie
 kolor = Colours.red
@@ -44,7 +44,8 @@ class menu():
         self.on_button = button.Button(1570, 950, self.on_img, 0.9)
         self.back_button = button.Button(700, 750, self.back_img, 0.7)
 
-        self.vid = Video("video/tlo.mp4")
+        #filmik, który pokazuje się przed samą grą
+        self.vid = Video("video/intro.mp4")
         self.vid.set_size((1920, 1080))
 
     # ustawienia wizualne (Tu będzie się znajdować zmiana kolorystyki węża, owocu i planszy)
@@ -107,15 +108,19 @@ class menu():
             pygame.display.update()
 
 
-
+    # załadowanie intra
     def intro(self):
         while True:
+            mixer.music.pause()
             self.vid.draw(self.screen, (0, 0))
             pygame.display.update()
             for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.QUIT:
                     self.vid.close()
+                    mixer.music.unpause()
                     self.main_menu()
+                    pygame.quit()
+                    quit()
 
 
     def main_menu(self):
