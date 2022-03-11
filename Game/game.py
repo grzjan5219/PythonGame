@@ -147,17 +147,19 @@ class Game():
             wynik = czcionka.render("Punkty: {0}".format(self.result), 1, (0, 0, 0))
             self.screen.blit(wynik, (720, 500))
 
-            self.retry_img = pygame.image.load("img/retry.png")
+            self.retry_button = pygame.image.load("img/retry.png")
             self.exit_img = pygame.image.load("img/exit.png")
-            self.retry_button = button.Button(700, 700, self.retry_img, 0.7)
-            self.exit_button = button.Button(700, 850, self.exit_img, 0.7)
+            self.retry_button = Buttonhover2.Button(700, 700, "img/retry", 0.7)
+            self.exit_button = Buttonhover2.Button(700, 850, "img/exit", 0.7)
+            self.retry_button.draw(self.screen)
+            self.exit_button.draw(self.screen)
 
-            if self.retry_button.draw(self.screen):
+            if self.retry_button.tick():
                 game = Game()
                 game.Start()
                 print("start")
                 pass
-            if self.exit_button.draw(self.screen):
+            if self.exit_button.tick():
                 sys.exit(0)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
