@@ -29,10 +29,10 @@ class menu():
         self.on_img = pygame.image.load("img/on.png")
         self.off_img = pygame.image.load("img/off.png")
 
-        self.start_button = Buttonhover2.Button(600, 450, "img/start", 0.8)
-        self.settings_button = Buttonhover2.Button(600, 620, "img/settings", 0.8)
-        self.exit_button = Buttonhover2.Button(600, 790, "img/exit", 0.8)
-        self.back_button = Buttonhover2.Button(600, 750, "img/back", 0.8)
+        self.start_button = Buttonhover2.Button(650, 450, "img/start", 0.8)
+        self.settings_button = Buttonhover2.Button(650, 620, "img/settings", 0.8)
+        self.exit_button = Buttonhover2.Button(650, 790, "img/exit", 0.8)
+        self.back_button = Buttonhover2.Button(650, 750, "img/back", 0.8)
         self.on_button = Buttonhover2.Button(1550, 950, "img/on", 1)
         self.off_button = Buttonhover2.Button(1700, 950, "img/off", 1)
 

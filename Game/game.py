@@ -50,16 +50,15 @@ class Game():
         czcionka = pygame.font.SysFont('comicsans', 50)
         background = pygame.image.load("img/tlo_game.jpg")
         exit_button= Buttonhover2.Button(1400, 950, "img/exit", 0.7)
-        on_img = pygame.image.load("img/on.png")
-        off_img = pygame.image.load("img/off.png")
-
-        off_button = button.Button(1750, 40, off_img, 0.9)
-        on_button = button.Button(1620, 40, on_img, 0.9)
+        on_button = Buttonhover2.Button(1600, 40, "img/on", 1)
+        off_button = Buttonhover2.Button(1750, 40, "img/off", 1)
 
         while True:
             # rysowanie, wyświetlanie
             pygame.Surface.blit(self.screen, background, (0, 0))
             exit_button.draw(self.screen)
+            on_button.draw(self.screen)
+            off_button.draw(self.screen)
 
             # Przycisk exit
             if exit_button.tick():
@@ -68,10 +67,10 @@ class Game():
                 return True
 
             # Opcje dźwięku
-            if on_button.draw(self.screen):
+            if on_button.tick():
                 mixer.music.set_volume(0.1)
 
-            if off_button.draw(self.screen):
+            if off_button.tick():
                 mixer.music.set_volume(0)
 
             # obługa zdarzeń
