@@ -1,15 +1,13 @@
 import pygame
 from Game.game import Game
+from tools import Buttonhover2
 from tools import button
 from pygame import mixer
 import Colours
 from tools.pyvidplayer import Video
 
-# Kolor węża. Później tego nie będzie
-kolor = Colours.red
 class menu():
     def __init__(self):
-        print("test")
         pygame.init()
         #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.screen = pygame.display.set_mode((1920, 1080))
@@ -30,19 +28,15 @@ class menu():
         mixer.music.set_volume(0.1)
 
         # opcje wyboru
-        self.start_img = pygame.image.load("img/start.png")
-        self.settings_img = pygame.image.load("img/settings.png")
-        self.exit_img = pygame.image.load("img/exit.png")
         self.on_img = pygame.image.load("img/on.png")
         self.off_img = pygame.image.load("img/off.png")
-        self.back_img = pygame.image.load("img/back.png")
 
-        self.start_button = button.Button(700, 450, self.start_img, 0.7)
-        self.settings_button = button.Button(700, 600, self.settings_img, 0.7)
-        self.exit_button = button.Button(700, 750, self.exit_img, 0.7)
-        self.off_button = button.Button(1700, 950, self.off_img, 0.9)
-        self.on_button = button.Button(1570, 950, self.on_img, 0.9)
-        self.back_button = button.Button(700, 750, self.back_img, 0.7)
+        self.start_button = Buttonhover2.Button(650, 450, "img/start", 0.8)
+        self.settings_button = Buttonhover2.Button(650, 620, "img/settings", 0.8)
+        self.exit_button = Buttonhover2.Button(650, 790, "img/exit", 0.8)
+        self.back_button = Buttonhover2.Button(650, 750, "img/back", 0.8)
+        self.on_button = Buttonhover2.Button(1550, 950, "img/on", 1)
+        self.off_button = Buttonhover2.Button(1700, 950, "img/off", 1)
 
         #filmik, który pokazuje się przed samą grą
         self.vid = Video("video/intro.mp4")
@@ -54,14 +48,11 @@ class menu():
         while run:
             self.screen.blit(self.tlo_settings_img, (0, 0))
             pygame.display.set_caption("Snake- ustawienia")
+            self.exit_button.draw(self.screen)
+            self.back_button.draw(self.screen)
 
-            if self.exit_button.draw(self.screen):
-                run = False
-                print("exit")
-                pass
-
-            if self.back_button.draw(self.screen):
-                print("exit")
+            if self.back_button.tick():
+                print("back")
                 run = False
                 pass
 
@@ -74,31 +65,28 @@ class menu():
 
     # główne ustawienia (Tu będą znajdować się opcje m.in. wizualne, zmiany  trudności..)
     def settings(self):
-        run = True
-        while run:
+        run2 = True
+        while run2:
             self.screen.blit(self.tlo_settings_img, (0, 0))
+            self.start_button.draw(self.screen)
+            self.back_button.draw(self.screen)
+            self.on_button.draw(self.screen)
+            self.off_button.draw(self.screen)
             pygame.display.set_caption("Snake- ustawienia")
 
             # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
-            if self.start_button.draw(self.screen):
-                print("test")
+            if self.start_button.tick():
                 self.wizualne()
                 pygame.display.update()
 
-            if self.exit_button.draw(self.screen):
-                run = False
-                print("exit")
-                pass
-
-            if self.back_button.draw(self.screen):
-                print("exit")
-                run = False
-                pass
+            if self.back_button.tick():
+                print("back")
+                return True
 
             # opcje dźwięku
-            if self.on_button.draw(self.screen):
+            if self.on_button.tick():
                 mixer.music.set_volume(0.1)
-            if self.off_button.draw(self.screen):
+            if self.off_button.tick():
                 mixer.music.set_volume(0)
 
             for event in pygame.event.get():
@@ -127,30 +115,35 @@ class menu():
         run = True
         while run:
             self.screen.blit(self.tlo_img, (0, 0))
+            self.start_button.draw(self.screen)
+            self.settings_button.draw(self.screen)
+            self.exit_button.draw(self.screen)
+            self.on_button.draw(self.screen)
+            self.off_button.draw(self.screen)
 
             # start gry
-            if self.start_button.draw(self.screen):
+            if self.start_button.tick():
                 game = Game()
                 game.Start()
                 print("start")
                 pass
 
             #  przycisk ustawień w main menu
-            if self.settings_button.draw(self.screen):
+            if self.settings_button.tick():
                 self.settings()
                 pygame.display.update()
                 print("settings")
 
             # wyjście
-            if self.exit_button.draw(self.screen):
+            if self.exit_button.tick():
                 run = False
                 print("exit")
                 pass
 
             # opcje dźwięku
-            if self.on_button.draw(self.screen):
+            if self.on_button.tick():
                 mixer.music.set_volume(0.1)
-            if self.off_button.draw(self.screen):
+            if self.off_button.tick():
                 mixer.music.set_volume(0)
 
             for event in pygame.event.get():
