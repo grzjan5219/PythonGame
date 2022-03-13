@@ -3,6 +3,8 @@ from Game.game import Game
 from tools import Buttonhover2
 from tools import button
 from pygame import mixer
+import Colours
+from tools.pyvidplayer import Video
 
 class menu():
     def __init__(self):
@@ -35,6 +37,10 @@ class menu():
         self.back_button = Buttonhover2.Button(650, 750, "img/back", 0.8)
         self.on_button = Buttonhover2.Button(1550, 950, "img/on", 1)
         self.off_button = Buttonhover2.Button(1700, 950, "img/off", 1)
+
+        #filmik, który pokazuje się przed samą grą
+        self.vid = Video("video/intro.mp4")
+        self.vid.set_size((1920, 1080))
 
     # ustawienia wizualne (Tu będzie się znajdować zmiana kolorystyki węża, owocu i planszy)
     def wizualne(self):
@@ -89,6 +95,22 @@ class menu():
                     quit()
             pygame.display.update()
 
+
+    # załadowanie intra
+    def intro(self):
+        while True:
+            mixer.music.pause()
+            self.vid.draw(self.screen, (0, 0))
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.QUIT:
+                    self.vid.close()
+                    mixer.music.unpause()
+                    self.main_menu()
+                    pygame.quit()
+                    quit()
+
+
     def main_menu(self):
         run = True
         while run:
@@ -130,4 +152,5 @@ class menu():
                     quit()
             pygame.display.update()
 menu = menu()
-menu.main_menu()
+#menu.main_menu()
+menu.intro()

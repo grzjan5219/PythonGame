@@ -2,7 +2,6 @@ import pygame
 import random
 from Game.przeszkodaType import PrzeszkodaType
 from Game.przeszkodaDirection import PrzeszkodaDirection
-from pygame import mixer
 
 class Przeszkoda():
     def __init__(self, game):
@@ -25,7 +24,7 @@ class Przeszkoda():
 
     def respawn(self, przeszkodaDirection):
         self.game.gameBoard.fields[przeszkodaDirection.x][przeszkodaDirection.y].przeszkodaType = PrzeszkodaType.none
-        while True:
+        if True:
             x = random.randint(0, self.game.gameBoard.width - 1)
             y = random.randint(0, self.game.gameBoard.height - 1)
 

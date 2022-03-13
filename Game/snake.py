@@ -116,9 +116,10 @@ class Snake():
                 self.game.result += 1
                 self.game.food.respawn(self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruit)
 
-        #if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].przeszkodaType != PrzeszkodaType.none:
-        #    if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].przeszkodaType == PrzeszkodaType.common:
-        #        self.game.przeszkoda.respawn(self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].przeszkodaDirection)
+        if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].przeszkodaType != PrzeszkodaType.none:
+            if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].przeszkodaType == PrzeszkodaType.common:
+                pygame.quit()
+                quit()
 
         if self.turningDirection == Direction.none:
             self.turningDirection = self.headSection.currentDirection
