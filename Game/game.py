@@ -8,7 +8,7 @@ from Game.przeszkoda import Przeszkoda
 from Game.direction import Direction
 from Game.fruitType import FruitType
 from Game.gameMode import GameMode
-from tools import button
+from tools import Buttonhover2
 from Game.przeszkodaType import PrzeszkodaType
 from os import path
 
@@ -65,29 +65,29 @@ class Game():
     def Start(self):
         czcionka = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
         background = pygame.image.load("img/tlo_game.jpg")
-        exit_img = pygame.image.load("img/exit.png")
-        on_img = pygame.image.load("img/on.png")
-        off_img = pygame.image.load("img/off.png")
+        exit_button= Buttonhover2.Button(1400, 950, "img/exit", 0.7)
+        on_button = Buttonhover2.Button(1600, 40, "img/on", 1)
+        off_button = Buttonhover2.Button(1750, 40, "img/off", 1)
 
-        off_button = button.Button(1750, 40, off_img, 0.9)
-        on_button = button.Button(1620, 40, on_img, 0.9)
-        exit_button = button.Button(1500, 950, exit_img, 0.5)
-
-        while True:
+        run = True
+        while run:
             # rysowanie, wyświetlanie
             pygame.Surface.blit(self.screen, background, (0, 0))
+            exit_button.draw(self.screen)
+            on_button.draw(self.screen)
+            off_button.draw(self.screen)
 
             # Przycisk exit
-            if exit_button.draw(self.screen):
+            if exit_button.tick():
                 mixer.music.load("sounds/BG music - menu.mp3")
                 mixer.music.play(-1)
                 return True
 
             # Opcje dźwięku
-            if on_button.draw(self.screen):
+            if on_button.tick():
                 mixer.music.set_volume(0.1)
 
-            if off_button.draw(self.screen):
+            if off_button.tick():
                 mixer.music.set_volume(0)
 
             # obługa zdarzeń
@@ -175,17 +175,20 @@ class Game():
                     self.screen.blit(nowy_rekord, (750, 580))
 
 
-            self.retry_img = pygame.image.load("img/retry.png")
+            self.retry_button = pygame.image.load("img/retry.png")
             self.exit_img = pygame.image.load("img/exit.png")
-            self.retry_button = button.Button(700, 700, self.retry_img, 0.7)
-            self.exit_button = button.Button(700, 850, self.exit_img, 0.7)
+            self.retry_button = Buttonhover2.Button(700, 700, "img/retry", 0.7)
+            self.exit_button = Buttonhover2.Button(700, 850, "img/exit", 0.7)
+            self.retry_button.draw(self.screen)
+            self.exit_button.draw(self.screen)
 
-            if self.retry_button.draw(self.screen):
+            if self.retry_button.tick():
+                print("start")
+                run = False
                 game = Game()
                 game.Start()
-                print("start")
                 pass
-            if self.exit_button.draw(self.screen):
+            if self.exit_button.tick():
                 sys.exit(0)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
