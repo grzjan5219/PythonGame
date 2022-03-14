@@ -126,6 +126,7 @@ class Game():
                 self.deltaTime += (self.clock.tick() / 1000.0)
                 self.snake.Move()
 
+
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację
             #pygame.draw.rect(self.screen, (0 , 255, 0), pygame.Rect(1100, 80, 360, 700))

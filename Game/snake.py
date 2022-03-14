@@ -61,6 +61,7 @@ class Snake():
     def Move(self):
         while self.game.deltaTime > (1 / self.game.tps):
             self.game.deltaTime -= (1 / self.game.tps)
+            self.game.food.tick()
 
             self.displacementValue += self.game.speed
 
