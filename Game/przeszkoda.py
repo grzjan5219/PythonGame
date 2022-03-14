@@ -6,7 +6,7 @@ from Game.przeszkodaDirection import PrzeszkodaDirection
 class Przeszkoda():
     def __init__(self, game):
         self.game = game
-        self.commonPrzeszkodaImage2 = pygame.transform.scale(pygame.image.load("img/cytryna.png"), (self.game.gameBoard.sizeBlock, self.game.gameBoard.sizeBlock))
+        self.commonPrzeszkodaImage2 = pygame.transform.scale(pygame.image.load("img/bomb.png"), (self.game.gameBoard.sizeBlock, self.game.gameBoard.sizeBlock))
         self.przeszkoda_list = [self.commonPrzeszkodaImage2]
         self.przeszkody = []
 

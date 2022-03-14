@@ -118,8 +118,8 @@ class Snake():
 
         if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].przeszkodaType != PrzeszkodaType.none:
             if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].przeszkodaType == PrzeszkodaType.common:
-                pygame.quit()
-                quit()
+                self.game.Defeat()
+                return
 
         if self.turningDirection == Direction.none:
             self.turningDirection = self.headSection.currentDirection
