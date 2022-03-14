@@ -1,5 +1,3 @@
-from Game.przeszkodaType import PrzeszkodaType
-
 class PrzeszkodaDirection():
     def __init__(self, przeszkodaType):
         self.przeszkodaType = przeszkodaType

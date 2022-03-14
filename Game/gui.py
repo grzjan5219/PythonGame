@@ -1,5 +1,6 @@
 import pygame
-from tools.button import Button
+import tools
+from tools.Buttonhover2 import Button
 from Game.direction import Direction
 from pygame import mixer
 
@@ -7,36 +8,36 @@ class Gui():
     def __init__(self, game):
         self.game = game
 
-        #czcionka = pygame.font.SysFont('comicsans', 40)
+        self.czcionka = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
+        self.background = pygame.image.load("img/tlo_game.jpg")
+        self.exit_button = tools.Buttonhover2.Button(1400, 950, "img/exit", 0.7)
+        self.on_button = tools.Buttonhover2.Button(1600, 40, "img/on", 1)
+        self.off_button = tools.Buttonhover2.Button(1750, 40, "img/off", 1)
 
-        exit_img = pygame.image.load("img/exit.png")
-        on_img = pygame.image.load("img/on.png")
-        off_img = pygame.image.load("img/off.png")
-
-        self.off_button = Button(1610, 760, off_img, 0.9)
-        self.on_button = Button(1480, 760, on_img, 0.9)
-        self.exit_button = Button(1435, 880, exit_img, 0.5)
         self.dialogue_font = pygame.font.Font('customFont/upheavtt.ttf', 60)
-
         self.dialogue = self.dialogue_font.render("press 'SPACE BAR' to play", 1, (0, 0, 0))
 
     def draw(self):
+        # rysowanie, wyświetlanie
+        pygame.Surface.blit(self.game.screen, self.background, (0, 0))
+        self.exit_button.draw(self.game.screen)
+        self.on_button.draw(self.game.screen)
+        self.off_button.draw(self.game.screen)
+
         # Przycisk exit
-        if self.exit_button.draw(self.game.screen):
+        if self.exit_button.tick():
             mixer.music.load("sounds/BG music - menu.mp3")
             mixer.music.play(-1)
             return True
 
         # Opcje dźwięku
-        if self.on_button.draw(self.game.screen):
+        if self.on_button.tick():
             mixer.music.set_volume(0.1)
 
-        if self.off_button.draw(self.game.screen):
+        if self.off_button.tick():
             mixer.music.set_volume(0)
 
-        result = self.dialogue_font.render("Punkty {0}".format(self.game.result), 1, (0, 0, 0))
+        wynik = self.czcionka.render("Score: {0}".format(self.game.result), 1, (0, 0, 0))
 
-        self.game.screen.blit(result, (1450, 150))
-
-        if not self.game.isRun:
-            self.game.screen.blit(self.dialogue, (300, 700))
+        self.game.screen.blit(self.dialogue, (325, 1000))
+        self.game.screen.blit(wynik, (5, 10))

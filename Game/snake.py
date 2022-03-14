@@ -1,12 +1,12 @@
 import pygame
 from copy import deepcopy
 from Game.fruitType import FruitType
-from Game.przeszkodaType import PrzeszkodaType
+from Archive.przeszkodaType import PrzeszkodaType
 from Game.direction import Direction
 from Game.section import Section
 from Game.sectionTimeWarp import SectionTimeWarp
 from Game.gameMode import GameMode
-from collections import deque
+
 
 class Snake():
     def __init__(self, game):
@@ -19,11 +19,8 @@ class Snake():
         self.displacementValue = 0
         self.removeWarp = None
 
-        #print("rozmiar: ", game.gameBoard.sizeBlock)
-
         #początek snake
         self.purposeMove = self.headFieldPos + pygame.math.Vector2(1, 0)
-        #self.turningDirection = Direction.none
         self.headSection = Section()
         self.headSection.currentDirection = Direction.right
         self.headSection.rect = pygame.Rect(self.headFieldCord.x, self.headFieldCord.y, game.gameBoard.sizeBlock, game.gameBoard.sizeBlock)
@@ -80,12 +77,6 @@ class Snake():
                         continue
 
                     sectionWarp.rect = deepcopy(sectionWarp.defaultRect)
-                        #print("usuwanie------------------------------------------------------------")
-
-
-
-                #print("midd: ", self.purposeMove.x, self.purposeMove.y)
-                #print("przed:", self.purposeMove.x, self.purposeMove.y)
 
                 self.changeBodyPurpose()
                 self.changeHeadPurpose()
@@ -94,12 +85,10 @@ class Snake():
                     self.endSnakePos = self.removeWarp.endPos
                     self.timeWarp.remove(self.removeWarp)
                     self.removeWarp = None
-                    # print(len(self.timeWarp))
 
                 self.continueWayToPurpose(distanceExcess)
 
                 self.displacementValue -= self.game.gameBoard.sizeBlock
-                #print("po:   ", self.purposeMove.x, self.purposeMove.y)
             else:
                 self.continueWayToPurpose(self.game.speed)
 
@@ -107,20 +96,13 @@ class Snake():
         if self.isNewSegment:
             self.isNewSegment = False
 
-        #print(self.purposeMove.x, self.purposeMove.y)
-
         if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType != FruitType.none:
-            # jest owoc
             if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruitType == FruitType.common:
                 self.isNewSegment = True
                 self.addSegment()
                 self.game.result += 1
                 self.game.food.respawn(self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].fruit)
 
-        if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].przeszkodaType != PrzeszkodaType.none:
-            if self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].przeszkodaType == PrzeszkodaType.common:
-                self.game.Defeat()
-                return
 
         if self.turningDirection == Direction.none:
             self.turningDirection = self.headSection.currentDirection
@@ -133,7 +115,6 @@ class Snake():
             self.purposeMove += pygame.math.Vector2(0, 1)
         elif self.turningDirection == Direction.right:
             self.headSection.currentDirection = Direction.right
-            #print("dodano")
             self.purposeMove += pygame.math.Vector2(1, 0)
         elif self.turningDirection == Direction.left:
             self.headSection.currentDirection = Direction.left
@@ -147,27 +128,20 @@ class Snake():
                 self.timeWarpChange()
 
         if not self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].isFree:
-            #print(self.purposeMove)
             self.game.Defeat()
             return
 
         self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].isFree = False
-        #self.game.gameBoard.fields[int(self.purposeMove.x)][int(self.purposeMove.y)].color = (0, 255, 0)
-        #print("zajete: ", self.purposeMove)
         self.turningDirection = Direction.none
-        #print("po: ", self.purposeMove.x, self.purposeMove.y)
 
     def changeBodyPurpose(self):
         minus = 1
 
         if self.isNewSegment:
-            # nie przemieszcza nowego segmentu w tej sekcji ruchu
             minus +=1
         else:
             self.game.gameBoard.fields[int(self.endSnakePos.x)][int(self.endSnakePos.y)].isFree = True
-            #self.game.gameBoard.fields[int(self.endSnakePos.x)][int(self.endSnakePos.y)].color = (0, 0, 0)
 
-            #print("wolne: ", self.endSnakePos)
             if self.body[-1].currentDirection == Direction.up:
                 self.endSnakePos += pygame.math.Vector2(0, -1)
             if self.body[-1].currentDirection == Direction.down:
@@ -243,7 +217,6 @@ class Snake():
             newSection.rect = deepcopy(newSection.defaultRect)
             newSection.endPos = deepcopy(self.purposeMove)
         if self.headSection.currentDirection == Direction.right:
-            # nowy cel po lewej stronie
             self.purposeMove += pygame.math.Vector2(-self.game.gameBoard.width, 0)
 
             screenPos = self.game.gameBoard.getPos(self.purposeMove)
