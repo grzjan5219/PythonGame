@@ -3,8 +3,6 @@ import random
 from Game.fruitType import FruitType
 from Game.fruit import Fruit
 from pygame import mixer
-import copy
-import math
 
 class Food():
     def __init__(self, game):
@@ -14,15 +12,15 @@ class Food():
         self.commonFruitImage1 = pygame.transform.scale(imageLime, (self.game.gameBoard.sizeBlock, self.game.gameBoard.sizeBlock))
         self.commonFruitImage2 = pygame.transform.scale(pygame.image.load("img/cytryna.png"), (self.game.gameBoard.sizeBlock, self.game.gameBoard.sizeBlock))
         self.fruit_list = [self.commonFruitImage1, self.commonFruitImage2]
-        #print(self.game.gameBoard.sizeBlock)
+
 
         self.ImagelimeList = []
         self.addedValue = 1
-        # co który tick ma się wykonać tick()
         self.tickInvoke = 6
         self.currentTick = self.tickInvoke
-
+        self.fruits = []
         self.precision = 30 # więcej = płynniej = mniej wydajnie
+
         minScale = self.game.gameBoard.sizeBlock - (self.game.gameBoard.sizeBlock / 10.0) # 90%
         maxScale = self.game.gameBoard.sizeBlock + (self.game.gameBoard.sizeBlock / 2.0) # 150%
 
@@ -30,11 +28,8 @@ class Food():
         scaleLime = minScale
 
         for i in range(0, self.precision):
-            val = (int(scaleLime) - self.game.gameBoard.sizeBlock) / 2
             self.ImagelimeList.append(pygame.transform.smoothscale(imageLime, (int(scaleLime), int(scaleLime))))
             scaleLime += precisionLime
-
-        self.fruits = []
 
     def spawn(self):
         for fruit in self.fruits:
@@ -57,7 +52,8 @@ class Food():
 
     def respawn(self, fruit):
         self.game.gameBoard.fields[fruit.x][fruit.y].fruitType = FruitType.none
-        #self.game.gameBoard.fields[fruit.x][fruit.y].fruit = None
+        self.game.gameBoard.fields[fruit.x][fruit.y].fruit = None
+
         while True:
             x = random.randint(0, self.game.gameBoard.width - 1)
             y = random.randint(0, self.game.gameBoard.height - 1)
@@ -82,7 +78,6 @@ class Food():
 
     def add(self, fruitType):
         newFruit = Fruit(fruitType)
-        #newFruit.animationPos = copy.deepcopy(self.ImagelimeList)
         for i in range(0, self.precision):
             newFruit.animationPos.append(None)
 
@@ -109,7 +104,4 @@ class Food():
         if self.game.isRun:
             for fruit in self.fruits:
                 if fruit.fruitType == FruitType.common:
-                    #rect = self.ImagelimeList[self.counterLime].get_rect()
-                    #rect.center = self.game.gameBoard.fields[fruit.x][fruit.y].block.center
-                    print(fruit.animationPos[self.counterLime])
                     self.game.screen.blit(self.ImagelimeList[self.counterLime], (fruit.animationPos[self.counterLime].x, fruit.animationPos[self.counterLime].y))
