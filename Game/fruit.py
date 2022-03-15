@@ -1,6 +1,4 @@
-from Game.fruitType import FruitType
-
-class Fruit():
+class Fruit:
     def __init__(self, fruitType):
         self.rect = None
         self.fruitType = fruitType
