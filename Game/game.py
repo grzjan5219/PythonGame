@@ -22,6 +22,7 @@ class Game():
         self.speed = 4
         self.tps = 100.0
         self.deltaTime = 0.0
+        self.paused = False
         self.isRun = False
         self.result = 0
         # 1200 # 880
@@ -96,9 +97,9 @@ class Game():
                     sys.exit(0)
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        mixer.music.load("sounds/BG music - menu.mp3")
-                        mixer.music.play(-1)
-                        return True
+                        self.paused = not self.paused
+                    elif self.paused is True:
+                        continue
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.snake.headSection.currentDirection != Direction.down:
                         if self.snake.turningDirection == Direction.none:
                             self.snake.turningDirection = Direction.up
@@ -122,7 +123,7 @@ class Game():
 
 
             # obsługa ruchu, stałe wykonywanie niezalezne od fps
-            if self.isRun:
+            if self.isRun  and self.paused is False:
                 self.deltaTime += (self.clock.tick() / 1000.0)
                 self.snake.Move()
 
