@@ -1,5 +1,6 @@
 import pygame
 from Game.game import Game
+from Game.gameMode import GameMode
 from tools import Buttonhover2
 from tools import button
 from pygame import mixer
@@ -37,10 +38,14 @@ class menu():
         self.back_button = Buttonhover2.Button(650, 750, "img/back", 0.8)
         self.on_button = Buttonhover2.Button(1550, 950, "img/on", 1)
         self.off_button = Buttonhover2.Button(1700, 950, "img/off", 1)
+        self.on2_button = Buttonhover2.Button(850, 540, "img/on", 1)
+        self.off2_button = Buttonhover2.Button(1000, 540, "img/off", 1)
 
         #filmik, który pokazuje się przed samą grą
         self.vid = Video("video/intro.mp4")
         self.vid.set_size((1920, 1080))
+
+        self.gameMode = GameMode.standard
 
     # ustawienia wizualne (Tu będzie się znajdować zmiana kolorystyki węża, owocu i planszy)
     def wizualne(self):
@@ -68,16 +73,24 @@ class menu():
         run2 = True
         while run2:
             self.screen.blit(self.tlo_settings_img, (0, 0))
-            self.start_button.draw(self.screen)
             self.back_button.draw(self.screen)
             self.on_button.draw(self.screen)
             self.off_button.draw(self.screen)
+            self.on2_button.draw(self.screen)
+            self.off2_button.draw(self.screen)
+
             pygame.display.set_caption("Snake- ustawienia")
 
             # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
-            if self.start_button.tick():
-                self.wizualne()
-                pygame.display.update()
+            if self.on2_button.tick():
+                self.gameMode = GameMode.timeWarp
+                print(self.gameMode)
+                return
+
+            if self.off2_button.tick():
+                self.gameMode = GameMode.standard
+                print(self.gameMode)
+                return
 
             if self.back_button.tick():
                 print("back")
@@ -123,7 +136,7 @@ class menu():
 
             # start gry
             if self.start_button.tick():
-                game = Game()
+                game = Game(self.gameMode)
                 game.Start()
                 print("start")
                 pass

@@ -16,7 +16,7 @@ from os import path
 HS_FILE = "highscore.txt"
 
 class Game():
-    def __init__(self):
+    def __init__(self, gamemode):
         #inicjalizacja
         self.clock = pygame.time.Clock()
         self.speed = 4
@@ -36,7 +36,7 @@ class Game():
                                              # sizeBlock - minimum 20
         #print(self.screen.get_width(), self.screen.get_height())
         # tryb gry
-        self.gameMode = GameMode.timeWarp
+        self.gameMode = gamemode
 
         self.snake = Snake(self)
         self.food = Food(self)
@@ -186,7 +186,7 @@ class Game():
             if self.retry_button.tick():
                 print("start")
                 run = False
-                game = Game()
+                game = Game(self.gameMode)
                 game.Start()
                 pass
             if self.exit_button.tick():
