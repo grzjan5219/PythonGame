@@ -123,9 +123,11 @@ class Game():
 
 
             # obsługa ruchu, stałe wykonywanie niezalezne od fps
-            if self.isRun  and self.paused is False:
-                self.deltaTime += (self.clock.tick() / 1000.0)
-                self.snake.Move()
+            if self.isRun:
+                oneTick = (self.clock.tick() / 1000.0)
+                if self.paused is False:
+                    self.deltaTime += oneTick
+                    self.snake.Move()
 
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację
