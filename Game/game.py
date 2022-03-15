@@ -78,6 +78,9 @@ class Game():
             on_button.draw(self.screen)
             off_button.draw(self.screen)
 
+            pause_font = pygame.font.Font('customFont/upheavtt.ttf', 100)
+            pause = pause_font.render("Paused", 1, (0, 0, 0))
+
             # Przycisk exit
             if exit_button.tick():
                 mixer.music.load("sounds/BG music - menu.mp3")
@@ -128,6 +131,8 @@ class Game():
                 if self.paused is False:
                     self.deltaTime += oneTick
                     self.snake.Move()
+                elif self.paused is True:
+                    self.screen.blit(pause, (625, 10))
 
             self.gameBoard.draw()
             # tymczasowy prostokąt wyznaczający miejsce na informację
