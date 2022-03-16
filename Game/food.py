@@ -13,13 +13,12 @@ class Food():
         self.commonFruitImage2 = pygame.transform.scale(pygame.image.load("img/cytryna.png"), (self.game.gameBoard.sizeBlock, self.game.gameBoard.sizeBlock))
         self.fruit_list = [self.commonFruitImage1, self.commonFruitImage2]
 
-
         self.ImagelimeList = []
         self.addedValue = 1
         self.tickInvoke = 6
         self.currentTick = self.tickInvoke
         self.fruits = []
-        self.precision = 30 # więcej = płynniej = mniej wydajnie
+        self.precision = 30
 
         minScale = self.game.gameBoard.sizeBlock - (self.game.gameBoard.sizeBlock / 10.0) # 90%
         maxScale = self.game.gameBoard.sizeBlock + (self.game.gameBoard.sizeBlock / 2.0) # 150%
