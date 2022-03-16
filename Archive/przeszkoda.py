@@ -1,7 +1,7 @@
 import pygame
 import random
-from Game.przeszkodaType import PrzeszkodaType
-from Game.przeszkodaDirection import PrzeszkodaDirection
+from Archive.przeszkodaType import PrzeszkodaType
+from Archive.przeszkodaDirection import PrzeszkodaDirection
 
 class Przeszkoda():
     def __init__(self, game):
