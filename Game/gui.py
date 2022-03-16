@@ -1,5 +1,6 @@
 import pygame
 import tools
+from menu import menu
 from tools.Buttonhover2 import Button
 from Game.direction import Direction
 from pygame import mixer
@@ -26,9 +27,12 @@ class Gui():
 
         # Przycisk exit
         if self.exit_button.tick():
-            mixer.music.load("sounds/BG music - menu.mp3")
-            mixer.music.play(-1)
-            return True
+            pago = menu()
+            pago.settings()
+
+            #mixer.music.load("sounds/BG music - menu.mp3")
+            #mixer.music.play(-1)
+            #return True
 
         # Opcje dźwięku
         if self.on_button.tick():
