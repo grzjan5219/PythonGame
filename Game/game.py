@@ -148,7 +148,7 @@ class Game():
 
             if self.retry_button.tick():
                 run = False
-                game = Game()
+                game = Game(self.gameMode)
                 game.Start()
                 pass
             if self.exit_button.tick():

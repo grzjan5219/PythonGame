@@ -27,6 +27,8 @@ class menu():
         self.off_button = Buttonhover2.Button(1700, 950, "img/off", 1)
         self.on2_button = Buttonhover2.Button(1150, 540, "img/on", 1)
         self.off2_button = Buttonhover2.Button(1300, 540, "img/off", 1)
+        self.on2_button = Buttonhover2.Button(1150, 540, "img/on", 1)
+        self.off2_button = Buttonhover2.Button(1300, 540, "img/off", 1)
 
         # filmik, który pokazuje się przed samą grą
         self.vid = Video("video/intro.mp4")
