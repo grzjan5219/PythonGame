@@ -22,6 +22,7 @@ class Game():
         self.speed = 4
         self.tps = 100.0
         self.deltaTime = 0.0
+        self.paused = False
         self.isRun = False
         self.result = 0
 
@@ -61,7 +62,10 @@ class Game():
                 self.highscore = 0
 
     def Start(self):
+
         while True:
+            pause_font = pygame.font.Font('customFont/upheavtt.ttf', 100)
+            pause = pause_font.render("Paused", 1, (0, 0, 0))
 
             # obługa zdarzeń
             for event in pygame.event.get():
@@ -69,9 +73,9 @@ class Game():
                     sys.exit(0)
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        mixer.music.load("sounds/BG music - menu.mp3")
-                        mixer.music.play(-1)
-                        return True
+                        self.paused = not self.paused
+                    elif self.paused is True:
+                        continue
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.snake.headSection.currentDirection != Direction.down:
                         if self.snake.turningDirection == Direction.none:
                             self.snake.turningDirection = Direction.up
@@ -94,8 +98,12 @@ class Game():
 
             # obsługa ruchu, stałe wykonywanie niezalezne od fps
             if self.isRun:
-                self.deltaTime += (self.clock.tick() / 1000.0)
-                self.snake.Move()
+                oneTick = (self.clock.tick() / 1000.0)
+                if self.paused is False:
+                    self.deltaTime += oneTick
+                    self.snake.Move()
+                elif self.paused is True:
+                    self.screen.blit(pause, (625, 10))
 
             self.gui.draw()
             self.gameBoard.draw()
