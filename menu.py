@@ -4,11 +4,15 @@ from Game.gameMode import GameMode
 from tools import Buttonhover2
 from pygame import mixer
 from tools.pyvidplayer import Video
+from tools.button import Button
 
 class menu():
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+        self.dialogue_font = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
+        self.dialogue = self.dialogue_font.render("Penetrating through walls: ", 1, (0, 0, 0))
 
         pygame.display.set_caption("Snake")
 
@@ -27,14 +31,15 @@ class menu():
         self.off_button = Buttonhover2.Button(1700, 950, "img/off", 1)
         self.on2_button = Buttonhover2.Button(1150, 540, "img/on", 1)
         self.off2_button = Buttonhover2.Button(1300, 540, "img/off", 1)
-        self.on2_button = Buttonhover2.Button(1150, 540, "img/on", 1)
-        self.off2_button = Buttonhover2.Button(1300, 540, "img/off", 1)
+
+        self.onHoverButton = Button(1150, 540, pygame.image.load("img/onhover.png"), 1)
+        self.offHoverButton = Button(1300, 540,  pygame.image.load("img/offhover.png"), 1)
 
         # filmik, który pokazuje się przed samą grą
         self.vid = Video("video/intro.mp4")
         self.vid.set_size((1920, 1080))
 
-        self.gameMode = GameMode.standard
+        self.setDefaultSettings()
 
         # muzyka w tle
         mixer.music.load("sounds/BG music - menu.mp3")
@@ -59,31 +64,34 @@ class menu():
             pygame.display.update()
 
 
+
     # główne ustawienia (Tu będą znajdować się opcje m.in. wizualne, zmiany  trudności..)
     def settings(self):
         while True:
             self.screen.blit(self.tlo_settings_img, (0, 0))
-            self.dialogue_font = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
-            self.dialogue = self.dialogue_font.render("Penetrating through walls: ", 1, (0, 0, 0))
+
             self.screen.blit(self.dialogue, (450, 540))
             self.back_button.draw(self.screen)
             self.on_button.draw(self.screen)
             self.off_button.draw(self.screen)
-            self.on2_button.draw(self.screen)
-            self.off2_button.draw(self.screen)
+
+            if self.gameMode == GameMode.standard:
+                self.offHoverButton.draw(self.screen)
+                self.on2_button.draw(self.screen)
+            elif self.gameMode == GameMode.timeWarp:
+                self.onHoverButton.draw(self.screen)
+                self.off2_button.draw(self.screen)
 
             pygame.display.set_caption("Snake - ustawienia")
 
             # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
             if self.on2_button.tick():
                 self.gameMode = GameMode.timeWarp
-                print(self.gameMode)
-                return
+                #print(self.gameMode)
 
             if self.off2_button.tick():
                 self.gameMode = GameMode.standard
-                print(self.gameMode)
-                return
+                #print(self.gameMode)
 
             if self.back_button.tick():
                 print("back")
@@ -101,6 +109,8 @@ class menu():
                     quit()
             pygame.display.update()
 
+    def setDefaultSettings(self):
+        self.gameMode = GameMode.standard
 
     # załadowanie intra
     def intro(self):
