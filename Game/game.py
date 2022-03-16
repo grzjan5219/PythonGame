@@ -16,7 +16,7 @@ from os import path
 HS_FILE = "highscore.txt"
 
 class Game():
-    def __init__(self, gamemode):
+    def __init__(self, gamemode, width, height):
         #inicjalizacja
         self.clock = pygame.time.Clock()
         self.speed = 4
@@ -26,12 +26,8 @@ class Game():
         self.isRun = False
         self.result = 0
 
-        big_map = 20
-        medium_map = 15
-        small_map = 10
-
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.gameBoard = Board(medium_map, medium_map, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
+        self.gameBoard = Board(width, height, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
                                              # sizeBlock - minimum 20
         # tryb gry
         self.gameMode = gamemode
@@ -148,7 +144,7 @@ class Game():
 
             if self.retry_button.tick():
                 run = False
-                game = Game(self.gameMode)
+                game = Game(self.gameMode, self.gameBoard.width, self.gameBoard.height)
                 game.Start()
                 pass
             if self.exit_button.tick():
