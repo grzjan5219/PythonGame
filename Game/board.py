@@ -7,9 +7,7 @@ class Board():
         self.width = width
         self.height = height
         self.game = game
-        self.fields = [[None] * height] * width # dwuwymiarowa tablica pól planszy
-        print(pygame.display.get_surface().get_width(), pygame.display.get_surface().get_height())
-
+        self.fields = [[None] * height] * width
         self.maxBoardSize = pygame.math.Vector2(1200, 880)
         self.sizeBlock = int(min((self.maxBoardSize.x / width), (self.maxBoardSize.y / height)))
         self.boardSize = pygame.math.Vector2(self.sizeBlock * width, self.sizeBlock * height)
@@ -60,3 +58,8 @@ class Board():
             return True
         else:
             return False
+
+    def getPos(self, pos):
+        positionOnThesScreen = self.boardPos + pygame.math.Vector2(pos.x * self.sizeBlock, pos.y * self.sizeBlock)
+        return positionOnThesScreen
+
