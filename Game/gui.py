@@ -3,11 +3,11 @@ import tools
 from tools.Buttonhover2 import Button
 from Game.direction import Direction
 from pygame import mixer
+from menu import menu
 
 class Gui():
     def __init__(self, game):
         self.game = game
-
         self.czcionka = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
         self.background = pygame.image.load("img/tlo_game.jpg")
         self.exit_button = tools.Buttonhover2.Button(1400, 950, "img/exit", 0.7)
@@ -26,9 +26,12 @@ class Gui():
 
         # Przycisk exit
         if self.exit_button.tick():
-            mixer.music.load("sounds/BG music - menu.mp3")
-            mixer.music.play(-1)
-            return True
+            lobby = menu()
+            lobby.main_menu()
+
+            #mixer.music.load("sounds/BG music - menu.mp3")
+            #mixer.music.play(-1)
+            #return True
 
         # Opcje dźwięku
         if self.on_button.tick():
