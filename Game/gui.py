@@ -39,5 +39,7 @@ class Gui():
 
         wynik = self.czcionka.render("Score: {0}".format(self.game.result), 1, (0, 0, 0))
 
-        self.game.screen.blit(self.dialogue, (540, 1000))
+        if not self.game.isRun:
+            self.game.screen.blit(self.dialogue, (540, 1000))
+
         self.game.screen.blit(wynik, (5, 10))
