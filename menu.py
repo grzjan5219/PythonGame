@@ -3,12 +3,22 @@ from Game.game import Game
 from Game.gameMode import GameMode
 from tools import Buttonhover2
 from pygame import mixer
+import os
 from tools.pyvidplayer import Video
 from tools.button import Button
 
 class menu():
     def __init__(self):
         pygame.init()
+        #to jest potrzebne do animowanego tła + TEKST
+        self.win = pygame.display.set_mode((1920, 1080))
+        self.bg_img = pygame.image.load(os.path.join("img/tlo_wide.jpg"))
+        self.bg = pygame.transform.scale(self.bg_img, (3840, 1080))
+        self.width = 3840
+        self.i = 0
+        self.MAIN_MENU = pygame.image.load("img/okno_main_menu.png")
+        self.SETTINGS = pygame.image.load("img/okno_settings.png")
+
         self.setDefaultSettings()
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
@@ -31,9 +41,6 @@ class menu():
         self.minusHeight = Button(1300, 765, pygame.image.load("img/minus.png"), 0.1)
 
         pygame.display.set_caption("Snake")
-
-        self.tlo_img = pygame.image.load("img/tlo.jpg")
-        self.tlo_settings_img = pygame.image.load("img/tlo_settings.jpg")
 
         # opcje wyboru
         self.on_img = pygame.image.load("img/on.png")
@@ -60,27 +67,18 @@ class menu():
         mixer.music.play(-1)
         mixer.music.set_volume(0.1)
 
-    # ustawienia wizualne (Tu będzie się znajdować zmiana kolorystyki węża, owocu i planszy)
-    def wizualne(self):
-        while True:
-            self.screen.blit(self.tlo_settings_img, (0, 0))
-            pygame.display.set_caption("Snake - ustawienia")
-            self.exit_button.draw(self.screen)
-            self.back_button.draw(self.screen)
-
-            if self.back_button.tick():
-                break
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
-            pygame.display.update()
-
     # główne ustawienia (Tu będą znajdować się opcje m.in. wizualne, zmiany  trudności..)
     def settings(self):
         while True:
-            self.screen.blit(self.tlo_settings_img, (0, 0))
+            # kod który robi animowane tło + TEXT
+            self.win.fill((0, 0, 0))
+            self.win.blit(self.bg, (self.i, 0))
+            self.win.blit(self.bg, (self.width + self.i, 0))
+            if self.i == -self.width:
+                self.win.blit(self.bg, (self.width + self.i, 0))
+                self.i = 0
+            self.i -= 1
+            self.screen.blit(self.SETTINGS, (0, 0))
 
             self.screen.blit(self.dialogue, (450, 450))
             self.screen.blit(self.speedDialogue, (450, 550))
@@ -166,7 +164,16 @@ class menu():
 
     def main_menu(self):
         while True:
-            self.screen.blit(self.tlo_img, (0, 0))
+            # kod który robi animowane tło + TEKST
+            self.win.fill((0, 0, 0))
+            self.win.blit(self.bg, (self.i, 0))
+            self.win.blit(self.bg, (self.width + self.i, 0))
+            if self.i == -self.width:
+                self.win.blit(self.bg, (self.width + self.i, 0))
+                self.i = 0
+            self.i -= 1
+            self.screen.blit(self.MAIN_MENU, (0, 0))
+
             self.start_button.draw(self.screen)
             self.settings_button.draw(self.screen)
             self.exit_button.draw(self.screen)

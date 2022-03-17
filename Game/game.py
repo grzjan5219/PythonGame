@@ -11,6 +11,7 @@ from Game.gameMode import GameMode
 from tools import Buttonhover2
 from Archive.przeszkodaType import PrzeszkodaType
 from os import path
+import os
 
 #plik który przechowuje najwyższy wynik
 HS_FILE = "highscore.txt"
@@ -25,6 +26,14 @@ class Game():
         self.paused = False
         self.isRun = False
         self.result = 0
+
+        # to jest potrzebne do animowanego tła + TEKST
+        self.win = pygame.display.set_mode((1920, 1080))
+        self.bg_img = pygame.image.load(os.path.join("img/tlo_wide.jpg"))
+        self.bg = pygame.transform.scale(self.bg_img, (3840, 1080))
+        self.width = 3840
+        self.i = 0
+        self.GAME_OVER = pygame.image.load("img/okno_game_over.png")
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.gameBoard = Board(width, height, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
@@ -117,9 +126,17 @@ class Game():
         while run:
             self.screen = pygame.display.set_mode((1920, 1080))
             pygame.display.set_caption("Snake- Game Over")
-            self.tlo_game_over_img = pygame.image.load("img/tlo_game_over.jpg")
 
-            self.screen.blit(self.tlo_game_over_img, (0, 0))
+            # kod który robi animowane tło
+            self.win.fill((0, 0, 0))
+            self.win.blit(self.bg, (self.i, 0))
+            self.win.blit(self.bg, (self.width + self.i, 0))
+            if self.i == -self.width:
+                self.win.blit(self.bg, (self.width + self.i, 0))
+                self.i = 0
+            self.i -= 1
+            self.screen.blit(self.GAME_OVER, (0, 0))
+
             czcionka = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
             wynik = czcionka.render("Score: {0}".format(self.result), 1, (0, 0, 0))
             rekord = czcionka.render("Highscore: {0}".format(self.highscore), 1, (0, 0, 0))
