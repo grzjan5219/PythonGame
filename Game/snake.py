@@ -1,5 +1,4 @@
 import copy
-
 import pygame
 from copy import deepcopy
 from Game.fruitType import FruitType
@@ -21,6 +20,7 @@ class Snake():
         self.displacementValue = 0
         self.removeWarp = None
         self.turnings = deque()
+        self.turningDirection = None
 
         #początek snake
         self.purposeMove = self.headFieldPos + pygame.math.Vector2(1, 0)

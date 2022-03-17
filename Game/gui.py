@@ -10,7 +10,7 @@ class Gui():
 
         self.czcionka = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
         self.background = pygame.image.load("img/tlo_game.jpg")
-        self.exit_button = tools.Buttonhover2.Button(1400, 950, "img/exit", 0.7)
+        self.exit_button = tools.Buttonhover2.Button(1410, 990, "img/exit", 0.6)
         self.on_button = tools.Buttonhover2.Button(1600, 40, "img/on", 1)
         self.off_button = tools.Buttonhover2.Button(1750, 40, "img/off", 1)
 
@@ -39,5 +39,5 @@ class Gui():
 
         wynik = self.czcionka.render("Score: {0}".format(self.game.result), 1, (0, 0, 0))
 
-        self.game.screen.blit(self.dialogue, (325, 1000))
+        self.game.screen.blit(self.dialogue, (540, 1000))
         self.game.screen.blit(wynik, (5, 10))
