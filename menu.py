@@ -1,6 +1,7 @@
 import pygame
 from Game.game import Game
 from Game.gameMode import GameMode
+from Game.speedType import SpeedType
 from tools import Buttonhover2
 from pygame import mixer
 import os
@@ -66,6 +67,14 @@ class menu():
         self.onHoverButton = Button(1150, 450, pygame.image.load("img/onhover.png"), 1)
         self.offHoverButton = Button(1300, 450,  pygame.image.load("img/offhover.png"), 1)
 
+        self.slowButton = Buttonhover2.Button(1000, 530, "img/slow", 0.5)
+        self.normalButton = Buttonhover2.Button(1230, 530, "img/normal", 0.5)
+        self.fastButton = Buttonhover2.Button(1460, 530, "img/fast", 0.5)
+
+        self.slowHoverButton = Button(1000, 530, pygame.image.load("img/slowhover.png"), 0.5)
+        self.normalHoverButton = Button(1230, 530, pygame.image.load("img/normalhover.png"), 0.5)
+        self.fastHoverButton = Button(1460, 530, pygame.image.load("img/fasthover.png"), 0.5)
+
         # filmik, który pokazuje się przed samą grą
         self.vid = Video("video/intro.mp4")
         self.vid.set_size((1920, 1080))
@@ -105,7 +114,29 @@ class menu():
                 self.onHoverButton.draw(self.screen)
                 self.off2_button.draw(self.screen)
 
+            if self.speedType == SpeedType.slow:
+                self.slowHoverButton.draw(self.screen)
+                self.normalButton.draw(self.screen)
+                self.fastButton.draw(self.screen)
+            elif self.speedType == SpeedType.normal:
+                self.slowButton.draw(self.screen)
+                self.normalHoverButton.draw(self.screen)
+                self.fastButton.draw(self.screen)
+            elif self.speedType == SpeedType.fast:
+                self.slowButton.draw(self.screen)
+                self.normalButton.draw(self.screen)
+                self.fastHoverButton.draw(self.screen)
+
             pygame.display.set_caption("Snake - ustawienia")
+
+            if(self.slowButton.tick()):
+                self.speedType = SpeedType.slow
+
+            if (self.normalButton.tick()):
+                self.speedType = SpeedType.normal
+
+            if (self.fastButton.tick()):
+                self.speedType = SpeedType.fast
 
             if self.plusWidth.draw(self.screen):
                 if self.mapSizeWidth < self.MAXWIDTH:
@@ -164,6 +195,7 @@ class menu():
 
     def setDefaultSettings(self):
         self.gameMode = GameMode.standard
+        self.speedType = SpeedType.normal
         self.mapSizeWidth = 15
         self.mapSizeHeight = 15
         self.numberFruits = 1
@@ -202,7 +234,7 @@ class menu():
 
             # start gry
             if self.start_button.tick():
-                game = Game(self.gameMode, self.mapSizeWidth, self.mapSizeHeight, self.numberFruits)
+                game = Game(self.gameMode, self.mapSizeWidth, self.mapSizeHeight, self.numberFruits, self.speedType)
                 game.Start()
 
             #  przycisk ustawień w main menu

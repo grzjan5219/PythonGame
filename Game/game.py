@@ -7,9 +7,9 @@ from Game.food import Food
 from Game.gui import Gui
 from Game.direction import Direction
 from Game.fruitType import FruitType
+from Game.speedType import SpeedType
 from Game.gameMode import GameMode
 from tools import Buttonhover2
-from Archive.przeszkodaType import PrzeszkodaType
 from os import path
 import os
 
@@ -17,16 +17,16 @@ import os
 HS_FILE = "highscore.txt"
 
 class Game():
-    def __init__(self, gamemode, width, height, numberFruits):
+    def __init__(self, gamemode, width, height, numberFruits, speedType):
         #inicjalizacja
         self.clock = pygame.time.Clock()
-        self.speed = 4
         self.tps = 100.0
         self.deltaTime = 0.0
         self.paused = False
         self.isRun = False
         self.result = 0
         self.numberFruits = numberFruits
+        self.speedType = speedType
 
         # to jest potrzebne do animowanego tła + TEKST
         self.win = pygame.display.set_mode((1920, 1080))
@@ -48,6 +48,13 @@ class Game():
 
         for i in range(numberFruits):
             self.food.add(FruitType.common)
+
+        if self.speedType == SpeedType.slow:
+            self.speed = int((5 * self.gameBoard.sizeBlock) / self.tps)
+        elif self.speedType == SpeedType.normal:
+            self.speed = int((7 * self.gameBoard.sizeBlock) / self.tps)
+        elif self.speedType == SpeedType.fast:
+            self.speed = int((13 * self.gameBoard.sizeBlock) / self.tps)
 
         pygame.display.set_caption("Snake")
 
@@ -77,7 +84,7 @@ class Game():
                     sys.exit(0)
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        self.paused = not self.paused
+                       self.paused = not self.paused
                     elif self.paused is True:
                         continue
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.snake.headSection.currentDirection != Direction.down:
@@ -93,7 +100,7 @@ class Game():
                         if self.snake.turningDirection == Direction.none:
                             self.snake.turningDirection = Direction.right
                     if event.key == pygame.K_SPACE:
-                        if self.isRun == False:
+                        if not self.isRun:
                             self.food.spawn()
                             self.snake.turningDirection = Direction.none
                             self.isRun = True
@@ -160,7 +167,7 @@ class Game():
 
             if self.retry_button.tick():
                 run = False
-                game = Game(self.gameMode, self.gameBoard.width, self.gameBoard.height, self.numberFruits)
+                game = Game(self.gameMode, self.gameBoard.width, self.gameBoard.height, self.numberFruits, self.speedType)
                 game.Start()
                 pass
             if self.exit_button.tick():
