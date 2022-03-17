@@ -17,7 +17,7 @@ import os
 HS_FILE = "highscore.txt"
 
 class Game():
-    def __init__(self, gamemode, width, height):
+    def __init__(self, gamemode, width, height, numberFruits):
         #inicjalizacja
         self.clock = pygame.time.Clock()
         self.speed = 4
@@ -26,6 +26,7 @@ class Game():
         self.paused = False
         self.isRun = False
         self.result = 0
+        self.numberFruits = numberFruits
 
         # to jest potrzebne do animowanego tła + TEKST
         self.win = pygame.display.set_mode((1920, 1080))
@@ -45,10 +46,8 @@ class Game():
         self.food = Food(self)
         self.gui = Gui(self)
 
-        # trzy owoce
-        self.food.add(FruitType.common)
-        self.food.add(FruitType.common)
-        self.food.add(FruitType.common)
+        for i in range(numberFruits):
+            self.food.add(FruitType.common)
 
         pygame.display.set_caption("Snake")
 
@@ -161,7 +160,7 @@ class Game():
 
             if self.retry_button.tick():
                 run = False
-                game = Game(self.gameMode, self.gameBoard.width, self.gameBoard.height)
+                game = Game(self.gameMode, self.gameBoard.width, self.gameBoard.height, self.numberFruits)
                 game.Start()
                 pass
             if self.exit_button.tick():

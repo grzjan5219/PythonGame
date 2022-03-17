@@ -27,18 +27,26 @@ class menu():
         self.MINWIDTH = 5
         self.MINHEIGHT = 5
 
-        self.dialogue_font = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
+        self.MINNUMBERFRUITS = 1
+        self.MAXNUMBERFRUITS = 5
+
+        self.dialogue_font = pygame.font.Font('customFont/NeueAachenProBold.TTF', 50)
         self.dialogue = self.dialogue_font.render("Penetrating through walls: ", 1, (0, 0, 0))
         self.speedDialogue = self.dialogue_font.render("Speed: ", 1, (0, 0, 0))
 
         self.mapSizeWidthDialoque = self.dialogue_font.render(f"Map size(width):    {self.mapSizeWidth}", 1, (0, 0, 0))
         self.mapSizeHeightDialoque = self.dialogue_font.render(f"Map size(height):   {self.mapSizeHeight}", 1, (0, 0, 0))
 
-        self.plusWidth = Button(1200, 650, pygame.image.load("img/plus.png"), 0.1)
-        self.minusWidth = Button(1300, 665, pygame.image.load("img/minus.png"), 0.1)
+        self.numberFruitsDialoque = self.dialogue_font.render(f"NumberFruits:         {self.numberFruits}", 1, (0, 0, 0))
 
-        self.plusHeight = Button(1200, 750, pygame.image.load("img/plus.png"), 0.1)
-        self.minusHeight = Button(1300, 765, pygame.image.load("img/minus.png"), 0.1)
+        self.plusWidth = Button(1200, 610, pygame.image.load("img/plus.png"), 0.08)
+        self.minusWidth = Button(1300, 625, pygame.image.load("img/minus.png"), 0.08)
+
+        self.plusHeight = Button(1200, 690, pygame.image.load("img/plus.png"), 0.08)
+        self.minusHeight = Button(1300, 705, pygame.image.load("img/minus.png"), 0.08)
+
+        self.plusNumberFruits = Button(1200, 770, pygame.image.load("img/plus.png"), 0.08)
+        self.minusNumberFruits = Button(1300, 785, pygame.image.load("img/minus.png"), 0.08)
 
         pygame.display.set_caption("Snake")
 
@@ -81,9 +89,10 @@ class menu():
             self.screen.blit(self.SETTINGS, (0, 0))
 
             self.screen.blit(self.dialogue, (450, 450))
-            self.screen.blit(self.speedDialogue, (450, 550))
-            self.screen.blit(self.mapSizeWidthDialoque, (450, 650))
-            self.screen.blit(self.mapSizeHeightDialoque, (450, 750))
+            self.screen.blit(self.speedDialogue, (450, 530))
+            self.screen.blit(self.mapSizeWidthDialoque, (450, 610))
+            self.screen.blit(self.mapSizeHeightDialoque, (450, 690))
+            self.screen.blit(self.numberFruitsDialoque, (450, 770))
 
             self.back_button.draw(self.screen)
             self.on_button.draw(self.screen)
@@ -118,6 +127,16 @@ class menu():
                     self.mapSizeHeight -= 1
                     self.mapSizeHeightDialoque = self.dialogue_font.render(f"Map size(height):   {self.mapSizeHeight}", 1, (0, 0, 0))
 
+            if self.plusNumberFruits.draw(self.screen):
+                if self.numberFruits < self.MAXNUMBERFRUITS:
+                    self.numberFruits += 1
+                    self.numberFruitsDialoque = self.dialogue_font.render(f"NumberFruits:         {self.numberFruits}", 1, (0, 0, 0))
+
+            if self.minusNumberFruits.draw(self.screen):
+                if self.numberFruits > self.MINNUMBERFRUITS:
+                    self.numberFruits -= 1
+                    self.numberFruitsDialoque = self.dialogue_font.render(f"NumberFruits:         {self.numberFruits}", 1, (0, 0, 0))
+
             # Zamiast przycisku start będzie przycisk "Ustawienia wizualne")
             if self.on2_button.tick():
                 self.gameMode = GameMode.timeWarp
@@ -147,6 +166,7 @@ class menu():
         self.gameMode = GameMode.standard
         self.mapSizeWidth = 15
         self.mapSizeHeight = 15
+        self.numberFruits = 1
 
     # załadowanie intra
     def intro(self):
@@ -182,7 +202,7 @@ class menu():
 
             # start gry
             if self.start_button.tick():
-                game = Game(self.gameMode, self.mapSizeWidth, self.mapSizeHeight)
+                game = Game(self.gameMode, self.mapSizeWidth, self.mapSizeHeight, self.numberFruits)
                 game.Start()
 
             #  przycisk ustawień w main menu

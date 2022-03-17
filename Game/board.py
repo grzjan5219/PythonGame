@@ -14,7 +14,7 @@ class Board():
 
         margin = pygame.math.Vector2((self.maxBoardSize.x - self.boardSize.x) / 2, (self.maxBoardSize.y - self.boardSize.y) / 2)
 
-        self.boardPos = pygame.math.Vector2(100, 100) + margin
+        self.boardPos = pygame.math.Vector2(360, 100) + margin
 
         default1 = (150, 150, 150)
         default2 = (200, 200, 100)
