@@ -1,5 +1,6 @@
 import pygame
-from Game.game import Game
+#from Game.game import Game
+import Game.game
 from Game.gameMode import GameMode
 from Game.speedType import SpeedType
 from tools import Buttonhover2
@@ -200,6 +201,17 @@ class menu():
         self.mapSizeHeight = 15
         self.numberFruits = 1
 
+    def setSettings(self, gameMode, speedMode, width, height, numberFruits):
+        self.gameMode = gameMode
+        self.speedType = speedMode
+        self.mapSizeWidth = width
+        self.mapSizeHeight = height
+        self.numberFruits = numberFruits
+
+        self.mapSizeWidthDialoque = self.dialogue_font.render(f"Map size(width):    {self.mapSizeWidth}", 1, (0, 0, 0))
+        self.mapSizeHeightDialoque = self.dialogue_font.render(f"Map size(height):   {self.mapSizeHeight}", 1,(0, 0, 0))
+        self.numberFruitsDialoque = self.dialogue_font.render(f"NumberFruits:         {self.numberFruits}", 1,(0, 0, 0))
+
     # załadowanie intra
     def intro(self):
         while True:
@@ -234,7 +246,7 @@ class menu():
 
             # start gry
             if self.start_button.tick():
-                game = Game(self.gameMode, self.mapSizeWidth, self.mapSizeHeight, self.numberFruits, self.speedType)
+                game = Game.game.Game(self.gameMode, self.mapSizeWidth, self.mapSizeHeight, self.numberFruits, self.speedType)
                 game.Start()
 
             #  przycisk ustawień w main menu
@@ -258,5 +270,7 @@ class menu():
                     quit()
             pygame.display.update()
 
-menu = menu()
-menu.intro()
+
+if __name__ == "__main__":
+    menu = menu()
+    menu.intro()

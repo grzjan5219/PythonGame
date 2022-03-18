@@ -3,6 +3,8 @@ import tools
 from tools.Buttonhover2 import Button
 from Game.direction import Direction
 from pygame import mixer
+import menu
+import sys
 
 class Gui():
     def __init__(self, game):
@@ -28,7 +30,10 @@ class Gui():
         if self.exit_button.tick():
             mixer.music.load("sounds/BG music - menu.mp3")
             mixer.music.play(-1)
-            return True
+            gameMenu = menu.menu()
+            gameMenu.setSettings(self.game.gameMode, self.game.speedType, self.game.w, self.game.h, self.game.numberFruits)
+            gameMenu.main_menu()
+            sys.exit(0)
 
         # Opcje dźwięku
         if self.on_button.tick():
