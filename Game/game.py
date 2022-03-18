@@ -9,6 +9,7 @@ from Game.direction import Direction
 from Game.fruitType import FruitType
 from Game.speedType import SpeedType
 from Game.gameMode import GameMode
+import menu
 from tools import Buttonhover2
 from os import path
 import os
@@ -39,6 +40,8 @@ class Game():
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.gameBoard = Board(width, height, self) # width  - max 60 (min - 5)  height - max 44 (min - 5)
                                              # sizeBlock - minimum 20
+        self.w = width
+        self.h = height
         # tryb gry
         self.gameMode = gamemode
 
@@ -73,11 +76,9 @@ class Game():
                 self.highscore = 0
 
     def Start(self):
-
+        pause_font = pygame.font.Font('customFont/upheavtt.ttf', 100)
+        pause = pause_font.render("Paused", 1, (0, 0, 0))
         while True:
-            pause_font = pygame.font.Font('customFont/upheavtt.ttf', 100)
-            pause = pause_font.render("Paused", 1, (0, 0, 0))
-
             # obługa zdarzeń
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -113,13 +114,14 @@ class Game():
                 if self.paused is False:
                     self.deltaTime += oneTick
                     self.snake.Move()
-                elif self.paused is True:
-                    self.screen.blit(pause, (625, 10))
 
             self.gui.draw()
             self.gameBoard.draw()
             self.food.draw()
             self.snake.draw()
+
+            if self.paused:
+                self.screen.blit(pause, (780, 490))
 
             pygame.display.flip()
 
@@ -129,6 +131,22 @@ class Game():
         mixer.music.play()
         mixer.music.set_volume(2)
         run = True
+
+        czcionka = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
+        wynik = czcionka.render("Score: {0}".format(self.result), 1, (0, 0, 0))
+        rekord = czcionka.render("Highscore: {0}".format(self.highscore), 1, (0, 0, 0))
+        nowy_rekord = czcionka.render("New highscore!", 1, (255, 0, 0))
+
+        #self.game.screen.blit(image[section.currentDirection], (section.rect.x, section.rect.y),(0, 0, section.rect.width, section.rect.height))
+        pygame.image.save(self.screen, "defeatScreen.png")
+        defeatImage = pygame.image.load("defeatScreen.png")
+
+       # obraz = self.screen.blit(defeatImage, (1000, 500), (self.gameBoard.boardPos.x, self.gameBoard.boardPos.y, self.gameBoard.boardSize.x, self.gameBoard.boardSize.y))
+
+        image = defeatImage.subsurface((self.gameBoard.boardPos.x, self.gameBoard.boardPos.y, self.gameBoard.boardSize.x, self.gameBoard.boardSize.y))
+        scale = 0.5
+        boardScreen = pygame.transform.scale(image, (int(image.get_width() * scale), int(image.get_height() * scale)))
+
         while run:
             self.screen = pygame.display.set_mode((1920, 1080))
             pygame.display.set_caption("Snake- Game Over")
@@ -143,10 +161,6 @@ class Game():
             self.i -= 1
             self.screen.blit(self.GAME_OVER, (0, 0))
 
-            czcionka = pygame.font.Font('customFont/NeueAachenProBold.TTF', 60)
-            wynik = czcionka.render("Score: {0}".format(self.result), 1, (0, 0, 0))
-            rekord = czcionka.render("Highscore: {0}".format(self.highscore), 1, (0, 0, 0))
-            nowy_rekord = czcionka.render("New highscore!", 1, (255, 0, 0))
             self.screen.blit(wynik, (840, 480))
             if self.result < self.highscore:
                 self.screen.blit(rekord, (780, 580))
@@ -165,12 +179,17 @@ class Game():
             self.retry_button.draw(self.screen)
             self.exit_button.draw(self.screen)
 
+            self.screen.blit(boardScreen, (1280, 500))
+
             if self.retry_button.tick():
                 run = False
                 game = Game(self.gameMode, self.gameBoard.width, self.gameBoard.height, self.numberFruits, self.speedType)
                 game.Start()
                 pass
             if self.exit_button.tick():
+                gameMenu = menu.menu()
+                gameMenu.setSettings(self.gameMode, self.speedType, self.w, self.h, self.numberFruits)
+                gameMenu.main_menu()
                 sys.exit(0)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
